@@ -1,2 +1,2 @@
 # gasora
-landingpage gasora
+landingpage gasora - aplikasi dengan baseline google apps script
