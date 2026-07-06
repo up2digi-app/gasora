@@ -1,0 +1,1933 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GASORA | CMS Admin v1.0</title>
+    
+    <!-- Branding Favicon GASORA -->
+    <link rel="icon" type="image/png" href="https://up2digi-app.github.io/up2digital-assets/gasora/logo.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        window.tailwind = {
+            config: {
+                theme: {
+                    extend: {
+                        fontFamily: { sans: ['Poppins', 'sans-serif'] },
+                        colors: {
+                            primary: '#6C63FF',
+                            secondary: '#8B5CF6',
+                            accent: '#22D3EE',
+                            textMain: '#0F172A',
+                            background: '#FFFFFF',
+                            surface: '#F8FAFC',
+                        },
+                        backgroundImage: {
+                            'gradient-primary': 'linear-gradient(135deg, #6C63FF 0%, #8B5CF6 50%, #22D3EE 100%)',
+                        },
+                        animation: {
+                            'float': 'float 6s ease-in-out infinite',
+                            'skeletonLoading': 'skeletonLoading 2s infinite',
+                            'fade-in': 'fadeIn 0.5s ease-out',
+                            'slide-in-right': 'slideInRight 0.3s ease-out forwards',
+                        },
+                        keyframes: {
+                            float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
+                            skeletonLoading: { '0%': { backgroundPosition: '100% 0' }, '100%': { backgroundPosition: '-100% 0' } },
+                            fadeIn: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                            slideInRight: { '0%': { opacity: '0', transform: 'translateX(50px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } }
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        body { background-color: #F8FAFC; color: #0F172A; }
+        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 10px 40px -10px rgba(108, 99, 255, 0.15); }
+        .glass-sidebar { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-right: 1px solid rgba(229, 231, 235, 0.6); }
+        
+        .kpi-card { background: #FFFFFF; border: 1px solid #F1F5F9; border-radius: 1.5rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+        .kpi-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(108, 99, 255, 0.1); border-color: rgba(108, 99, 255, 0.2); }
+
+        .menu-item { transition: all 0.2s ease; cursor: pointer; }
+        .menu-item.active { background: linear-gradient(135deg, rgba(108, 99, 255, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%); color: #6C63FF; font-weight: 700; border-right: 3px solid #6C63FF; }
+        .menu-item:hover:not(.active) { background-color: #F8FAFC; color: #6C63FF; }
+
+        .form-input { width: 100%; padding: 0.875rem 1rem; border-radius: 0.75rem; border: 1px solid #E2E8F0; background-color: #F8FAFC; transition: all 0.3s ease; outline: none; font-size: 0.875rem; color:#0F172A; }
+        .form-input:focus { border-color: #6C63FF; background-color: #FFFFFF; box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.1); }
+        .form-label { display: block; font-size: 0.75rem; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; margin-left: 0.25rem; }
+
+        .btn-gradient { background: linear-gradient(135deg, #6C63FF 0%, #8B5CF6 50%, #22D3EE 100%); background-size: 200% auto; transition: all 0.4s ease; }
+        .btn-gradient:hover { background-position: right center; box-shadow: 0 10px 20px -5px rgba(108, 99, 255, 0.4); transform: translateY(-2px); }
+
+        .skeleton { background: linear-gradient(90deg, #f1f5f9, #e2e8f0, #f1f5f9); background-size: 300% 100%; animation: skeletonLoading 2s infinite; border-radius: 1rem; }
+        .floating-orb { position: absolute; border-radius: 9999px; filter: blur(80px); opacity: 0.3; z-index: -1; pointer-events: none; }
+        .orb-1 { width: 400px; height: 400px; background: #6C63FF; top: -100px; left: -100px; animation: float 8s ease-in-out infinite; }
+        .orb-2 { width: 300px; height: 300px; background: #22D3EE; bottom: -50px; right: -50px; animation: float 10s ease-in-out infinite reverse; }
+
+        .spinner { border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid #fff; width: 20px; height: 20px; animation: spin 1s linear infinite; }
+        .spinner-primary { border: 3px solid rgba(108,99,255,0.2); border-top: 3px solid #6C63FF; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .data-table th { background-color: #F8FAFC; color: #64748B; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; padding: 1rem; text-align: left; border-bottom: 1px solid #E2E8F0; }
+        .data-table td { padding: 1rem; border-bottom: 1px solid #F1F5F9; color: #334155; font-size: 0.875rem; vertical-align: middle; }
+        .data-table tr:hover td { background-color: #F8FAFC; }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px;}
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+        /* Rich Text Editor Styling */
+        .editor-toolbar-btn { width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: #475569; background: transparent; transition: all 0.2s ease; font-size: 14px; font-weight: bold; border: 1px solid transparent; }
+        .editor-toolbar-btn:hover { background: #F1F5F9; color: #6C63FF; border-color: #E2E8F0; }
+        .editor-area:empty:before { content: 'Tulis isi konten di sini...'; color: #94A3B8; pointer-events: none; }
+        .prose { color: #334155; line-height: 1.7; }
+        .prose h2 { font-size: 1.5em; font-weight: 700; margin-top: 1.5em; margin-bottom: 0.5em; color: #0F172A; }
+        .prose h3 { font-size: 1.25em; font-weight: 600; margin-top: 1.2em; margin-bottom: 0.5em; color: #0F172A; }
+        .prose p { margin-bottom: 1em; }
+        .prose ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1em; }
+        .prose ol { list-style-type: decimal; padding-left: 1.5em; margin-bottom: 1em; }
+        .prose blockquote { border-left: 4px solid #6C63FF; padding-left: 1rem; color: #64748B; font-style: italic; margin: 1.5em 0; background: #F8FAFC; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; }
+        .prose a { color: #6C63FF; text-decoration: underline; text-underline-offset: 2px; }
+        .prose hr { margin: 2em 0; border: 0; border-top: 1px solid #E2E8F0; }
+        .prose b, .prose strong { font-weight: 700; color: #0F172A; }
+        .prose i, .prose em { font-style: italic; }
+    </style>
+</head>
+<body class="antialiased overflow-hidden">
+
+    <div id="login-view" class="min-h-screen w-full flex items-center justify-center relative bg-surface z-50">
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-5 mix-blend-overlay"></div>
+
+        <div class="glass-panel w-full max-w-md p-8 sm:p-10 rounded-[2.5rem] relative z-10 mx-4 animate-fade-in">
+            <div class="text-center mb-10">
+                <div class="flex items-center justify-center mb-4 hover:scale-105 transition-transform">
+                    <img src="https://up2digi-app.github.io/up2digital-assets/gasora/logo.png" alt="GASORA" class="w-12 h-12 object-contain">
+                </div>
+                <h1 class="text-2xl font-black tracking-tight text-textMain">Welcome Back</h1>
+                <p class="text-sm text-gray-500 font-medium mt-1">Sign in to GASORA CMS v1.0</p>
+            </div>
+
+            <div id="login-error" class="hidden mb-6 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl flex items-center text-sm font-semibold">
+                <i class="ph-fill ph-warning-circle text-lg mr-2"></i>
+                <span id="login-error-text">Error message</span>
+            </div>
+
+            <form id="login-form" class="space-y-6">
+                <div>
+                    <label class="form-label">Username</label>
+                    <div class="relative">
+                        <i class="ph ph-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg"></i>
+                        <input type="text" id="username" class="form-input pl-12" placeholder="Enter your username" required>
+                    </div>
+                </div>
+                <div>
+                    <label class="form-label">Password</label>
+                    <div class="relative">
+                        <i class="ph ph-lock-key absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg"></i>
+                        <input type="password" id="password" class="form-input pl-12" placeholder="Enter your password" required>
+                        <button type="button" onclick="togglePasswordVisibility('password')" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary">
+                            <i id="icon-password" class="ph ph-eye text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" id="btn-login" class="w-full bg-[#6C63FF] hover:bg-[#5B54E8] text-[#FFFFFF] font-bold py-4 rounded-xl shadow-lg flex justify-center items-center transition-colors">
+                    <span id="btn-login-text">Masuk Dashboard</span>
+                    <div id="btn-login-spinner" class="spinner hidden"></div>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard-view" class="h-screen w-full flex bg-surface hidden">
+        
+        <!-- Sidebar -->
+        <aside id="sidebar-container" class="glass-sidebar w-64 h-full flex flex-col absolute lg:relative z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+            <div class="h-20 flex items-center px-6 border-b border-gray-100">
+                <img src="https://up2digi-app.github.io/up2digital-assets/gasora/logo.png" alt="GASORA" class="w-8 h-8 object-contain mr-3">
+                <span class="font-black text-xl text-textMain tracking-tight">GASORA CMS</span>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto py-6 px-4 space-y-1" id="nav-menu">
+                <a data-view="dashboard" class="menu-item active flex items-center px-4 py-3 rounded-xl text-sm font-semibold">
+                    <i class="ph-fill ph-squares-four text-xl mr-3"></i> Dashboard
+                </a>
+                
+                <p class="px-4 pt-4 pb-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Content</p>
+                <a data-view="showcase" class="menu-item flex items-center px-4 py-3 rounded-xl text-sm font-semibold text-gray-600">
+                    <i class="ph ph-image text-xl mr-3"></i> Showcase
+                </a>
+                <a data-view="pricing" class="menu-item flex items-center px-4 py-3 rounded-xl text-sm font-semibold text-gray-600">
+                    <i class="ph ph-tag text-xl mr-3"></i> Pricing
+                </a>
+                <a data-view="pricing_features" class="menu-item flex items-center px-4 py-3 rounded-xl text-sm font-semibold text-gray-600">
+                    <i class="ph ph-list-checks text-xl mr-3"></i> Pricing Features
+                </a>
+                <a data-view="faq" class="menu-item flex items-center px-4 py-3 rounded-xl text-sm font-semibold text-gray-600">
+                    <i class="ph ph-question text-xl mr-3"></i> FAQ
+                </a>
+                <a data-view="testimonial" class="menu-item flex items-center px-4 py-3 rounded-xl text-sm font-semibold text-gray-600">
+                    <i class="ph ph-chat-centered-text text-xl mr-3"></i> Testimonial
+                </a>
+                <a data-view="blog" class="menu-item flex items-center px-4 py-3 rounded-xl text-sm font-semibold text-gray-600">
+                    <i class="ph ph-newspaper text-xl mr-3"></i> Blog
+                </a>
+
+                <p class="px-4 pt-4 pb-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">CRM & Users</p>
+                <a data-view="leads" class="menu-item flex items-center px-4 py-3 rounded-xl text-sm font-semibold text-gray-600">
+                    <i class="ph ph-address-book text-xl mr-3"></i> Leads
+                </a>
+                <a data-view="users" class="menu-item flex items-center px-4 py-3 rounded-xl text-sm font-semibold text-gray-600">
+                    <i class="ph ph-users text-xl mr-3"></i> Users
+                </a>
+
+                <p class="px-4 pt-4 pb-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Configuration</p>
+                <a data-view="settings" class="menu-item flex items-center px-4 py-3 rounded-xl text-sm font-semibold text-gray-600">
+                    <i class="ph ph-gear text-xl mr-3"></i> Settings
+                </a>
+                <a data-view="social" class="menu-item flex items-center px-4 py-3 rounded-xl text-sm font-semibold text-gray-600">
+                    <i class="ph ph-share-network text-xl mr-3"></i> Social
+                </a>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-100 flex flex-col space-y-3">
+                <div class="text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest">Powered by GASORA</div>
+            </div>
+        </aside>
+        
+        <div id="sidebar-overlay" class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-30 hidden lg:hidden transition-opacity opacity-0"></div>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+            <header class="h-20 bg-white/80 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-6 z-20">
+                <div class="flex items-center">
+                    <button id="btn-menu" class="lg:hidden w-10 h-10 rounded-xl bg-gray-50 text-gray-600 flex items-center justify-center hover:bg-indigo-50 hover:text-primary mr-4">
+                        <i class="ph-bold ph-list text-xl"></i>
+                    </button>
+                    <div class="hidden sm:flex flex-col">
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Hari Ini</span>
+                        <span id="current-date" class="text-sm font-bold text-textMain">Loading...</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div id="global-spinner" class="hidden items-center justify-center bg-indigo-50 text-primary px-3 py-1.5 rounded-full text-xs font-bold">
+                        <div class="spinner spinner-primary w-4 h-4 mr-2 border-2 border-t-2"></div> Syncing...
+                    </div>
+                    <div class="text-right hidden sm:block">
+                        <h4 id="topbar-name" class="text-sm font-bold text-textMain leading-tight">Admin User</h4>
+                        <span id="topbar-role" class="text-xs font-bold text-primary capitalize">Role</span>
+                    </div>
+                    
+                    <!-- My Profile Dropdown Patch -->
+                    <div class="relative">
+                        <button id="btn-profile-dropdown" class="w-11 h-11 rounded-full bg-indigo-100 border-2 border-white shadow-sm flex items-center justify-center overflow-hidden focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all">
+                            <img id="topbar-avatar" src="https://ui-avatars.com/api/?name=G&background=E0E7FF&color=6C63FF" class="w-full h-full object-cover" alt="Avatar">
+                        </button>
+                        
+                        <div id="profile-dropdown" class="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 hidden z-50 py-2 transform opacity-0 scale-95 transition-all origin-top-right">
+                            <div class="px-4 py-2 border-b border-gray-50 sm:hidden">
+                                <p class="text-sm font-bold text-textMain truncate" id="dropdown-name">Admin User</p>
+                                <p class="text-xs font-medium text-gray-500 truncate capitalize" id="dropdown-role">Role</p>
+                            </div>
+                            <a href="#" onclick="openProfileModal(); toggleProfileDropdown(false);" class="flex items-center px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
+                                <i class="ph-bold ph-user-circle text-lg mr-3 text-gray-400"></i> My Profile
+                            </a>
+                            <a href="#" onclick="openChangePasswordModal(); toggleProfileDropdown(false);" class="flex items-center px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
+                                <i class="ph-bold ph-key text-lg mr-3 text-gray-400"></i> Change Password
+                            </a>
+                            <div class="border-t border-gray-100 my-1"></div>
+                            <a href="#" id="btn-logout" class="flex items-center px-4 py-2.5 text-sm font-bold text-red-600 hover:bg-red-50 transition-colors">
+                                <i class="ph-bold ph-sign-out text-lg mr-3 text-red-500"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex-1 overflow-y-auto p-6 lg:p-8 bg-surface relative" id="main-scroll-area">
+                
+                <div id="view-dashboard" class="view-section max-w-6xl mx-auto space-y-8 animate-fade-in">
+                    <div>
+                        <h2 class="text-2xl lg:text-3xl font-black text-textMain tracking-tight">Dashboard Overview</h2>
+                        <p class="text-gray-500 font-medium text-sm mt-1">Ringkasan data live dari GASORA API.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                        <div class="kpi-card p-6 flex items-center relative overflow-hidden">
+                            <div class="absolute right-0 top-0 w-20 h-20 bg-indigo-50 rounded-bl-full -z-10"></div>
+                            <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-primary flex items-center justify-center text-2xl mr-4"><i class="ph-fill ph-address-book"></i></div>
+                            <div><p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Leads</p><h3 id="kpi-leads" class="text-2xl font-black text-textMain leading-none">--</h3></div>
+                        </div>
+                        <div class="kpi-card p-6 flex items-center relative overflow-hidden">
+                            <div class="absolute right-0 top-0 w-20 h-20 bg-blue-50 rounded-bl-full -z-10"></div>
+                            <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-500 flex items-center justify-center text-2xl mr-4"><i class="ph-fill ph-image"></i></div>
+                            <div><p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Showcase</p><h3 id="kpi-showcase" class="text-2xl font-black text-textMain leading-none">--</h3></div>
+                        </div>
+                        <div class="kpi-card p-6 flex items-center relative overflow-hidden">
+                            <div class="absolute right-0 top-0 w-20 h-20 bg-purple-50 rounded-bl-full -z-10"></div>
+                            <div class="w-12 h-12 rounded-2xl bg-purple-100 text-secondary flex items-center justify-center text-2xl mr-4"><i class="ph-fill ph-tag"></i></div>
+                            <div><p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Pricing</p><h3 id="kpi-pricing" class="text-2xl font-black text-textMain leading-none">--</h3></div>
+                        </div>
+                        <div class="kpi-card p-6 flex items-center relative overflow-hidden">
+                            <div class="absolute right-0 top-0 w-20 h-20 bg-cyan-50 rounded-bl-full -z-10"></div>
+                            <div class="w-12 h-12 rounded-2xl bg-cyan-100 text-accent flex items-center justify-center text-2xl mr-4"><i class="ph-fill ph-question"></i></div>
+                            <div><p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">FAQ</p><h3 id="kpi-faq" class="text-2xl font-black text-textMain leading-none">--</h3></div>
+                        </div>
+                        <div class="kpi-card p-6 flex items-center relative overflow-hidden">
+                            <div class="absolute right-0 top-0 w-20 h-20 bg-pink-50 rounded-bl-full -z-10"></div>
+                            <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-500 flex items-center justify-center text-2xl mr-4"><i class="ph-fill ph-chat-centered-text"></i></div>
+                            <div><p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Testimonials</p><h3 id="kpi-testimonial" class="text-2xl font-black text-textMain leading-none">--</h3></div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="kpi-card p-6 flex items-center relative overflow-hidden border border-gray-100">
+                            <div class="w-14 h-14 rounded-2xl bg-gray-50 text-gray-500 flex items-center justify-center text-3xl mr-4 flex-shrink-0" id="icon-api-status"><i class="ph-fill ph-broadcast"></i></div>
+                            <div><p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">API Status</p><h3 id="kpi-api-status" class="text-xl font-black text-gray-500 leading-none mt-1">Checking...</h3></div>
+                        </div>
+                        <div class="kpi-card p-6 flex items-center relative overflow-hidden border border-gray-100">
+                            <div class="w-14 h-14 rounded-2xl bg-gray-50 text-gray-500 flex items-center justify-center text-3xl mr-4 flex-shrink-0" id="icon-sheet-status"><i class="ph-fill ph-database"></i></div>
+                            <div><p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Spreadsheet Status</p><h3 id="kpi-sheet-status" class="text-xl font-black text-gray-500 leading-none mt-1.5 tracking-tight">Checking...</h3></div>
+                        </div>
+                        <div class="kpi-card p-6 flex flex-col justify-center text-white" style="background-color: #0F172A;">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center"><i class="ph-fill ph-clock-counter-clockwise mr-2 text-lg"></i> Last Sync</p>
+                            <h3 id="kpi-last-sync" class="text-lg font-bold leading-tight">--</h3>
+                            <p class="text-xs text-gray-400 mt-2">Sinkronisasi data terakhir berhasil</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-settings" class="view-section hidden max-w-5xl mx-auto space-y-6 animate-fade-in">
+                    <div class="flex justify-between items-end mb-8">
+                        <div><h2 class="text-2xl font-black text-textMain">Global Settings</h2><p class="text-sm text-gray-500">Konfigurasi utama landing page & sistem.</p></div>
+                        <div class="flex space-x-2">
+                            <button onclick="refreshCache()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2.5 rounded-xl font-bold text-sm flex items-center transition-colors"><i class="ph-bold ph-arrows-clockwise mr-2"></i> Refresh Cache</button>
+                            <button onclick="saveSettings()" class="bg-[#6C63FF] hover:bg-[#5B54E8] text-[#FFFFFF] px-6 py-2.5 rounded-xl font-bold text-sm flex items-center shadow-md transition-colors"><i class="ph-bold ph-floppy-disk mr-2"></i> Save Settings</button>
+                        </div>
+                    </div>
+                    
+                    <form id="form-settings" class="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 space-y-8">
+                        <div>
+                            <h3 class="text-lg font-bold text-textMain border-b border-gray-100 pb-2 mb-4">Brand Information</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div><label class="form-label">Brand Name</label><input type="text" name="brand_name" class="form-input"></div>
+                                <div><label class="form-label">Tagline</label><input type="text" name="tagline" class="form-input"></div>
+                                <div><label class="form-label">Logo URL</label><input type="text" name="logo_url" class="form-input"></div>
+                                <div><label class="form-label">Favicon URL</label><input type="text" name="favicon_url" class="form-input"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-textMain border-b border-gray-100 pb-2 mb-4">Contact Detail</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div><label class="form-label">Email</label><input type="email" name="email" class="form-input"></div>
+                                <div><label class="form-label">Whatsapp</label><input type="text" name="whatsapp" class="form-input"></div>
+                                <div class="md:col-span-2"><label class="form-label">Address</label><input type="text" name="address" class="form-input"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-textMain border-b border-gray-100 pb-2 mb-4">Hero Section</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div><label class="form-label">Hero Title</label><input type="text" name="hero_title" class="form-input"></div>
+                                <div><label class="form-label">Hero Subtitle</label><input type="text" name="hero_subtitle" class="form-input"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-textMain border-b border-gray-100 pb-2 mb-4">Footer Settings</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div><label class="form-label">Footer Text</label><input type="text" name="footer_text" class="form-input"></div>
+                                <div><label class="form-label">Copyright</label><input type="text" name="copyright" class="form-input"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-textMain border-b border-gray-100 pb-2 mb-4">Global SEO</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div><label class="form-label">SEO Title</label><input type="text" name="seo_title" class="form-input"></div>
+                                <div><label class="form-label">SEO Keywords</label><input type="text" name="seo_keywords" class="form-input"></div>
+                                <div class="md:col-span-2"><label class="form-label">SEO Description</label><textarea name="seo_description" rows="2" class="form-input"></textarea></div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 space-y-4">
+                        <h3 class="text-lg font-bold text-textMain border-b border-gray-100 pb-2 mb-4">Developer & API Connection</h3>
+                        <div>
+                            <label class="form-label">GAS API URL</label>
+                            <input type="text" id="api_url_input" class="form-input">
+                        </div>
+                        <div class="flex flex-wrap gap-3 mt-4">
+                            <button type="button" onclick="saveApiUrl()" class="px-5 py-2.5 bg-blue-50 text-blue-600 font-bold rounded-xl hover:bg-blue-100 transition-colors flex items-center text-sm">
+                                <i class="ph-bold ph-floppy-disk mr-2"></i> Save API URL
+                            </button>
+                            <button type="button" onclick="testConnection()" class="px-5 py-2.5 bg-indigo-50 text-primary font-bold rounded-xl hover:bg-indigo-100 transition-colors flex items-center text-sm">
+                                <i class="ph-bold ph-plugs mr-2"></i> Test API Connection
+                            </button>
+                            <button type="button" onclick="resetApiUrl()" class="px-5 py-2.5 bg-red-50 text-red-600 font-bold rounded-xl hover:bg-red-100 transition-colors flex items-center text-sm">
+                                <i class="ph-bold ph-arrow-counter-clockwise mr-2"></i> Reset Default API
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Module Views -->
+                <div id="view-showcase" class="view-section hidden max-w-6xl mx-auto animate-fade-in">
+                    <div class="flex justify-between items-end mb-6">
+                        <div><h2 class="text-2xl font-black text-textMain">Showcase Manager</h2><p class="text-sm text-gray-500">Kelola gambar/portfolio.</p></div>
+                        <button onclick="openModal('showcase', 'create')" class="bg-[#6C63FF] hover:bg-[#5B54E8] text-[#FFFFFF] px-5 py-2.5 rounded-xl font-bold text-sm flex items-center shadow-md transition-colors"><i class="ph-bold ph-plus mr-2"></i> Add New</button>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
+                        <table class="data-table w-full whitespace-nowrap">
+                            <thead></thead>
+                            <tbody id="tbody-showcase"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="view-pricing" class="view-section hidden max-w-6xl mx-auto animate-fade-in">
+                    <div class="flex justify-between items-end mb-6">
+                        <div><h2 class="text-2xl font-black text-textMain">Pricing Manager</h2><p class="text-sm text-gray-500">Kelola paket harga.</p></div>
+                        <button onclick="openModal('pricing', 'create')" class="bg-[#6C63FF] hover:bg-[#5B54E8] text-[#FFFFFF] px-5 py-2.5 rounded-xl font-bold text-sm flex items-center shadow-md transition-colors"><i class="ph-bold ph-plus mr-2"></i> Add New</button>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
+                        <table class="data-table w-full whitespace-nowrap">
+                            <thead></thead>
+                            <tbody id="tbody-pricing"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="view-pricing_features" class="view-section hidden max-w-6xl mx-auto animate-fade-in">
+                    <div class="flex justify-between items-end mb-6">
+                        <div><h2 class="text-2xl font-black text-textMain">Pricing Features</h2><p class="text-sm text-gray-500">Kelola detail fitur dari setiap paket harga.</p></div>
+                        <button onclick="openModal('pricing_features', 'create')" class="bg-[#6C63FF] hover:bg-[#5B54E8] text-[#FFFFFF] px-5 py-2.5 rounded-xl font-bold text-sm flex items-center shadow-md transition-colors"><i class="ph-bold ph-plus mr-2"></i> Add New</button>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
+                        <table class="data-table w-full whitespace-nowrap">
+                            <thead></thead>
+                            <tbody id="tbody-pricing_features"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="view-faq" class="view-section hidden max-w-6xl mx-auto animate-fade-in">
+                    <div class="flex justify-between items-end mb-6">
+                        <div><h2 class="text-2xl font-black text-textMain">FAQ Manager</h2><p class="text-sm text-gray-500">Kelola pertanyaan umum.</p></div>
+                        <button onclick="openModal('faq', 'create')" class="bg-[#6C63FF] hover:bg-[#5B54E8] text-[#FFFFFF] px-5 py-2.5 rounded-xl font-bold text-sm flex items-center shadow-md transition-colors"><i class="ph-bold ph-plus mr-2"></i> Add New</button>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
+                        <table class="data-table w-full whitespace-nowrap">
+                            <thead></thead>
+                            <tbody id="tbody-faq"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="view-testimonial" class="view-section hidden max-w-6xl mx-auto animate-fade-in">
+                    <div class="flex justify-between items-end mb-6">
+                        <div><h2 class="text-2xl font-black text-textMain">Testimonial Manager</h2><p class="text-sm text-gray-500">Kelola review klien.</p></div>
+                        <button onclick="openModal('testimonial', 'create')" class="bg-[#6C63FF] hover:bg-[#5B54E8] text-[#FFFFFF] px-5 py-2.5 rounded-xl font-bold text-sm flex items-center shadow-md transition-colors"><i class="ph-bold ph-plus mr-2"></i> Add New</button>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
+                        <table class="data-table w-full whitespace-nowrap">
+                            <thead></thead>
+                            <tbody id="tbody-testimonial"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="view-blog" class="view-section hidden max-w-6xl mx-auto animate-fade-in">
+                    <div class="flex justify-between items-end mb-6">
+                        <div><h2 class="text-2xl font-black text-textMain">Blog Manager</h2><p class="text-sm text-gray-500">Kelola artikel blog/berita.</p></div>
+                        <button onclick="openModal('blog', 'create')" class="bg-[#6C63FF] hover:bg-[#5B54E8] text-[#FFFFFF] px-5 py-2.5 rounded-xl font-bold text-sm flex items-center shadow-md transition-colors"><i class="ph-bold ph-plus mr-2"></i> Add New</button>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
+                        <table class="data-table w-full whitespace-nowrap">
+                            <thead></thead>
+                            <tbody id="tbody-blog"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="view-social" class="view-section hidden max-w-6xl mx-auto animate-fade-in">
+                    <div class="flex justify-between items-end mb-6">
+                        <div><h2 class="text-2xl font-black text-textMain">Social Media Links</h2><p class="text-sm text-gray-500">Kelola link sosial media.</p></div>
+                        <button onclick="openModal('social', 'create')" class="bg-[#6C63FF] hover:bg-[#5B54E8] text-[#FFFFFF] px-5 py-2.5 rounded-xl font-bold text-sm flex items-center shadow-md transition-colors"><i class="ph-bold ph-plus mr-2"></i> Add New</button>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
+                        <table class="data-table w-full whitespace-nowrap">
+                            <thead></thead>
+                            <tbody id="tbody-social"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="view-leads" class="view-section hidden max-w-6xl mx-auto animate-fade-in">
+                    <div class="flex justify-between items-end mb-6">
+                        <div><h2 class="text-2xl font-black text-textMain">Lead Manager</h2><p class="text-sm text-gray-500">Data prospek/klien.</p></div>
+                        <div class="flex space-x-2">
+                            <button onclick="exportLeadsCSV()" class="bg-green-50 hover:bg-green-100 text-green-600 px-4 py-2.5 rounded-xl font-bold text-sm flex items-center transition-colors"><i class="ph-bold ph-download-simple mr-2"></i> Export CSV</button>
+                            <button onclick="loadDashboard()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2.5 rounded-xl font-bold text-sm flex items-center transition-colors"><i class="ph-bold ph-arrows-clockwise mr-2"></i> Sync Leads</button>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
+                        <table class="data-table w-full whitespace-nowrap">
+                            <thead></thead>
+                            <tbody id="tbody-leads"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="view-users" class="view-section hidden max-w-6xl mx-auto animate-fade-in">
+                    <div class="flex justify-between items-end mb-6">
+                        <div><h2 class="text-2xl font-black text-textMain">System Users</h2><p class="text-sm text-gray-500">Kelola hak akses admin/editor.</p></div>
+                        <button onclick="openModal('users', 'create')" class="bg-[#6C63FF] hover:bg-[#5B54E8] text-[#FFFFFF] px-5 py-2.5 rounded-xl font-bold text-sm flex items-center shadow-md transition-colors"><i class="ph-bold ph-plus mr-2"></i> Add New</button>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
+                        <table class="data-table w-full whitespace-nowrap">
+                            <thead></thead>
+                            <tbody id="tbody-users"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- MAIN FORM MODAL -->
+    <div id="modal-form-overlay" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-50 hidden flex justify-center items-start sm:items-center p-4 overflow-y-auto pt-20 sm:pt-4">
+        <div id="modal-form-content" class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300">
+            <div class="px-8 py-5 border-b border-gray-100 flex justify-between items-center bg-surface">
+                <h3 id="modal-title" class="text-xl font-black text-textMain">Add/Edit Data</h3>
+                <button onclick="closeModal('form')" class="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center hover:bg-red-100 hover:text-red-500 transition-colors"><i class="ph-bold ph-x"></i></button>
+            </div>
+            <div class="p-8 max-h-[70vh] overflow-y-auto">
+                <form id="dynamic-form" class="space-y-5">
+                    <!-- Injected by CMS Engine -->
+                </form>
+            </div>
+            <div class="px-8 py-5 border-t border-gray-100 bg-gray-50 flex justify-end space-x-3">
+                <button type="button" onclick="closeModal('form')" class="px-5 py-2 rounded-xl text-sm font-bold text-gray-600 bg-white border border-gray-200 hover:bg-gray-100 transition-colors">Close</button>
+                <button type="button" id="btn-submit-form" onclick="submitForm()" class="px-5 py-2 rounded-xl text-sm font-bold text-[#FFFFFF] bg-[#6C63FF] hover:bg-[#5B54E8] shadow-md transition-colors flex items-center">
+                    <span id="btn-submit-text">Save Changes</span>
+                    <div id="btn-submit-spinner" class="spinner ml-2 hidden w-4 h-4 border-2"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MY PROFILE MODAL -->
+    <div id="modal-profile-overlay" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-50 hidden flex justify-center items-center p-4">
+        <div id="modal-profile-content" class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300">
+            <div class="px-8 py-5 border-b border-gray-100 flex justify-between items-center bg-surface">
+                <h3 class="text-xl font-black text-textMain flex items-center"><i class="ph-bold ph-user-circle mr-2 text-primary"></i> My Profile</h3>
+                <button onclick="closeModal('profile')" class="text-gray-400 hover:text-red-500 transition-colors"><i class="ph-bold ph-x text-xl"></i></button>
+            </div>
+            <div class="p-8">
+                <form id="form-profile" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Username</label>
+                            <input type="text" id="profile-username" class="form-input bg-gray-100 cursor-not-allowed font-medium text-gray-500" readonly>
+                        </div>
+                        <div>
+                            <label class="form-label">Role</label>
+                            <input type="text" id="profile-role" class="form-input bg-gray-100 cursor-not-allowed font-medium capitalize text-gray-500" readonly>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" id="profile-fullname" name="full_name" class="form-input" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Email Address</label>
+                        <input type="email" id="profile-email" name="email" class="form-input">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 border-t border-gray-100 pt-4 mt-2">
+                        <div>
+                            <label class="form-label">Account Status</label>
+                            <input type="text" id="profile-status" class="form-input bg-gray-100 cursor-not-allowed text-xs font-bold text-gray-500" readonly>
+                        </div>
+                        <div>
+                            <label class="form-label">Created At</label>
+                            <input type="text" id="profile-createdat" class="form-input bg-gray-100 cursor-not-allowed text-xs text-gray-500" readonly>
+                        </div>
+                        <div class="col-span-2">
+                            <label class="form-label">Last Login</label>
+                            <input type="text" id="profile-lastlogin" class="form-input bg-gray-100 cursor-not-allowed text-xs text-gray-500" readonly>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="px-8 py-5 border-t border-gray-100 bg-gray-50 flex justify-end space-x-3">
+                <button type="button" onclick="closeModal('profile')" class="px-5 py-2.5 rounded-xl text-sm font-bold text-gray-600 bg-white border border-gray-200 hover:bg-gray-100 transition-colors">Cancel</button>
+                <button type="button" onclick="saveProfile()" id="btn-save-profile" class="px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-[#6C63FF] hover:bg-[#5B54E8] shadow-md transition-colors flex items-center">
+                    <span id="text-save-profile">Save Profile</span>
+                    <div id="spinner-save-profile" class="spinner ml-2 hidden w-4 h-4 border-2"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHANGE PASSWORD MODAL -->
+    <div id="modal-changepass-overlay" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-50 hidden flex justify-center items-center p-4">
+        <div id="modal-changepass-content" class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300">
+            <div class="px-8 py-5 border-b border-gray-100 flex justify-between items-center bg-surface">
+                <h3 class="text-xl font-black text-textMain flex items-center"><i class="ph-bold ph-key mr-2 text-primary"></i> Security</h3>
+                <button onclick="closeModal('changepass')" class="text-gray-400 hover:text-red-500 transition-colors"><i class="ph-bold ph-x text-xl"></i></button>
+            </div>
+            <div class="p-8">
+                <form id="form-changepass" class="space-y-5">
+                    <div>
+                        <label class="form-label">Current Password *</label>
+                        <div class="relative">
+                            <input type="password" id="cp-current" name="current_password" class="form-input pr-10" required>
+                            <button type="button" onclick="togglePasswordVisibility('cp-current')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary"><i class="ph ph-eye text-lg" id="icon-cp-current"></i></button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-label">New Password *</label>
+                        <div class="relative">
+                            <input type="password" id="cp-new" name="new_password" class="form-input pr-10" required oninput="checkPasswordStrength(this.value, 'cp-new')">
+                            <button type="button" onclick="togglePasswordVisibility('cp-new')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary"><i class="ph ph-eye text-lg" id="icon-cp-new"></i></button>
+                        </div>
+                        <div class="mt-2">
+                            <div class="flex justify-between items-center mb-1"><span class="text-[10px] font-bold text-gray-400 uppercase">Strength</span><span id="strength-text-cp-new" class="text-[10px] font-bold text-gray-400">None</span></div>
+                            <div class="w-full bg-gray-200 rounded-full h-1.5"><div id="strength-bar-cp-new" class="bg-gray-300 h-1.5 rounded-full" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-label">Confirm New Password *</label>
+                        <div class="relative">
+                            <input type="password" id="cp-confirm" name="confirm_password" class="form-input pr-10" required>
+                            <button type="button" onclick="togglePasswordVisibility('cp-confirm')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary"><i class="ph ph-eye text-lg" id="icon-cp-confirm"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="px-8 py-5 border-t border-gray-100 bg-gray-50 flex flex-col space-y-2">
+                <button type="button" onclick="saveChangePassword()" id="btn-save-pass" class="w-full py-3 rounded-xl text-sm font-bold text-white bg-red-500 hover:bg-red-600 shadow-md transition-colors flex justify-center items-center">
+                    <span id="text-save-pass">Update Password</span>
+                    <div id="spinner-save-pass" class="spinner ml-2 hidden w-4 h-4 border-2"></div>
+                </button>
+                <button type="button" onclick="closeModal('changepass')" class="w-full py-3 rounded-xl text-sm font-bold text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DELETE CONFIRM MODAL -->
+    <div id="modal-confirm-overlay" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-50 hidden flex justify-center items-center p-4">
+        <div id="modal-confirm-content" class="bg-white w-full max-w-sm rounded-3xl shadow-2xl p-8 text-center transform scale-95 opacity-0 transition-all duration-300">
+            <div class="w-16 h-16 rounded-full bg-red-100 text-red-500 flex items-center justify-center text-4xl mx-auto mb-4"><i class="ph-fill ph-warning-circle"></i></div>
+            <h3 class="text-xl font-black text-textMain mb-2">Delete Confirmation</h3>
+            <p class="text-sm text-gray-500 mb-8">Apakah Anda yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan.</p>
+            <div class="flex justify-center space-x-3">
+                <button onclick="closeModal('confirm')" class="flex-1 px-4 py-3 rounded-xl font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors">Cancel</button>
+                <button onclick="executeDelete()" id="btn-confirm-delete" class="flex-1 px-4 py-3 rounded-xl font-bold text-white bg-red-500 hover:bg-red-600 shadow-md transition-colors flex items-center justify-center">
+                    <span id="btn-delete-text">Yes, Delete</span>
+                    <div id="btn-delete-spinner" class="spinner ml-2 hidden w-4 h-4 border-2"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[60] flex flex-col gap-3 pointer-events-none"></div>
+
+    <script>
+        const DEFAULT_API_URL = "https://script.google.com/macros/s/AKfycbzCO6NQTMJ7rdou9L2R5n9tflBZQz8XMZ_qrZBaQ5HA_6ZsmWYUf0bpfOizTR3yG5U81w/exec";
+        if (!localStorage.getItem('gasora_api_url')) {
+            localStorage.setItem('gasora_api_url', DEFAULT_API_URL);
+        }
+        let API_URL = localStorage.getItem('gasora_api_url') || DEFAULT_API_URL;
+
+        window.GASORA_DATA = {};
+        let CURRENT_MODAL_STATE = { module: null, action: null, id: null };
+
+        // =====================================================================
+        // SECURITY & PASSWORD ENGINE
+        // =====================================================================
+        function togglePasswordVisibility(inputId) {
+            const el = document.getElementById(inputId);
+            const icon = document.getElementById('icon-' + inputId) || document.querySelector(`#${inputId} ~ button i`);
+            if (el.type === 'password') {
+                el.type = 'text';
+                if(icon) icon.className = 'ph ph-eye-slash text-lg';
+            } else {
+                el.type = 'password';
+                if(icon) icon.className = 'ph ph-eye text-lg';
+            }
+        }
+
+        function checkPasswordStrength(val, fieldName) {
+            let strength = 0;
+            if (val.length >= 8) strength += 1;
+            if (/[A-Z]/.test(val)) strength += 1;
+            if (/[a-z]/.test(val)) strength += 1;
+            if (/[0-9]/.test(val)) strength += 1;
+            if (/[^A-Za-z0-9]/.test(val)) strength += 1;
+
+            const bar = document.getElementById(`strength-bar-${fieldName}`);
+            const text = document.getElementById(`strength-text-${fieldName}`);
+            if(!bar || !text) return;
+            
+            if (val.length === 0) {
+                bar.style.width = '0%';
+                bar.className = 'h-1.5 rounded-full bg-gray-300';
+                text.textContent = 'None';
+                text.className = 'text-[10px] font-bold text-gray-400';
+            } else if (val.length < 8) {
+                bar.style.width = '33%';
+                bar.className = 'h-1.5 rounded-full bg-red-500 transition-all';
+                text.textContent = 'Weak (Min 8 chars)';
+                text.className = 'text-[10px] font-bold text-red-500';
+            } else if (strength < 4) {
+                bar.style.width = '66%';
+                bar.className = 'h-1.5 rounded-full bg-yellow-500 transition-all';
+                text.textContent = 'Medium';
+                text.className = 'text-[10px] font-bold text-yellow-500';
+            } else {
+                bar.style.width = '100%';
+                bar.className = 'h-1.5 rounded-full bg-green-500 transition-all';
+                text.textContent = 'Strong';
+                text.className = 'text-[10px] font-bold text-green-500';
+            }
+        }
+
+        function toggleProfileDropdown(forceState = null) {
+            const dropdown = document.getElementById('profile-dropdown');
+            if (forceState === false || !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => dropdown.classList.add('hidden'), 200);
+            } else {
+                document.getElementById('dropdown-name').textContent = localStorage.getItem('gasora_user') || 'Admin User';
+                document.getElementById('dropdown-role').textContent = localStorage.getItem('gasora_role') || 'Role';
+                dropdown.classList.remove('hidden');
+                setTimeout(() => dropdown.classList.remove('opacity-0', 'scale-95'), 10);
+            }
+        }
+
+        const FORM_SCHEMAS = {
+            showcase: [
+                { name: 'category', label: 'Category', type: 'select', options: ['Property', 'Sales & CRM', 'Finance', 'HR & Workforce', 'Operations', 'Retail & Inventory', 'Education', 'Healthcare', 'Hospitality', 'Manufacturing', 'Logistics', 'Others'], default: 'Property', required: true },
+                { name: 'title', label: 'Title', type: 'text', required: true },
+                { name: 'short_description', label: 'Short Description', type: 'textarea' },
+                { name: 'description', label: 'Description', type: 'textarea' },
+                { name: 'thumbnail', label: 'Thumbnail URL', type: 'text', required: true },
+                { name: 'hero_image', label: 'Hero Image URL', type: 'text' },
+                { name: 'gallery_images', label: 'Gallery Images URL', type: 'text' },
+                { name: 'banner', label: 'Banner URL', type: 'text' },
+                { name: 'demo_url', label: 'Demo URL', type: 'text' },
+                { name: 'button_text', label: 'Button Text', type: 'text' },
+                { name: 'button_url', label: 'Button Link', type: 'text' },
+                { name: 'features', label: 'Features (Comma separated)', type: 'textarea' },
+                { name: 'badge', label: 'Badge', type: 'select', options: ['', 'NEW', 'HOT', 'POPULAR', 'BEST SELLER', 'LIMITED', 'FREE', 'AI READY', 'RECOMMENDED', 'TOP CHOICE'], default: '' },
+                { name: 'sort_order', label: 'Sort Order', type: 'number', default: 1 },
+                { name: 'status', label: 'Status', type: 'select', options: ['published', 'draft', 'archived'], default: 'published' }
+            ],
+            pricing: [
+                { name: 'package_id', label: 'Package ID', type: 'text', required: true },
+                { name: 'package_name', label: 'Package Name', type: 'text', required: true },
+                { name: 'price', label: 'Price (e.g. Rp 99.000)', type: 'text', required: true },
+                { name: 'description', label: 'Description', type: 'textarea' },
+                { name: 'button_text', label: 'Button Text', type: 'text', default: 'Pilih Paket' },
+                { name: 'button_link', label: 'Button Link', type: 'text' },
+                { name: 'badge', label: 'Badge', type: 'text' },
+                { name: 'color_theme', label: 'Color Theme', type: 'text' },
+                { name: 'featured', label: 'Is Featured', type: 'select', options: ['TRUE', 'FALSE'], default: 'FALSE' },
+                { name: 'sort_order', label: 'Sort Order', type: 'number', default: 1 },
+                { name: 'active', label: 'Status', type: 'select', options: ['TRUE', 'FALSE'], default: 'TRUE' }
+            ],
+            pricing_features: [
+                { name: 'feature', label: 'Feature Name', type: 'text', required: true },
+                { name: 'package_id', label: 'Package ID', type: 'text', required: true },
+                { name: 'sort_order', label: 'Sort Order', type: 'number', default: 1 }
+            ],
+            faq: [
+                { name: 'question', label: 'Question', type: 'text', required: true },
+                { name: 'answer', label: 'Answer', type: 'textarea', required: true },
+                { name: 'sort_order', label: 'Sort Order', type: 'number', default: 1 },
+                { name: 'active', label: 'Status', type: 'select', options: ['TRUE', 'FALSE'], default: 'TRUE' }
+            ],
+            testimonial: [
+                { name: 'name', label: 'Client Name', type: 'text', required: true },
+                { name: 'position', label: 'Position', type: 'text' },
+                { name: 'company', label: 'Company', type: 'text' },
+                { name: 'avatar_url', label: 'Avatar URL', type: 'text' },
+                { name: 'review', label: 'Review Text', type: 'textarea', required: true },
+                { name: 'rating', label: 'Rating (1-5)', type: 'number', default: 5 },
+                { name: 'sort_order', label: 'Sort Order', type: 'number', default: 1 },
+                { name: 'active', label: 'Status', type: 'select', options: ['TRUE', 'FALSE'], default: 'TRUE' }
+            ],
+            blog: [
+                { name: 'title', label: 'Article Title', type: 'text', required: true },
+                { name: 'slug', label: 'URL Slug', type: 'text', required: true },
+                { name: 'category', label: 'Category', type: 'text' },
+                { name: 'author', label: 'Author Name', type: 'text' },
+                { name: 'cover_image', label: 'Cover Image URL', type: 'text' },
+                { name: 'content', label: 'Content (HTML/Text)', type: 'textarea', required: true },
+                { name: 'status', label: 'Status', type: 'select', options: ['published', 'draft'], default: 'published' }
+            ],
+            social: [
+                { name: 'platform', label: 'Platform Name', type: 'text', required: true },
+                { name: 'url', label: 'Target URL', type: 'text', required: true },
+                { name: 'icon', label: 'Icon Class (e.g. ph-instagram-logo)', type: 'text', required: true },
+                { name: 'sort_order', label: 'Sort Order', type: 'number', default: 1 },
+                { name: 'status', label: 'Status', type: 'select', options: ['TRUE', 'FALSE'], default: 'TRUE' }
+            ],
+            leads: [
+                { name: 'name', label: 'Client Name', type: 'text', required: true },
+                { name: 'whatsapp', label: 'WhatsApp Number', type: 'text', required: true },
+                { name: 'email', label: 'Email Address', type: 'email' },
+                { name: 'company', label: 'Company Name', type: 'text' },
+                { name: 'service', label: 'Service Needed', type: 'text' },
+                { name: 'status', label: 'Status', type: 'select', options: ['NEW', 'FOLLOW UP', 'NEGOTIATION', 'WON', 'LOST'] },
+                { name: 'assigned_to', label: 'Assigned To', type: 'text' },
+                { name: 'notes', label: 'Internal Notes', type: 'textarea' }
+            ],
+            // PATCH Security v1.0 User Schema
+            users: [
+                { name: 'username', label: 'Username', type: 'text', required: true, readOnlyEdit: true },
+                { name: 'full_name', label: 'Full Name', type: 'text', required: true },
+                { name: 'email', label: 'Email', type: 'email' },
+                { name: 'role', label: 'Role', type: 'select', options: ['admin', 'editor'], default: 'editor' },
+                { name: 'status', label: 'Status', type: 'select', options: ['TRUE', 'FALSE'], default: 'TRUE' },
+                { name: 'password', label: 'Password', type: 'password', required: true, createOnly: true },
+                { name: 'confirm_password', label: 'Confirm Password', type: 'password', required: true, createOnly: true },
+                { name: 'reset_password', label: 'Reset Password (Leave blank to keep old)', type: 'password', editOnly: true },
+                { name: 'confirm_reset_password', label: 'Confirm Reset Password', type: 'password', editOnly: true }
+            ]
+        };
+
+        function getActionName(module, actionType) {
+            const map = {
+                'settings': { update: 'updateSettings' },
+                'showcase': { create: 'createShowcase', update: 'updateShowcase', delete: 'deleteShowcase' },
+                'pricing': { create: 'createPricing', update: 'updatePricing', delete: 'deletePricing' },
+                'pricing_features': { create: 'createPricingFeature', update: 'updatePricingFeature', delete: 'deletePricingFeature' },
+                'faq': { create: 'createFaq', update: 'updateFaq', delete: 'deleteFaq' },
+                'testimonial': { create: 'createTestimonial', update: 'updateTestimonial', delete: 'deleteTestimonial' },
+                'blog': { create: 'createBlog', update: 'updateBlog', delete: 'deleteBlog' },
+                'social': { create: 'createSocial', update: 'updateSocial', delete: 'deleteSocial' },
+                'leads': { create: 'createLead', update: 'updateLeadStatus', delete: 'deleteLead' },
+                'users': { create: 'createUser', update: 'updateUser', delete: 'deleteUser' },
+                'profile': { update: 'updateProfile' },
+                'password': { update: 'changePassword' }
+            };
+            return map[module] ? map[module][actionType] : null;
+        }
+
+        async function apiRequest(method, action, payloadObj = null) {
+            try {
+                let fetchOptions = { method: method };
+                
+                if (method === 'POST') {
+                    const finalPayload = { action: action, data: payloadObj || {} };
+                    
+                    if (payloadObj) {
+                        for (let k in payloadObj) {
+                            finalPayload[k] = payloadObj[k];
+                        }
+                    }
+
+                    fetchOptions.body = JSON.stringify(finalPayload);
+                    fetchOptions.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
+                }
+
+                const url = method === 'GET' ? `${API_URL}?action=${action}` : API_URL;
+                const response = await fetch(url, fetchOptions);
+                
+                if (!response.ok) throw new Error(`Network Error: ${response.status}`);
+                
+                const result = await response.json();
+                return result;
+            } catch (error) {
+                console.error("API Request Failed:", error);
+                return { success: false, message: "API Communication Failed", errors: [error.message] };
+            }
+        }
+
+        async function loadDashboard() {
+            toggleGlobalSpinner(true);
+            try {
+                const result = await apiRequest('GET', 'dashboard');
+                
+                if (result.success && result.data) {
+                    window.GASORA_DATA = result.data;
+                    renderSettingsForm();
+                    renderDashboardKpi();
+                    renderAllTables();
+                    updateStatusCards(true, true);
+                    document.getElementById('kpi-last-sync').textContent = getFormattedDate(new Date());
+                    showToast("Dashboard synchronized.", "success");
+                } else {
+                    throw new Error(result.message || "Failed to load dashboard data");
+                }
+            } catch (error) {
+                showToast(error.message, "error");
+                updateStatusCards(false, false);
+            } finally {
+                toggleGlobalSpinner(false);
+            }
+        }
+
+        async function testConnection() {
+            toggleGlobalSpinner(true);
+            try {
+                const response = await fetch(API_URL + "?action=health");
+                if (!response.ok) throw new Error("HTTP " + response.status);
+                const res = await response.json();
+
+                if (res.success) {
+                    showToast(`API Connected`, "success");
+                    updateStatusCards(true, true);
+                } else {
+                    throw new Error("Health check failed");
+                }
+            } catch (error) {
+                showToast("API Connection Failed", "error");
+                updateStatusCards(false, false);
+            } finally {
+                toggleGlobalSpinner(false);
+            }
+        }
+
+        function saveApiUrl() {
+            const input = document.getElementById('api_url_input');
+            let url = input.value.trim();
+            if (!url) {
+                showToast("API URL tidak boleh kosong.", "error");
+                return;
+            }
+            if (!url.startsWith('http')) {
+                showToast("API URL tidak valid.", "error");
+                return;
+            }
+            localStorage.setItem('gasora_api_url', url);
+            API_URL = url;
+            showToast("API URL berhasil diperbarui.", "success");
+        }
+
+        function resetApiUrl() {
+            localStorage.removeItem('gasora_api_url');
+            API_URL = DEFAULT_API_URL;
+            document.getElementById('api_url_input').value = API_URL;
+            showToast("API URL dikembalikan ke default.", "success");
+        }
+        
+        function refreshCache() {
+            loadDashboard();
+        }
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            
+            document.getElementById('login-error').classList.add('hidden');
+            document.getElementById('btn-login-text').classList.add('hidden');
+            document.getElementById('btn-login-spinner').classList.remove('hidden');
+            document.getElementById('btn-login').disabled = true;
+
+            const result = await apiRequest('POST', 'login', { username: u, password: p });
+            
+            if (result.success) {
+                localStorage.setItem('gasora_logged_in', 'true');
+                localStorage.setItem('gasora_user', result.data.full_name);
+                localStorage.setItem('gasora_role', result.data.role);
+                localStorage.setItem('gasora_last_login', result.data.last_login);
+                localStorage.setItem('gasora_username', result.data.username);
+                localStorage.setItem('gasora_user_id', result.data.id);
+                
+                checkAuthGuard();
+                document.getElementById('login-form').reset();
+            } else {
+                document.getElementById('login-error-text').textContent = (result.errors && result.errors[0]) || result.message || "Authentication Failed";
+                document.getElementById('login-error').classList.remove('hidden');
+            }
+
+            document.getElementById('btn-login-text').classList.remove('hidden');
+            document.getElementById('btn-login-spinner').classList.add('hidden');
+            document.getElementById('btn-login').disabled = false;
+        });
+
+        document.getElementById('btn-logout').addEventListener('click', executeLogout);
+        function executeLogout() {
+            localStorage.clear();
+            checkAuthGuard();
+            toggleProfileDropdown(false);
+        }
+
+        function checkAuthGuard() {
+            if (localStorage.getItem('gasora_logged_in') === 'true') {
+                document.getElementById('login-view').classList.add('hidden');
+                document.getElementById('dashboard-view').classList.remove('hidden');
+                
+                document.getElementById('topbar-name').textContent = localStorage.getItem('gasora_user') || 'Admin User';
+                document.getElementById('topbar-role').textContent = localStorage.getItem('gasora_role') || 'Admin';
+                
+                loadDashboard();
+            } else {
+                document.getElementById('login-view').classList.remove('hidden');
+                document.getElementById('dashboard-view').classList.add('hidden');
+            }
+        }
+
+        // =====================================================================
+        // CMS ENGINE v2.0 - DYNAMIC SCHEMA REGISTRY
+        // =====================================================================
+        const CMS_ENGINE = {
+            HIDDEN_FIELDS: ['password_hash', 'token', 'secret', 'deleted_at', 'session', 'refresh_token', 'access_token', 'api_key'], // PATCH: Never load password_hash from DB
+            IMAGE_FIELDS: ['thumbnail', 'hero_image', 'banner', 'gallery_images', 'avatar', 'avatar_url', 'logo', 'favicon', 'image', 'image_url', 'cover_image'],
+            TEXTAREA_FIELDS: ['description', 'answer', 'review', 'features', 'short_description', 'notes', 'excerpt'],
+            RICHTEXT_FIELDS: ['content'],
+            URL_FIELDS: ['button_link', 'button_url', 'demo_url', 'website', 'url'],
+            NUMBER_FIELDS: ['sort_order', 'rating'],
+            EMAIL_FIELDS: ['email'],
+            BOOLEAN_FIELDS: ['active', 'featured'],
+            
+            getSchema: function(module) {
+                if(FORM_SCHEMAS[module]) return FORM_SCHEMAS[module];
+                
+                const dataList = window.GASORA_DATA[module] || [];
+                let keys = [];
+                
+                if (dataList.length > 0) {
+                    const keySet = new Set();
+                    dataList.forEach(obj => Object.keys(obj).forEach(k => keySet.add(k)));
+                    keys = Array.from(keySet);
+                } else {
+                    keys = this.getFallbackKeys(module);
+                }
+
+                return keys.map(key => {
+                    let type = 'text';
+                    let options = null;
+                    let defaultVal = undefined;
+                    const lowerKey = key.toLowerCase();
+
+                    if (this.IMAGE_FIELDS.includes(lowerKey)) type = 'image';
+                    else if (this.RICHTEXT_FIELDS.includes(lowerKey) && module === 'blog') type = 'richtext';
+                    else if (this.TEXTAREA_FIELDS.includes(lowerKey)) type = 'textarea';
+                    else if (this.URL_FIELDS.includes(lowerKey)) type = 'url';
+                    else if (this.NUMBER_FIELDS.includes(lowerKey)) type = 'number';
+                    else if (this.EMAIL_FIELDS.includes(lowerKey)) type = 'email';
+                    else if (this.BOOLEAN_FIELDS.includes(lowerKey)) {
+                        type = 'select';
+                        options = ['TRUE', 'FALSE'];
+                        defaultVal = 'TRUE';
+                    }
+                    else if (lowerKey === 'status') {
+                        type = 'select';
+                        options = this.inferStatusOptions(module);
+                        if (options.includes('published')) defaultVal = 'published';
+                        else if (options.includes('TRUE')) defaultVal = 'TRUE';
+                    }
+
+                    return {
+                        name: key,
+                        label: key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                        type: type,
+                        options: options,
+                        default: defaultVal,
+                        hidden: this.HIDDEN_FIELDS.includes(lowerKey) || lowerKey === 'id' || lowerKey === 'package_id'
+                    };
+                });
+            },
+
+            inferStatusOptions: function(module) {
+                if (module === 'leads') return ['NEW', 'FOLLOW UP', 'NEGOTIATION', 'WON', 'LOST'];
+                if (module === 'blog') return ['published', 'draft'];
+                if (module === 'showcase') return ['published', 'draft', 'archived'];
+                return ['TRUE', 'FALSE'];
+            },
+            
+            getFallbackKeys: function(module) {
+                const fallbacks = {
+                    showcase: ['id','category','title','short_description','description','thumbnail','hero_image','gallery_images','status','banner','demo_url','button_text','button_url','features','badge','sort_order','active'],
+                    pricing: ['package_id','package_name','price','description','button_text','button_link','badge','color_theme','featured','sort_order','active'],
+                    pricing_features: ['id','feature','package_id','sort_order'],
+                    faq: ['id','question','answer','sort_order','active'],
+                    testimonial: ['id','name','position','company','avatar_url','review','rating','sort_order','active'],
+                    blog: ['id','slug','title','category','excerpt','content','cover_image','author','publish_date','status','featured','seo_title','seo_description','tags','sort_order'],
+                    social: ['id','platform','url','icon','sort_order','status'],
+                    leads: ['id','created_at','name','whatsapp','email','company','service','status','assigned_to','notes']
+                };
+                return fallbacks[module] || ['id', 'title', 'active'];
+            }
+        };
+
+        function getStatusBadge(val) {
+            if (val === undefined || val === null || val === '') return `<span class="px-2 py-1 rounded bg-gray-100 text-gray-500 text-[10px] font-bold uppercase">N/A</span>`;
+            const v = String(val).toUpperCase();
+            if (v === 'TRUE' || v === '1') {
+                return '<span class="px-2 py-1 rounded bg-green-50 text-green-600 text-[10px] font-bold uppercase">Active</span>';
+            } else if (v === 'FALSE' || v === '0') {
+                return '<span class="px-2 py-1 rounded bg-gray-100 text-gray-500 text-[10px] font-bold uppercase">Inactive</span>';
+            } else if (v === 'PUBLISHED') {
+                return '<span class="px-2 py-1 rounded bg-blue-50 text-blue-600 text-[10px] font-bold uppercase">Published</span>';
+            } else if (v === 'DRAFT') {
+                return '<span class="px-2 py-1 rounded bg-yellow-50 text-yellow-600 text-[10px] font-bold uppercase">Draft</span>';
+            } else if (v === 'ARCHIVED') {
+                return '<span class="px-2 py-1 rounded bg-gray-100 text-gray-500 text-[10px] font-bold uppercase">Archived</span>';
+            }
+            return `<span class="px-2 py-1 rounded bg-gray-100 text-gray-500 text-[10px] font-bold uppercase">${val}</span>`;
+        }
+
+        function renderDashboardKpi() {
+            const data = window.GASORA_DATA;
+            if (data.leads) document.getElementById('kpi-leads').textContent = data.leads.length;
+            if (data.showcase) document.getElementById('kpi-showcase').textContent = data.showcase.length;
+            if (data.pricing) document.getElementById('kpi-pricing').textContent = data.pricing.length;
+            if (data.faq) document.getElementById('kpi-faq').textContent = data.faq.length;
+            if (data.testimonial) document.getElementById('kpi-testimonial').textContent = data.testimonial.length;
+        }
+
+        function renderSettingsForm() {
+            const d = window.GASORA_DATA.settings || {};
+            const form = document.getElementById('form-settings');
+            const inputs = form.querySelectorAll('input, textarea');
+            inputs.forEach(inp => {
+                if (d[inp.name] !== undefined) inp.value = d[inp.name];
+            });
+        }
+
+        function updateStatusCards(apiOk, sheetOk) {
+            const apiStatusEl = document.getElementById('kpi-api-status');
+            const iconApiStatusEl = document.getElementById('icon-api-status');
+            if (apiOk) {
+                apiStatusEl.textContent = 'ONLINE';
+                apiStatusEl.className = 'text-xl font-black text-green-500 leading-none mt-1';
+                iconApiStatusEl.className = 'w-14 h-14 rounded-2xl bg-green-50 text-green-500 flex items-center justify-center text-3xl mr-4 flex-shrink-0';
+            } else {
+                apiStatusEl.textContent = 'OFFLINE';
+                apiStatusEl.className = 'text-xl font-black text-red-500 leading-none mt-1';
+                iconApiStatusEl.className = 'w-14 h-14 rounded-2xl bg-red-50 text-red-500 flex items-center justify-center text-3xl mr-4 flex-shrink-0';
+            }
+
+            const sheetStatusEl = document.getElementById('kpi-sheet-status');
+            const iconSheetStatusEl = document.getElementById('icon-sheet-status');
+            if (sheetOk) {
+                sheetStatusEl.textContent = 'CONNECTED';
+                sheetStatusEl.className = 'text-xl font-black text-blue-500 leading-none mt-1.5 tracking-tight';
+                if(iconSheetStatusEl) iconSheetStatusEl.className = 'w-14 h-14 rounded-2xl bg-blue-50 text-blue-500 flex items-center justify-center text-3xl mr-4 flex-shrink-0';
+            } else {
+                sheetStatusEl.textContent = 'ERROR';
+                sheetStatusEl.className = 'text-xl font-black text-red-500 leading-none mt-1.5 tracking-tight';
+                if(iconSheetStatusEl) iconSheetStatusEl.className = 'w-14 h-14 rounded-2xl bg-red-50 text-red-500 flex items-center justify-center text-3xl mr-4 flex-shrink-0';
+            }
+        }
+
+        // =====================================================================
+        // TABLE ENGINE
+        // =====================================================================
+        function renderAllTables() {
+            const modules = ['showcase', 'pricing', 'pricing_features', 'faq', 'testimonial', 'blog', 'social', 'leads', 'users'];
+            
+            modules.forEach(mod => {
+                const data = window.GASORA_DATA[mod] || [];
+                const schema = CMS_ENGINE.getSchema(mod);
+                const thead = document.querySelector(`#view-${mod} table thead`);
+                const tbody = document.getElementById(`tbody-${mod}`);
+                
+                if (!thead || !tbody) return;
+
+                let finalCols = [];
+
+                if (mod === 'users') {
+                    // PATCH 9: Explicit columns for Users Table
+                    finalCols = [
+                        schema.find(f => f.name === 'username'),
+                        schema.find(f => f.name === 'full_name'),
+                        schema.find(f => f.name === 'email'),
+                        schema.find(f => f.name === 'role'),
+                        {name: 'last_login', label: 'Last Login', type: 'text'},
+                        {name: 'created_at', label: 'Created At', type: 'text'},
+                        schema.find(f => f.name === 'status')
+                    ].filter(Boolean);
+                } else {
+                    let displayFields = schema.filter(f => !f.hidden && f.type !== 'textarea' && f.type !== 'richtext' && f.name !== 'gallery_images' && f.type !== 'password');
+                    let imgField = displayFields.find(f => f.type === 'image');
+                    let statusField = displayFields.find(f => f.name === 'status' || f.name === 'active');
+                    let otherFields = displayFields.filter(f => f !== imgField && f !== statusField).slice(0, 4);
+                    
+                    if (imgField) finalCols.push(imgField);
+                    finalCols = finalCols.concat(otherFields);
+                    if (statusField) finalCols.push(statusField);
+                }
+
+                thead.innerHTML = `<tr>
+                    ${finalCols.map(f => `<th ${f.type === 'image' ? 'class="w-16"' : ''}>${f.label}</th>`).join('')}
+                    <th class="text-right w-32">Action</th>
+                </tr>`;
+
+                const idField = mod === 'pricing' ? 'package_id' : 'id';
+                tbody.innerHTML = data.map(r => {
+                    let tr = `<tr>`;
+                    finalCols.forEach(f => {
+                        let val = r[f.name];
+                        if (val === undefined || val === null) val = '';
+                        
+                        if (f.type === 'image') {
+                            tr += `<td><img src="${val || 'https://placehold.co/100?text=IMG'}" class="w-12 h-12 rounded object-cover border" onerror="this.src='https://placehold.co/100?text=IMG'"></td>`;
+                        } else if (f.name === 'status' || f.name === 'active') {
+                            tr += `<td>${getStatusBadge(val)}</td>`;
+                        } else if (f.type === 'url') {
+                             tr += `<td class="truncate max-w-[150px]"><a href="${val}" target="_blank" class="text-blue-500 hover:underline">${val || '-'}</a></td>`;
+                        } else {
+                            let textVal = String(val);
+                            if (textVal.length > 50) textVal = textVal.substring(0, 50) + '...';
+                            
+                            let badgeHtml = '';
+                            if (mod === 'showcase' && (f.name === 'title' || f.name === 'name') && r.badge) {
+                                let badgeColor = 'bg-indigo-100 text-indigo-600';
+                                const b = String(r.badge).toUpperCase();
+                                if(b === 'HOT' || b === 'BEST SELLER') badgeColor = 'bg-red-100 text-red-600';
+                                else if(b === 'NEW' || b === 'FREE') badgeColor = 'bg-green-100 text-green-600';
+                                else if(b === 'AI READY' || b === 'TOP CHOICE' || b === 'RECOMMENDED') badgeColor = 'bg-purple-100 text-purple-600';
+                                else if(b === 'LIMITED') badgeColor = 'bg-orange-100 text-orange-600';
+                                else badgeColor = 'bg-blue-100 text-blue-600';
+                                
+                                badgeHtml = `<span class="ml-2 px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-wider ${badgeColor} inline-block align-middle mb-0.5">${r.badge}</span>`;
+                            }
+
+                            tr += `<td class="${f.name.includes('title') || f.name.includes('name') ? 'font-bold' : ''} truncate max-w-[200px]">${textVal || '-'}${badgeHtml}</td>`;
+                        }
+                    });
+
+                    // Action Column Builder
+                    let actions = `<div class="flex justify-end">`;
+                    if (mod === 'leads') {
+                        actions += `<button onclick="openWhatsApp('${r.whatsapp || ''}', '${(r.name || '').replace(/'/g, "\\'")}', '${(r.service || '').replace(/'/g, "\\'")}')" class="w-8 h-8 rounded bg-green-50 text-green-600 hover:bg-green-100 mr-1" title="WhatsApp Follow Up"><i class="ph-bold ph-whatsapp-logo"></i></button>`;
+                    }
+                    if (mod === 'users') {
+                        // PATCH: Reset Password button mapping directly to edit focus on reset password input
+                        actions += `<button onclick="openModal('${mod}', 'update', '${r[idField]}'); setTimeout(() => document.getElementById('input-reset_password').focus(), 300);" class="w-8 h-8 rounded bg-yellow-50 text-yellow-600 hover:bg-yellow-100 mr-1" title="Reset Password"><i class="ph-bold ph-key"></i></button>`;
+                    }
+                    actions += `
+                        <button onclick="openModal('${mod}', 'update', '${r[idField]}')" class="w-8 h-8 rounded bg-blue-50 text-blue-600 hover:bg-blue-100 mr-1" title="Edit"><i class="ph-bold ph-pencil-simple"></i></button>
+                        <button onclick="confirmDelete('${mod}', '${r[idField]}')" class="w-8 h-8 rounded bg-red-50 text-red-600 hover:bg-red-100" title="Delete"><i class="ph-bold ph-trash"></i></button>
+                    </div>`;
+                    tr += `<td class="text-right">${actions}</td></tr>`;
+                    return tr;
+                }).join('');
+            });
+        }
+
+        // =====================================================================
+        // RICH TEXT EDITOR NATIVE ENGINE
+        // =====================================================================
+        function execRichText(command, value = null) {
+            if (command === 'createLink') {
+                const url = prompt('Masukkan URL Link (contoh: https://example.com):');
+                if (url) {
+                    document.execCommand(command, false, url);
+                }
+            } else {
+                document.execCommand(command, false, value);
+            }
+            
+            const activeEditor = document.activeElement;
+            if (activeEditor && activeEditor.hasAttribute('contenteditable')) {
+                activeEditor.dispatchEvent(new Event('input'));
+            }
+        }
+
+        function initRichText(fieldName) {
+            const editor = document.getElementById(`editor-${fieldName}`);
+            const hidden = document.getElementById(`hidden-${fieldName}`);
+            const preview = document.getElementById(`preview-${fieldName}`);
+            if (!editor || !hidden) return;
+
+            editor.addEventListener('focus', () => { document.execCommand('defaultParagraphSeparator', false, 'p'); });
+            const syncContent = () => {
+                let html = editor.innerHTML;
+                html = html.replace(/ style="[^"]*"/gi, '');
+                html = html.replace(/ class="[^"]*"/gi, '');
+                html = html.replace(/<\/?font[^>]*>/gi, '');
+                html = html.replace(/<span[^>]*>/gi, '').replace(/<\/span>/gi, '');
+                html = html.replace(/<div[^>]*>/gi, '<p>').replace(/<\/div>/gi, '</p>');
+                html = html.replace(/<p><br><\/p>/gi, '');
+                html = html.replace(/<p>\s*<\/p>/gi, '');
+                html = html.replace(/<br>/gi, '<br />');
+                html = html.trim();
+                hidden.value = html;
+                if (preview) preview.innerHTML = html;
+            };
+
+            editor.addEventListener('input', syncContent);
+            editor.addEventListener('blur', syncContent);
+            editor.addEventListener('paste', (e) => {
+                e.preventDefault();
+                let text = (e.originalEvent || e).clipboardData.getData('text/plain');
+                document.execCommand('insertText', false, text);
+            });
+        }
+
+        // =====================================================================
+        // FORM GENERATOR ENGINE
+        // =====================================================================
+        function openModal(module, action, id = null) {
+            CURRENT_MODAL_STATE = { module, action, id };
+            const schema = CMS_ENGINE.getSchema(module);
+            
+            if (!schema || schema.length === 0) {
+                showToast(`No schema mapping available for module: ${module}`, "error");
+                return;
+            }
+
+            document.getElementById('modal-title').textContent = (action === 'create') ? `Add New ${module}` : `Edit ${module}`;
+            const form = document.getElementById('dynamic-form');
+            form.innerHTML = '';
+            document.getElementById('btn-submit-form').classList.remove('hidden');
+
+            let record = {};
+            const idField = module === 'pricing' ? 'package_id' : 'id';
+            if (action === 'update' && id && window.GASORA_DATA[module]) {
+                record = window.GASORA_DATA[module].find(r => String(r[idField]) === String(id)) || {};
+            }
+
+            schema.forEach(field => {
+                if (field.hidden) {
+                    if (field.name === 'id' || field.name === 'package_id') {
+                        form.innerHTML += `<input type="hidden" name="${field.name}" value="${record[field.name] || ''}">`;
+                    }
+                    return;
+                }
+
+                // PATCH Security 1.0 logic for rendering
+                if (field.createOnly && action !== 'create') return;
+                if (field.editOnly && action !== 'update') return;
+
+                let val = record[field.name];
+                
+                if (action === 'create' && field.default !== undefined) {
+                    val = field.default;
+                } else if (val === undefined || val === null) {
+                    val = '';
+                }
+
+                if (field.type === 'select') {
+                    if (val === true || val === 1 || String(val).toUpperCase() === 'TRUE') val = 'TRUE';
+                    if (val === false || val === 0 || String(val).toUpperCase() === 'FALSE') val = 'FALSE';
+                }
+                val = String(val);
+
+                // Ignore populating password values from existing record for security
+                if (field.type === 'password') val = ''; 
+
+                let reqAttr = (field.name === 'title' || field.name === 'name' || field.name === 'package_name' || field.name === 'thumbnail' || field.required) ? 'required' : '';
+                
+                // Readonly modifier for fields like Edit Username
+                let classModifier = 'form-input';
+                let extraAttr = '';
+                if (field.readOnlyEdit && action === 'update') {
+                    classModifier = 'form-input bg-gray-100 cursor-not-allowed text-gray-500';
+                    extraAttr = 'readonly';
+                }
+
+                let html = `<div><label class="form-label">${field.label}</label>`;
+                
+                if (field.type === 'richtext') {
+                    // ... (keep existing richtext logic)
+                    html += `
+                        <div class="border border-gray-200 rounded-xl overflow-hidden bg-white mt-1">
+                            <div class="bg-gray-50 border-b border-gray-200 p-2 flex flex-wrap gap-1.5 items-center">
+                                <button type="button" onclick="execRichText('bold')" class="editor-toolbar-btn" title="Bold"><i class="ph-bold ph-text-b"></i></button>
+                                <button type="button" onclick="execRichText('italic')" class="editor-toolbar-btn" title="Italic"><i class="ph-bold ph-text-italic"></i></button>
+                                <div class="w-px h-5 bg-gray-300 mx-1"></div>
+                                <button type="button" onclick="execRichText('formatBlock', 'H2')" class="editor-toolbar-btn" title="Heading 2"><span class="text-xs">H2</span></button>
+                                <button type="button" onclick="execRichText('formatBlock', 'H3')" class="editor-toolbar-btn" title="Heading 3"><span class="text-xs">H3</span></button>
+                                <div class="w-px h-5 bg-gray-300 mx-1"></div>
+                                <button type="button" onclick="execRichText('insertUnorderedList')" class="editor-toolbar-btn" title="Bullet List"><i class="ph-bold ph-list-bullets"></i></button>
+                                <button type="button" onclick="execRichText('insertOrderedList')" class="editor-toolbar-btn" title="Number List"><i class="ph-bold ph-list-numbers"></i></button>
+                                <button type="button" onclick="execRichText('formatBlock', 'BLOCKQUOTE')" class="editor-toolbar-btn" title="Quote"><i class="ph-bold ph-quotes"></i></button>
+                                <button type="button" onclick="execRichText('insertHorizontalRule')" class="editor-toolbar-btn" title="Horizontal Line"><i class="ph-bold ph-minus"></i></button>
+                                <div class="w-px h-5 bg-gray-300 mx-1"></div>
+                                <button type="button" onclick="execRichText('createLink')" class="editor-toolbar-btn" title="Link"><i class="ph-bold ph-link"></i></button>
+                                <div class="w-px h-5 bg-gray-300 mx-1"></div>
+                                <button type="button" onclick="execRichText('undo')" class="editor-toolbar-btn" title="Undo"><i class="ph-bold ph-arrow-u-up-left"></i></button>
+                                <button type="button" onclick="execRichText('redo')" class="editor-toolbar-btn" title="Redo"><i class="ph-bold ph-arrow-u-up-right"></i></button>
+                                <button type="button" onclick="execRichText('removeFormat')" class="editor-toolbar-btn" title="Clear Format"><i class="ph-bold ph-eraser"></i></button>
+                            </div>
+                            <div id="editor-${field.name}" contenteditable="true" class="editor-area p-4 min-h-[300px] outline-none prose max-w-none text-sm">${val}</div>
+                            <textarea name="${field.name}" id="hidden-${field.name}" class="hidden" ${reqAttr}>${val}</textarea>
+                        </div>
+                        <div class="mt-4 p-4 border border-indigo-100 rounded-xl bg-indigo-50/30">
+                            <label class="block text-[10px] font-bold text-primary uppercase tracking-widest mb-2"><i class="ph-fill ph-eye mr-1"></i> Live Preview</label>
+                            <div id="preview-${field.name}" class="prose max-w-none text-sm bg-white p-6 rounded-xl border border-white shadow-sm min-h-[100px]">${val}</div>
+                        </div>
+                    `;
+                } else if (field.type === 'textarea') {
+                    html += `<textarea name="${field.name}" rows="3" class="${classModifier}" ${extraAttr} ${reqAttr}>${val}</textarea>`;
+                } else if (field.type === 'select') {
+                    html += `<select name="${field.name}" class="${classModifier}" ${extraAttr} ${reqAttr}>`;
+                    if (field.options) {
+                        let currentOptions = [...field.options];
+                        if (val && !currentOptions.some(opt => String(opt).toUpperCase() === String(val).toUpperCase())) {
+                            currentOptions.unshift(val);
+                        }
+                        currentOptions.forEach(opt => {
+                            let optLabel = opt;
+                            if (opt === '') optLabel = '(Kosong)';
+                            else if (opt === 'TRUE') optLabel = 'Active';
+                            else if (opt === 'FALSE') optLabel = 'Inactive';
+                            else if (opt === 'published') optLabel = 'Published';
+                            else if (opt === 'draft') optLabel = 'Draft';
+                            else if (opt === 'archived') optLabel = 'Archived';
+                            
+                            const isSelected = (val.toUpperCase() === String(opt).toUpperCase()) ? 'selected' : '';
+                            html += `<option value="${opt}" ${isSelected} class="capitalize">${optLabel}</option>`;
+                        });
+                    }
+                    html += `</select>`;
+                } else if (field.type === 'image') {
+                    html += `<input type="url" name="${field.name}" value="${val}" class="${classModifier}" ${extraAttr} ${reqAttr} oninput="document.getElementById('preview-${field.name}').src = this.value || 'https://placehold.co/400x200?text=No+Image'">`;
+                    html += `<div class="mt-2 p-2 bg-gray-50 rounded-xl border border-gray-100"><img id="preview-${field.name}" src="${val || 'https://placehold.co/400x200?text=Preview'}" class="w-full max-h-32 object-contain rounded" onerror="this.src='https://placehold.co/400x200?text=No+Image'"></div>`;
+                } else if (field.type === 'password') {
+                    // PATCH: Add Show/Hide and Password Strength meter
+                    html += `
+                        <div class="relative">
+                            <input type="password" id="input-${field.name}" name="${field.name}" value="" class="${classModifier} pr-10" ${extraAttr} ${reqAttr} oninput="checkPasswordStrength(this.value, '${field.name}')">
+                            <button type="button" onclick="togglePasswordVisibility('input-${field.name}')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary"><i class="ph ph-eye text-lg" id="icon-input-${field.name}"></i></button>
+                        </div>
+                    `;
+                    if (field.name === 'password' || field.name === 'reset_password') {
+                        html += `
+                            <div class="mt-2">
+                                <div class="flex justify-between items-center mb-1"><span class="text-[10px] font-bold text-gray-400 uppercase">Strength</span><span id="strength-text-${field.name}" class="text-[10px] font-bold text-gray-400">None</span></div>
+                                <div class="w-full bg-gray-200 rounded-full h-1.5"><div id="strength-bar-${field.name}" class="bg-gray-300 h-1.5 rounded-full" style="width: 0%"></div></div>
+                            </div>
+                        `;
+                    }
+                } else {
+                    let inputType = field.type;
+                    html += `<input type="${inputType}" name="${field.name}" value="${val}" class="${classModifier}" ${extraAttr} ${reqAttr}>`;
+                }
+                
+                html += `</div>`;
+                form.innerHTML += html;
+            });
+
+            const overlay = document.getElementById('modal-form-overlay');
+            const content = document.getElementById('modal-form-content');
+            overlay.classList.remove('hidden');
+            
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                schema.forEach(field => {
+                    if (field.type === 'richtext') initRichText(field.name);
+                });
+            }, 10);
+        }
+
+        // =====================================================================
+        // MY PROFILE & CHANGE PASSWORD ENGINE (PATCH)
+        // =====================================================================
+        function openProfileModal() {
+            const userId = localStorage.getItem('gasora_user_id');
+            const data = window.GASORA_DATA.users || [];
+            const user = data.find(u => String(u.id) === String(userId)) || {};
+            
+            document.getElementById('profile-username').value = user.username || '';
+            document.getElementById('profile-fullname').value = user.full_name || '';
+            document.getElementById('profile-email').value = user.email || '';
+            document.getElementById('profile-role').value = user.role || '';
+            document.getElementById('profile-status').value = user.status || '';
+            document.getElementById('profile-lastlogin').value = user.last_login || '';
+            document.getElementById('profile-createdat').value = user.created_at || '';
+            
+            document.getElementById('modal-profile-overlay').classList.remove('hidden');
+            setTimeout(() => document.getElementById('modal-profile-content').classList.remove('scale-95', 'opacity-0'), 10);
+        }
+
+        async function saveProfile() {
+            const form = document.getElementById('form-profile');
+            if(!form.checkValidity()) { form.reportValidity(); return; }
+
+            const payload = {
+                id: localStorage.getItem('gasora_user_id'),
+                full_name: document.getElementById('profile-fullname').value,
+                email: document.getElementById('profile-email').value
+            };
+
+            const btnText = document.getElementById('text-save-profile');
+            const btnSpinner = document.getElementById('spinner-save-profile');
+            const btn = document.getElementById('btn-save-profile');
+            btn.disabled = true; btnText.textContent = "Saving..."; btnSpinner.classList.remove('hidden');
+
+            try {
+                const res = await apiRequest('POST', 'updateProfile', payload);
+                if (res.success) {
+                    showToast("Profile updated successfully", "success");
+                    localStorage.setItem('gasora_user', payload.full_name);
+                    document.getElementById('topbar-name').textContent = payload.full_name;
+                    closeModal('profile');
+                    await loadDashboard();
+                } else {
+                    throw new Error((res.errors && res.errors[0]) || res.message || "Failed to update profile");
+                }
+            } catch (error) {
+                showToast(error.message, "error");
+            } finally {
+                btn.disabled = false; btnText.textContent = "Save Profile"; btnSpinner.classList.add('hidden');
+            }
+        }
+
+        function openChangePasswordModal() {
+            document.getElementById('form-changepass').reset();
+            checkPasswordStrength('', 'cp-new');
+            document.getElementById('modal-changepass-overlay').classList.remove('hidden');
+            setTimeout(() => document.getElementById('modal-changepass-content').classList.remove('scale-95', 'opacity-0'), 10);
+        }
+
+        async function saveChangePassword() {
+            const form = document.getElementById('form-changepass');
+            if(!form.checkValidity()) { form.reportValidity(); return; }
+
+            const cpCurrent = document.getElementById('cp-current').value;
+            const cpNew = document.getElementById('cp-new').value;
+            const cpConfirm = document.getElementById('cp-confirm').value;
+
+            if (cpNew.length < 8) { showToast("Password baru minimal 8 karakter", "error"); return; }
+            if (cpNew !== cpConfirm) { showToast("Konfirmasi password tidak cocok", "error"); return; }
+            if (cpCurrent === cpNew) { showToast("Password baru tidak boleh sama dengan password lama", "error"); return; }
+
+            const payload = {
+                id: localStorage.getItem('gasora_user_id'),
+                current_password: cpCurrent,
+                new_password: cpNew
+            };
+
+            const btnText = document.getElementById('text-save-pass');
+            const btnSpinner = document.getElementById('spinner-save-pass');
+            const btn = document.getElementById('btn-save-pass');
+            btn.disabled = true; btnText.textContent = "Updating..."; btnSpinner.classList.remove('hidden');
+
+            try {
+                const res = await apiRequest('POST', 'changePassword', payload);
+                if (res.success) {
+                    showToast("Password updated successfully. Please login again.", "success");
+                    closeModal('changepass');
+                    setTimeout(() => executeLogout(), 1500); // Logout after change password
+                } else {
+                    throw new Error((res.errors && res.errors[0]) || res.message || "Failed to change password");
+                }
+            } catch (error) {
+                showToast(error.message, "error");
+            } finally {
+                btn.disabled = false; btnText.textContent = "Update Password"; btnSpinner.classList.add('hidden');
+            }
+        }
+
+        function closeModal(type) {
+            const overlay = document.getElementById(`modal-${type}-overlay`);
+            const content = document.getElementById(`modal-${type}-content`);
+            if(content) content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => { if(overlay) overlay.classList.add('hidden'); }, 300);
+            CURRENT_MODAL_STATE = { module: null, action: null, id: null };
+        }
+        
+        // =====================================================================
+        // SERIALIZER ENGINE
+        // =====================================================================
+        function serializePayloadDynamic(module, action, id, formData) {
+            const schema = CMS_ENGINE.getSchema(module);
+            let existingRecord = {};
+            
+            const idField = module === 'pricing' ? 'package_id' : 'id';
+            if (action === 'update' && id && window.GASORA_DATA[module]) {
+                existingRecord = window.GASORA_DATA[module].find(r => String(r[idField]) === String(id)) || {};
+            }
+
+            const payload = { ...existingRecord };
+            
+            // SECURITY PATCH: Never echo back password_hash
+            delete payload.password_hash;
+            delete payload.password; // clean state
+
+            schema.forEach(field => {
+                if (formData.has(field.name)) {
+                    payload[field.name] = formData.get(field.name);
+                }
+            });
+
+            // Security 1.0 Password Logic
+            if (module === 'users') {
+                if (action === 'create') {
+                    delete payload.confirm_password; // Dont send confirm to backend
+                } else if (action === 'update') {
+                    if (payload.reset_password && payload.reset_password.trim() !== '') {
+                        payload.password = payload.reset_password; // Remap reset to password key for backend
+                    }
+                    delete payload.reset_password;
+                    delete payload.confirm_reset_password;
+                }
+            }
+
+            if (action === 'update') {
+                payload[idField] = id;
+            }
+
+            if (module === 'showcase' && payload.status) {
+                payload.active = payload.status === 'published' ? 'TRUE' : 'FALSE';
+            }
+
+            return payload;
+        }
+
+        // =====================================================================
+        // SAVE ENGINE
+        // =====================================================================
+        async function submitForm() {
+            const form = document.getElementById('dynamic-form');
+            if(!form.checkValidity()) { form.reportValidity(); return; }
+
+            const formData = new FormData(form);
+            
+            // PATCH Security User Validation
+            if (CURRENT_MODAL_STATE.module === 'users') {
+                if (CURRENT_MODAL_STATE.action === 'create') {
+                    const pass = formData.get('password');
+                    const conf = formData.get('confirm_password');
+                    if (pass.length < 8) { showToast("Password minimal 8 karakter", "error"); return; }
+                    if (pass !== conf) { showToast("Password dan Konfirmasi tidak sama", "error"); return; }
+                } else if (CURRENT_MODAL_STATE.action === 'update') {
+                    const reset = formData.get('reset_password');
+                    const confReset = formData.get('confirm_reset_password');
+                    if (reset && reset.trim() !== '') {
+                        if (reset.length < 8) { showToast("Password baru minimal 8 karakter", "error"); return; }
+                        if (reset !== confReset) { showToast("Password baru dan Konfirmasi tidak sama", "error"); return; }
+                    }
+                }
+            }
+
+            // Validation for dropdowns
+            const schema = CMS_ENGINE.getSchema(CURRENT_MODAL_STATE.module);
+            for (let field of schema) {
+                if (field.type === 'select' && field.options) {
+                    const val = formData.get(field.name);
+                    let validOptions = [...field.options];
+                    
+                    if (CURRENT_MODAL_STATE.action === 'update' && CURRENT_MODAL_STATE.id) {
+                        const idField = CURRENT_MODAL_STATE.module === 'pricing' ? 'package_id' : 'id';
+                        const existingRecord = (window.GASORA_DATA[CURRENT_MODAL_STATE.module] || []).find(r => String(r[idField]) === String(CURRENT_MODAL_STATE.id)) || {};
+                        if (existingRecord[field.name]) {
+                            validOptions.push(String(existingRecord[field.name]));
+                        }
+                    }
+
+                    if (val !== null && val !== undefined) {
+                        const isValid = validOptions.some(opt => String(opt).toUpperCase() === String(val).toUpperCase());
+                        if (!isValid) {
+                            showToast(`Nilai tidak valid untuk field ${field.label}.`, "error");
+                            return;
+                        }
+                    }
+                }
+            }
+
+            const payload = serializePayloadDynamic(CURRENT_MODAL_STATE.module, CURRENT_MODAL_STATE.action, CURRENT_MODAL_STATE.id, formData);
+
+            const btnFormSubmit = document.getElementById('btn-submit-form');
+            const btnText = document.getElementById('btn-submit-text');
+            const btnSpinner = document.getElementById('btn-submit-spinner');
+            
+            btnText.textContent = 'Saving...'; 
+            btnSpinner.classList.remove('hidden');
+            btnFormSubmit.disabled = true;
+
+            const actionName = getActionName(CURRENT_MODAL_STATE.module, CURRENT_MODAL_STATE.action);
+            
+            if (!actionName) {
+                showToast("Action mapping not found.", "error");
+                btnText.textContent = 'Save Changes'; 
+                btnSpinner.classList.add('hidden');
+                btnFormSubmit.disabled = false;
+                return;
+            }
+
+            try {
+                const res = await apiRequest('POST', actionName, payload);
+                if (res.success) {
+                    showToast(res.message || "Data saved successfully", "success");
+                    closeModal('form');
+                    await loadDashboard(); 
+                } else {
+                    throw new Error((res.errors && res.errors[0]) || res.message || "Failed to save data");
+                }
+            } catch (error) {
+                showToast(error.message, "error");
+            } finally {
+                btnText.textContent = 'Save Changes'; 
+                btnSpinner.classList.add('hidden');
+                btnFormSubmit.disabled = false;
+            }
+        }
+
+        async function saveSettings() {
+            const form = document.getElementById('form-settings');
+            const formData = new FormData(form);
+            const payload = Object.fromEntries(formData.entries());
+
+            toggleGlobalSpinner(true);
+            try {
+                const res = await apiRequest('POST', 'updateSettings', payload);
+                if (res.success) {
+                    showToast("Settings saved successfully", "success");
+                    loadDashboard();
+                } else {
+                    throw new Error((res.errors && res.errors[0]) || res.message || "Failed to update settings");
+                }
+            } catch (error) {
+                showToast(error.message, "error");
+            } finally {
+                toggleGlobalSpinner(false);
+            }
+        }
+
+        function confirmDelete(module, id) {
+            CURRENT_MODAL_STATE = { module, action: 'delete', id };
+            const overlay = document.getElementById('modal-confirm-overlay');
+            const content = document.getElementById('modal-confirm-content');
+            overlay.classList.remove('hidden');
+            setTimeout(() => content.classList.remove('scale-95', 'opacity-0'), 10);
+        }
+
+        async function executeDelete() {
+            const btnConfirmDelete = document.getElementById('btn-confirm-delete');
+            const btnText = document.getElementById('btn-delete-text');
+            const btnSpinner = document.getElementById('btn-delete-spinner');
+            
+            btnText.textContent = 'Deleting...'; 
+            btnSpinner.classList.remove('hidden');
+            btnConfirmDelete.disabled = true;
+
+            const role = localStorage.getItem('gasora_role') || 'editor';
+            const actionName = getActionName(CURRENT_MODAL_STATE.module, 'delete');
+            
+            if (!actionName) {
+                showToast("Action mapping not found for delete.", "error");
+                btnText.textContent = 'Yes, Delete'; 
+                btnSpinner.classList.add('hidden');
+                btnConfirmDelete.disabled = false;
+                return;
+            }
+
+            const payload = { role: role };
+            if (CURRENT_MODAL_STATE.module === 'pricing') payload.package_id = CURRENT_MODAL_STATE.id;
+            else payload.id = CURRENT_MODAL_STATE.id;
+
+            try {
+                const res = await apiRequest('POST', actionName, payload);
+                if (res.success) {
+                    showToast("Record deleted successfully", "success");
+                    closeModal('confirm');
+                    loadDashboard(); 
+                } else {
+                    throw new Error((res.errors && res.errors[0]) || res.message || "Failed to delete record");
+                }
+            } catch (error) {
+                showToast(error.message, "error");
+            } finally {
+                btnText.textContent = 'Yes, Delete'; 
+                btnSpinner.classList.add('hidden');
+                btnConfirmDelete.disabled = false;
+            }
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            if(!container) return;
+            const toast = document.createElement('div');
+            
+            const color = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+            const icon = type === 'success' ? 'ph-check-circle' : 'ph-warning-circle';
+            
+            toast.className = `flex items-center px-4 py-3 rounded-xl shadow-xl text-white ${color} font-bold text-sm transform translate-x-full transition-transform duration-300 animate-slide-in-right`;
+            toast.innerHTML = `<i class="ph-fill ${icon} text-xl mr-3"></i> ${message}`;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+                toast.classList.remove('animate-slide-in-right');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function toggleGlobalSpinner(show) {
+            const spinner = document.getElementById('global-spinner');
+            if (!spinner) return;
+            if (show) spinner.classList.remove('hidden');
+            else spinner.classList.add('hidden');
+        }
+
+        function getFormattedDate(d) {
+            const pad = (n) => n < 10 ? '0'+n : n;
+            return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+        }
+        
+        function exportLeadsCSV() {
+            const data = window.GASORA_DATA.leads;
+            if (!data || data.length === 0) {
+                showToast("No leads data available to export.", "error");
+                return;
+            }
+
+            const schema = CMS_ENGINE.getSchema('leads');
+            const headers = schema.map(f => f.label);
+            const keys = schema.map(f => f.name);
+
+            let csvContent = "\uFEFF"; 
+            csvContent += headers.join(',') + '\r\n';
+
+            data.forEach(row => {
+                const values = keys.map(k => {
+                    let val = row[k] || (row['tanggal'] && k === 'created_at' ? row['tanggal'] : '');
+                    if (val === undefined || val === null) val = '';
+                    val = String(val).replace(/"/g, '""');
+                    return `"${val}"`;
+                });
+                csvContent += values.join(',') + '\r\n';
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            
+            const pad = (n) => n < 10 ? '0'+n : n;
+            const d = new Date();
+            const filename = `gasora_leads_${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}.csv`;
+
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showToast("Leads data exported to CSV.", "success");
+        }
+
+        function openWhatsApp(number, name, service) {
+            if (!number) {
+                showToast("WhatsApp number is missing.", "error");
+                return;
+            }
+            const cleanNumber = number.replace(/\D/g, '');
+            const message = `Hi ${name || 'Customer'},\n\nTerima kasih telah menghubungi GASORA.\n\nKami sudah menerima permintaan layanan:\n${service || '-'}\n\nTim kami akan segera menghubungi Anda.\n\nTerima kasih.\n\nRegards,\nGASORA Team`;
+            const encodedMessage = encodeURIComponent(message);
+            const url = `https://wa.me/${cleanNumber}?text=${encodedMessage}`;
+            window.open(url, '_blank');
+        }
+
+        function setupInteractions() {
+            // Profile Dropdown Toggle Logic
+            const btnProfile = document.getElementById('btn-profile-dropdown');
+            if (btnProfile) {
+                btnProfile.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleProfileDropdown();
+                });
+            }
+            // Close Dropdown on global click
+            window.addEventListener('click', (e) => {
+                const dropdown = document.getElementById('profile-dropdown');
+                if(dropdown && !dropdown.contains(e.target) && e.target.id !== 'btn-profile-dropdown') {
+                    toggleProfileDropdown(false);
+                }
+            });
+
+            const tp = document.getElementById('toggle-password');
+            const pi = document.getElementById('password');
+            if(tp && pi) {
+                tp.addEventListener('click', () => {
+                    const type = pi.getAttribute('type') === 'password' ? 'text' : 'password';
+                    pi.setAttribute('type', type);
+                    tp.innerHTML = type === 'password' ? '<i class="ph ph-eye text-lg"></i>' : '<i class="ph ph-eye-slash text-lg"></i>';
+                });
+            }
+
+            const menuItems = document.querySelectorAll('#nav-menu .menu-item');
+            const views = document.querySelectorAll('.view-section');
+            const sidebar = document.getElementById('sidebar-container');
+            const overlay = document.getElementById('sidebar-overlay');
+
+            menuItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    menuItems.forEach(m => m.classList.remove('active'));
+                    e.currentTarget.classList.add('active');
+
+                    const targetView = e.currentTarget.getAttribute('data-view');
+                    views.forEach(v => {
+                        if (v.id === `view-${targetView}`) v.classList.remove('hidden');
+                        else v.classList.add('hidden');
+                    });
+
+                    const scrollArea = document.getElementById('main-scroll-area');
+                    if(scrollArea) scrollArea.scrollTop = 0;
+
+                    if (window.innerWidth < 1024 && sidebar && overlay) {
+                        sidebar.classList.add('-translate-x-full');
+                        overlay.classList.add('opacity-0');
+                        setTimeout(() => overlay.classList.add('hidden'), 300);
+                    }
+                });
+            });
+
+            const btnMenu = document.getElementById('btn-menu');
+            if (btnMenu && sidebar && overlay) {
+                btnMenu.addEventListener('click', () => {
+                    sidebar.classList.remove('-translate-x-full');
+                    overlay.classList.remove('hidden');
+                    setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+                });
+                overlay.addEventListener('click', () => {
+                    sidebar.classList.add('-translate-x-full');
+                    overlay.classList.add('opacity-0');
+                    setTimeout(() => overlay.classList.add('hidden'), 300);
+                });
+            }
+
+            const dateEl = document.getElementById('current-date');
+            if (dateEl) {
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                dateEl.textContent = new Date().toLocaleDateString('id-ID', options);
+            }
+            
+            const apiInput = document.getElementById('api_url_input');
+            if(apiInput) apiInput.value = API_URL;
+        }
+
+        function searchTable(module, query) {
+            query = query.toLowerCase();
+            const data = window.GASORA_DATA[module] || [];
+            const filtered = data.filter(row => {
+                return Object.values(row).some(val => String(val).toLowerCase().includes(query));
+            });
+            const originalData = window.GASORA_DATA[module];
+            window.GASORA_DATA[module] = filtered;
+            renderAllTables();
+            window.GASORA_DATA[module] = originalData;
+        }
+
+        function initApp() {
+            setupInteractions();
+            checkAuthGuard();
+        }
+
+        initApp();
+    </script>
+</body>
+</html>
