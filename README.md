@@ -1,2 +1,3 @@
-# gasora
-landingpage gasora - aplikasi dengan baseline google apps script
+Official Website
+
+https://gasora.up2digital.workers.dev
