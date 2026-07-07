@@ -1,0 +1,2339 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GASORA - Bangun Aplikasi Bisnis Lebih Cepat</title>
+    <meta name="description" content="Jasa pembuatan aplikasi Google Apps Script untuk UMKM, Sekolah, Klinik, Property, Retail dan Perusahaan.">
+    <link rel="canonical" href="https://gasora.id/">
+    <meta name="keywords" content="Google Apps Script Indonesia, Jasa Pembuatan Aplikasi, Aplikasi Sekolah, Aplikasi UMKM, Inventory System, CRM Hub, SPMB Online, Dashboard Bisnis">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://up2digi-app.github.io/up2digital-assets/gasora/favicon.png">
+    <link rel="apple-touch-icon" href="https://up2digi-app.github.io/up2digital-assets/gasora/favicon.png">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="GASORA - Bangun Aplikasi Bisnis Lebih Cepat">
+    <meta property="og:description" content="Jasa pembuatan aplikasi Google Apps Script untuk UMKM, Sekolah, Klinik, Property, Retail dan Perusahaan.">
+    <meta property="og:image" content="https://up2digi-app.github.io/up2digital-assets/gasora/logo.png">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="GASORA - Bangun Aplikasi Bisnis Lebih Cepat">
+    <meta name="twitter:description" content="Jasa pembuatan aplikasi Google Apps Script untuk UMKM, Sekolah, Klinik, Property, Retail dan Perusahaan.">
+    <meta name="twitter:image" content="https://up2digi-app.github.io/up2digital-assets/gasora/logo.png">
+
+    <!-- Theme Initialization Script (Prevents FOUC) -->
+    <script>
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else {
+            // Default to dark mode if no preference or prefers dark
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+
+    <!-- SEO Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "GASORA",
+          "url": "https://gasora.id",
+          "logo": "https://up2digi-app.github.io/up2digital-assets/gasora/logo.png",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "",
+            "contactType": "Customer Service",
+            "url": "https://wa.link/i8w855"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "name": "GASORA",
+          "url": "https://gasora.id",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://gasora.id/?s={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "LocalBusiness",
+          "name": "UP2 Digi-App",
+          "image": "https://up2digi-app.github.io/up2digital-assets/gasora/logo.png",
+          "url": "https://gasora.id",
+          "telephone": "WA: https://wa.link/i8w855"
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            { "@type": "Question", "name": "Apa itu GASORA?", "acceptedAnswer": { "@type": "Answer", "text": "GASORA adalah layanan pembuatan aplikasi bisnis kustom yang dibangun di atas infrastruktur Google Apps Script." } },
+            { "@type": "Question", "name": "Berapa lama proses pembuatan aplikasi?", "acceptedAnswer": { "@type": "Answer", "text": "Tergantung kompleksitas. Paket LITE biasanya memakan waktu 7-14 hari kerja, sementara PRO dan Enterprise bisa 3-6 minggu." } },
+            { "@type": "Question", "name": "Apakah data saya aman?", "acceptedAnswer": { "@type": "Answer", "text": "Sangat aman. Database disimpan di akun Google Workspace/Drive Anda sendiri." } },
+            { "@type": "Question", "name": "Apakah perlu bayar server bulanan?", "acceptedAnswer": { "@type": "Answer", "text": "Tidak. Karena menggunakan ekosistem Google Apps Script, hosting backend dan database sepenuhnya gratis." } }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0F172A', 
+                            card: '#131A2B',
+                            modal: '#162032',
+                            primary: '#4F46E5',
+                            secondary: '#06B6D4',
+                            accent: '#8B5CF6',
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'pulse-glow': 'pulseGlow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 3s linear infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { filter: 'drop-shadow(0 0 20px rgba(79,70,229,0.3))' },
+                            '50%': { filter: 'drop-shadow(0 0 35px rgba(79,70,229,0.7))' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+            color: #1E293B;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
+        }
+        
+        .dark body {
+            background: #0F172A;
+            color: #E5E7EB;
+        }
+
+        /* Essential Glass for Navbar Only */
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.7);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: none;
+        }
+
+        /* Modern SaaS Card */
+        .saas-card {
+            background-color: #ffffff;
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .dark .saas-card {
+            background-color: #131A2B;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .saas-card:hover, .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .dark .saas-card:hover, .dark .card-hover:hover {
+            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .gasora-gradient-text {
+            background: linear-gradient(to right, #16C7FF, #8B3DFF, #FF9A1F, #16C7FF);
+            background-size: 300% 300%;
+            animation: gradientMove 6s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #4F46E5 0%, #8B5CF6 100%);
+        }
+
+        /* Floating CS Widget Animations */
+        .cs-widget {
+            animation: float-cs 5s ease-in-out infinite;
+        }
+        @keyframes float-cs {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+        .cs-bounce {
+            animation: bounce-soft 3s infinite;
+        }
+        @keyframes bounce-soft {
+            0%, 100% { transform: translateY(-3%); animation-timing-function: cubic-bezier(0.8,0,1,1); }
+            50% { transform: none; animation-timing-function: cubic-bezier(0,0,0.2,1); }
+        }
+
+        /* Typewriter Cursor */
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: #06B6D4;
+            animation: blink 1s step-end infinite;
+            margin-left: 2px;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Modal Transitions */
+        .modal-overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            transform: scale(0.95) translateY(20px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { @apply bg-transparent; }
+        ::-webkit-scrollbar-thumb { @apply bg-slate-300 dark:bg-slate-700 rounded-full; }
+        ::-webkit-scrollbar-thumb:hover { @apply bg-brand-primary; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+
+        /* Filter Transitions */
+        .showcase-card {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        /* Typography optimizations for Blog Modal */
+        .blog-prose h3 { @apply text-2xl font-bold mt-8 mb-4 text-slate-900 dark:text-[#E5E7EB]; }
+        .blog-prose h4 { @apply text-xl font-semibold mt-6 mb-3 text-slate-800 dark:text-[#E5E7EB]; }
+        .blog-prose p { @apply text-base md:text-lg leading-relaxed mb-6 text-slate-600 dark:text-[#94A3B8]; }
+        .blog-prose ul, .blog-prose ol { @apply mb-6 ml-6 text-base md:text-lg text-slate-600 dark:text-[#94A3B8]; }
+        .blog-prose li { @apply mb-2; }
+        .blog-prose strong { @apply text-slate-800 dark:text-[#E5E7EB] font-semibold; }
+        .blog-prose .lead { @apply text-lg md:text-xl font-medium text-slate-700 dark:text-[#E5E7EB] mb-8 border-l-4 border-brand-primary pl-4; }
+
+        /* Hero Slide Hover Effect */
+        .hero-slide {
+            transition: transform 0.3s ease;
+        }
+        .hero-slide:hover {
+            transform: scale(1.01);
+        }
+
+        /* Modal App Image Specific Fixes */
+        #app-modal-visual img {
+            width: 100%;
+            max-height: 320px;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-primary selection:text-white">
+
+    <!-- Global Loading Overlay -->
+    <div id="global-loader" class="fixed inset-0 z-[999] bg-white dark:bg-[#0F172A] flex items-center justify-center transition-opacity duration-700 hidden opacity-0">
+        <div class="flex flex-col items-center">
+            <i class="ph ph-spinner animate-spin text-5xl text-brand-primary mb-4"></i>
+            <p class="text-slate-600 dark:text-[#94A3B8] font-medium animate-pulse" id="global-loader-text">Memuat Ekosistem GASORA...</p>
+        </div>
+    </div>
+
+    <!-- Ambient Background Blobs (Clean Modern SaaS) -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <!-- Light Mode Glow (Very Subtle) -->
+        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-cyan-400/10 rounded-full mix-blend-multiply filter blur-[80px] animate-blob dark:hidden"></div>
+        <div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-purple-400/10 rounded-full mix-blend-multiply filter blur-[80px] animate-blob animation-delay-2000 dark:hidden"></div>
+        
+        <!-- Dark Mode Glow (Subtle & Premium) -->
+        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-[#16C7FF]/10 rounded-full mix-blend-screen filter blur-[90px] animate-blob hidden dark:block"></div>
+        <div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-[#8B3DFF]/10 rounded-full mix-blend-screen filter blur-[90px] animate-blob animation-delay-2000 hidden dark:block"></div>
+    </div>
+
+    <nav id="branding" class="fixed w-full z-50 glass transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Updated Navbar Branding -->
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="return window.scrollToSection(event, 'hero')">
+                    <img src="https://up2digi-app.github.io/up2digital-assets/gasora/logo.png" alt="GASORA Logo" class="h-10 w-auto drop-shadow-lg" loading="lazy" decoding="async">
+                    <div class="flex flex-col justify-center">
+                        <span class="font-bold text-2xl tracking-tight gasora-gradient-text leading-none">GASORA</span>
+                        <span class="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-[#94A3B8] mt-1">Bangun Aplikasi Bisnis Lebih Cepat</span>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'hero')" class="text-slate-600 dark:text-[#94A3B8] hover:text-brand-primary dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'features')" class="text-slate-600 dark:text-[#94A3B8] hover:text-brand-primary dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Fitur</a>
+                        <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'showcase')" class="text-slate-600 dark:text-[#94A3B8] hover:text-brand-primary dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Demo</a>
+                        <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'pricing')" class="text-slate-600 dark:text-[#94A3B8] hover:text-brand-primary dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Pricing</a>
+                        <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'faq')" class="text-slate-600 dark:text-[#94A3B8] hover:text-brand-primary dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">FAQ</a>
+                        <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'blog')" class="text-slate-600 dark:text-[#94A3B8] hover:text-brand-primary dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Blog</a>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex items-center gap-4">
+                    <!-- Theme Switcher -->
+                    <button id="theme-toggle" class="p-2.5 rounded-full bg-slate-200 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 transition-colors focus:outline-none" aria-label="Toggle Theme">
+                        <i class="ph-fill ph-sun text-xl hidden dark:block text-yellow-400"></i>
+                        <i class="ph-fill ph-moon text-xl block dark:hidden text-slate-700"></i>
+                    </button>
+
+                    <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'contact')" class="inline-flex items-center justify-center px-6 py-2.5 border border-transparent text-sm font-medium rounded-full text-white bg-gradient-primary hover:opacity-90 transition-all shadow-[0_0_15px_rgba(79,70,229,0.3)] dark:shadow-[0_0_15px_rgba(79,70,229,0.4)] hover:shadow-[0_0_25px_rgba(79,70,229,0.6)]">
+                        Konsultasi Gratis
+                    </a>
+                </div>
+
+                <div class="md:hidden flex items-center gap-2">
+                    <button id="theme-toggle-mobile" class="p-2 rounded-full bg-slate-200 dark:bg-white/10 transition-colors focus:outline-none">
+                        <i class="ph-fill ph-sun text-lg hidden dark:block text-yellow-400"></i>
+                        <i class="ph-fill ph-moon text-lg block dark:hidden text-slate-700"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white focus:outline-none p-2">
+                        <i class="ph ph-list text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden glass">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'hero')" class="text-slate-600 dark:text-[#94A3B8] hover:text-brand-primary dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'features')" class="text-slate-600 dark:text-[#94A3B8] hover:text-brand-primary dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium">Fitur</a>
+                <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'showcase')" class="text-slate-600 dark:text-[#94A3B8] hover:text-brand-primary dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium">Demo</a>
+                <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'pricing')" class="text-slate-600 dark:text-[#94A3B8] hover:text-brand-primary dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium">Pricing</a>
+                <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'faq')" class="text-slate-600 dark:text-[#94A3B8] hover:text-brand-primary dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
+                <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'blog')" class="text-slate-600 dark:text-[#94A3B8] hover:text-brand-primary dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium">Blog</a>
+                <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'contact')" class="w-full text-center mt-4 inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-gradient-primary">
+                    Konsultasi Gratis
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 z-10 flex flex-col justify-center min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            
+            <div class="saas-card inline-flex items-center gap-2 px-4 py-2 mb-8 animate-fade-in-up rounded-full border-slate-200 dark:border-white/5">
+                <span class="flex h-2 w-2 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-secondary opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-secondary"></span>
+                </span>
+                <span class="text-sm font-medium text-slate-700 dark:text-[#94A3B8]">GASORA 2.0 is Live</span>
+            </div>
+
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 animate-fade-in-up text-slate-900 dark:text-[#E5E7EB]" style="animation-delay: 0.1s;">
+                Bangun Aplikasi Bisnis <br class="hidden md:block" />
+                Lebih Cepat dengan <br class="hidden md:block" />
+                <span class="gasora-gradient-text">Google Apps Script</span>
+            </h1>
+            
+            <div class="text-2xl md:text-3xl font-bold text-slate-800 dark:text-[#E5E7EB] mb-6 h-10 flex items-center justify-center gap-2 animate-fade-in-up" style="animation-delay: 0.2s;">
+                <span>Aplikasi</span>
+                <span id="typewriter" class="text-brand-primary dark:text-brand-secondary"></span><span class="cursor">&nbsp;</span>
+            </div>
+
+            <p class="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-slate-600 dark:text-[#94A3B8] mb-10 animate-fade-in-up" style="animation-delay: 0.3s;">
+                Solusi pembuatan aplikasi bisnis modern untuk UMKM, Sekolah, Yayasan, Property, Klinik, Travel, Retail, dan Perusahaan. Tanpa biaya server bulanan, aman, dan mudah digunakan.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style="animation-delay: 0.4s;">
+                <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'showcase')" class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold rounded-full text-white bg-gradient-primary hover:opacity-90 transition-all shadow-[0_0_20px_rgba(79,70,229,0.3)] dark:shadow-[0_0_20px_rgba(79,70,229,0.4)]">
+                    Lihat Demo Aplikasi
+                    <i class="ph ph-arrow-right ml-2 text-xl"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'contact')" class="saas-card inline-flex items-center justify-center px-8 py-4 text-base font-semibold rounded-full text-slate-800 dark:text-[#E5E7EB] hover:bg-slate-50 dark:hover:bg-[#162032] transition-all border-slate-200 dark:border-white/5">
+                    Konsultasi Gratis
+                </a>
+            </div>
+            
+            <!-- Real Application Showcase (Slider) -->
+            <div class="mt-20 relative mx-auto max-w-5xl animate-fade-in-up group" style="animation-delay: 0.6s;">
+                <div class="saas-card p-2 rounded-2xl relative">
+                    <div class="rounded-xl overflow-hidden bg-slate-100 dark:bg-[#131A2B] aspect-[16/9] md:aspect-[21/9] relative border border-slate-200 dark:border-white/5">
+                        
+                        <!-- Slider Track populated dynamically via JS -->
+                        <div class="flex h-full transition-transform duration-700 ease-in-out" id="hero-slider">
+                            <!-- Slides generated by Javascript -->
+                        </div>
+
+                        <!-- Controls -->
+                        <button id="slider-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white dark:bg-[#131A2B] border border-slate-200 dark:border-white/5 flex items-center justify-center text-slate-800 dark:text-[#E5E7EB] hover:bg-brand-primary hover:text-white dark:hover:bg-brand-primary dark:hover:text-white transition-all opacity-0 group-hover:opacity-100 z-10"><i class="ph ph-caret-left text-xl"></i></button>
+                        <button id="slider-next" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white dark:bg-[#131A2B] border border-slate-200 dark:border-white/5 flex items-center justify-center text-slate-800 dark:text-[#E5E7EB] hover:bg-brand-primary hover:text-white dark:hover:bg-brand-primary dark:hover:text-white transition-all opacity-0 group-hover:opacity-100 z-10"><i class="ph ph-caret-right text-xl"></i></button>
+                        
+                        <!-- Dots -->
+                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10" id="slider-dots"></div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="features" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-brand-primary dark:text-brand-secondary font-semibold tracking-wide uppercase text-sm mb-2">Mengapa Memilih Kami</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-[#E5E7EB]">Teknologi Modern, Hasil Optimal</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="saas-card p-8 reveal">
+                    <div class="w-14 h-14 rounded-xl bg-brand-primary/10 dark:bg-brand-primary/20 flex items-center justify-center mb-6 border border-brand-primary/20 dark:border-brand-primary/30 text-brand-primary">
+                        <i class="ph ph-lightning text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-[#E5E7EB] mb-3">Cepat Dibangun</h4>
+                    <p class="text-slate-600 dark:text-[#94A3B8]">Pemanfaatan ekosistem Google Workspace memungkinkan deployment aplikasi jauh lebih cepat dibanding build dari nol.</p>
+                </div>
+
+                <div class="saas-card p-8 reveal" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 rounded-xl bg-brand-secondary/10 dark:bg-brand-secondary/20 flex items-center justify-center mb-6 border border-brand-secondary/20 dark:border-brand-secondary/30 text-brand-secondary">
+                        <i class="ph ph-cloud text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-[#E5E7EB] mb-3">Cloud Based</h4>
+                    <p class="text-slate-600 dark:text-[#94A3B8]">100% berbasis cloud di infrastruktur Google yang terpercaya. Tanpa perlu pusing memikirkan biaya server hosting bulanan.</p>
+                </div>
+
+                <div class="saas-card p-8 reveal" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 rounded-xl bg-brand-accent/10 dark:bg-brand-accent/20 flex items-center justify-center mb-6 border border-brand-accent/20 dark:border-brand-accent/30 text-brand-accent">
+                        <i class="ph ph-chart-line-up text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-[#E5E7EB] mb-3">Dashboard Modern</h4>
+                    <p class="text-slate-600 dark:text-[#94A3B8]">Antarmuka pengguna (UI) dirancang modern, responsif, dan intuitif menggunakan teknologi frontend terkini.</p>
+                </div>
+
+                <div class="saas-card p-8 reveal" style="transition-delay: 300ms;">
+                    <div class="w-14 h-14 rounded-xl bg-green-500/10 dark:bg-green-500/20 flex items-center justify-center mb-6 border border-green-500/20 dark:border-green-500/30 text-green-600 dark:text-green-400">
+                        <i class="ph ph-device-mobile text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-[#E5E7EB] mb-3">Mobile Friendly</h4>
+                    <p class="text-slate-600 dark:text-[#94A3B8]">Akses aplikasi bisnis Anda darimana saja, kapan saja. Desain 100% responsif untuk Smartphone, Tablet, maupun Desktop.</p>
+                </div>
+
+                <div class="saas-card p-8 reveal" style="transition-delay: 400ms;">
+                    <div class="w-14 h-14 rounded-xl bg-yellow-500/10 dark:bg-yellow-500/20 flex items-center justify-center mb-6 border border-yellow-500/20 dark:border-yellow-500/30 text-yellow-600 dark:text-yellow-400">
+                        <i class="ph ph-lock-key text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-[#E5E7EB] mb-3">Secure Access</h4>
+                    <p class="text-slate-600 dark:text-[#94A3B8]">Keamanan level Enterprise yang didukung oleh sistem autentikasi akun Google. Data Anda tersimpan aman di Google Drive Anda sendiri.</p>
+                </div>
+
+                <div class="saas-card p-8 reveal" style="transition-delay: 500ms;">
+                    <div class="w-14 h-14 rounded-xl bg-pink-500/10 dark:bg-pink-500/20 flex items-center justify-center mb-6 border border-pink-500/20 dark:border-pink-500/30 text-pink-600 dark:text-pink-400">
+                        <i class="ph ph-arrows-clockwise text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-[#E5E7EB] mb-3">Mudah Dikembangkan</h4>
+                    <p class="text-slate-600 dark:text-[#94A3B8]">Skalabilitas tinggi. Tambahkan fitur, modul, atau integrasi baru seiring dengan pertumbuhan bisnis Anda tanpa rombak total.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="showcase" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-brand-primary dark:text-brand-secondary font-semibold tracking-wide uppercase text-sm mb-2">Ekosistem GASORA</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-[#E5E7EB]">Showcase Aplikasi</h3>
+                <p class="mt-4 text-slate-600 dark:text-[#94A3B8] max-w-2xl mx-auto">Berbagai solusi aplikasi yang siap disesuaikan dengan kebutuhan spesifik bisnis Anda.</p>
+            </div>
+
+            <!-- Filter Category Updated -->
+            <div class="flex flex-wrap justify-center gap-2 mb-12 reveal" id="showcase-filters">
+                <button class="filter-btn active px-5 py-2 rounded-full bg-white dark:bg-[#131A2B] border border-brand-primary text-brand-primary dark:text-brand-secondary text-sm font-semibold transition-all shadow-[0_0_15px_rgba(79,70,229,0.2)]" data-filter="all">Semua</button>
+                <button class="filter-btn px-5 py-2 rounded-full bg-white dark:bg-[#131A2B] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 text-slate-500 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white text-sm font-semibold transition-all" data-filter="property">Property</button>
+                <button class="filter-btn px-5 py-2 rounded-full bg-white dark:bg-[#131A2B] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 text-slate-500 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white text-sm font-semibold transition-all" data-filter="crm">Sales & CRM</button>
+                <button class="filter-btn px-5 py-2 rounded-full bg-white dark:bg-[#131A2B] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 text-slate-500 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white text-sm font-semibold transition-all" data-filter="finance">Finance</button>
+                <button class="filter-btn px-5 py-2 rounded-full bg-white dark:bg-[#131A2B] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 text-slate-500 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white text-sm font-semibold transition-all" data-filter="hr">HR & Workforce</button>
+                <button class="filter-btn px-5 py-2 rounded-full bg-white dark:bg-[#131A2B] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 text-slate-500 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white text-sm font-semibold transition-all" data-filter="ops">Operations</button>
+                <button class="filter-btn px-5 py-2 rounded-full bg-white dark:bg-[#131A2B] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 text-slate-500 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white text-sm font-semibold transition-all" data-filter="retail">Retail & Inventory</button>
+            </div>
+
+            <!-- Showcase Grid populated by JavaScript RENDER ENGINE -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="showcase-grid">
+                <!-- Dynamically rendered -->
+            </div>
+        </div>
+    </section>
+
+    <!-- App Detail Modal -->
+    <div id="app-modal" class="modal-overlay fixed inset-0 z-[100] bg-slate-900/80 dark:bg-brand-dark/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div class="modal-content relative w-full max-w-2xl bg-white dark:bg-brand-modal rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.5)] flex flex-col max-h-[90vh] overflow-hidden border border-slate-200 dark:border-white/5">
+            
+            <div class="flex items-center justify-between p-6 bg-white/95 dark:bg-brand-modal/95 border-b border-slate-100 dark:border-white/5 shrink-0">
+                <div>
+                    <h3 id="app-modal-title" class="text-2xl font-bold text-slate-900 dark:text-[#E5E7EB]">Nama Aplikasi</h3>
+                    <p id="app-modal-subtitle" class="text-sm text-brand-primary dark:text-brand-secondary font-medium mt-1">Subtitle</p>
+                </div>
+                <button onclick="window.closeAppModal()" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 flex items-center justify-center text-slate-500 dark:text-[#94A3B8] transition-colors">
+                    <i class="ph ph-x text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 md:p-8 overflow-y-auto custom-scrollbar bg-white dark:bg-brand-modal flex-1">
+                <div id="app-modal-visual" class="rounded-[16px] mb-6 flex items-center justify-center overflow-hidden relative shadow-inner w-full">
+                    <!-- Image or placeholder injected via JS -->
+                </div>
+                
+                <h4 class="font-bold text-slate-800 dark:text-[#E5E7EB] mb-2">Deskripsi Sistem</h4>
+                <p id="app-modal-desc" class="text-slate-600 dark:text-[#94A3B8] leading-relaxed mb-6 text-sm md:text-base">Deskripsi lengkap aplikasi...</p>
+                
+                <h4 class="font-bold text-slate-800 dark:text-[#E5E7EB] mb-3">Fitur Utama</h4>
+                <ul id="app-modal-features" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-600 dark:text-[#94A3B8]">
+                    <!-- Features -->
+                </ul>
+            </div>
+            
+            <div class="p-6 bg-slate-50 dark:bg-[#131A2B] border-t border-slate-200 dark:border-white/5 flex gap-3 shrink-0">
+                <a id="app-modal-demo-btn" href="#" target="_blank" class="flex-1 py-3 rounded-xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white font-bold text-center hover:bg-slate-50 dark:hover:bg-white/10 transition-colors shadow-sm text-sm sm:text-base" style="display:none;">Lihat Demo</a>
+                <a id="app-modal-buy-btn" href="javascript:void(0)" onclick="return window.scrollToSection(event, 'contact')" class="flex-1 py-3 rounded-xl bg-gradient-primary hover:opacity-90 text-white font-bold text-center shadow-md transition-colors text-sm sm:text-base">Pesan Aplikasi</a>
+            </div>
+        </div>
+    </div>
+
+    <section id="pricing" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-brand-primary dark:text-brand-secondary font-semibold tracking-wide uppercase text-sm mb-2">Investasi Terbaik</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-[#E5E7EB]">Paket Pembuatan Aplikasi</h3>
+                <p class="mt-4 text-slate-600 dark:text-[#94A3B8] max-w-2xl mx-auto">Pilih paket yang paling sesuai dengan skala dan kebutuhan bisnis Anda.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-center" id="pricing-grid">
+                <!-- Pricing Card Defaults - Will be used as fallback -->
+                <div class="saas-card p-8 flex flex-col h-full reveal">
+                    <div class="mb-4">
+                        <h4 class="text-xl font-bold text-slate-500 dark:text-gray-300">DEMO</h4>
+                        <div class="text-3xl font-bold text-slate-900 dark:text-[#E5E7EB] mt-2">Gratis</div>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-[#94A3B8] mb-6">Coba pengalaman menggunakan ekosistem GASORA.</p>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        <li class="flex items-start text-sm text-slate-700 dark:text-[#94A3B8]"><i class="ph ph-check-circle text-brand-primary dark:text-brand-secondary mt-0.5 mr-2 text-lg"></i> Akses Demo</li>
+                        <li class="flex items-start text-sm text-slate-700 dark:text-[#94A3B8]"><i class="ph ph-check-circle text-brand-primary dark:text-brand-secondary mt-0.5 mr-2 text-lg"></i> Dummy Data</li>
+                        <li class="flex items-start text-sm text-slate-700 dark:text-[#94A3B8]"><i class="ph ph-check-circle text-brand-primary dark:text-brand-secondary mt-0.5 mr-2 text-lg"></i> Trial Experience</li>
+                    </ul>
+                    <button onclick="return window.scrollToSection(event, 'showcase')" class="block w-full text-center py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/5 text-slate-800 dark:text-[#E5E7EB] font-semibold transition-all mt-auto">Coba Demo</button>
+                </div>
+
+                <div class="saas-card p-8 flex flex-col h-full reveal" style="transition-delay: 100ms;">
+                    <div class="mb-4">
+                        <h4 class="text-xl font-bold text-brand-secondary">LITE</h4>
+                        <div class="text-3xl font-bold text-slate-900 dark:text-[#E5E7EB] mt-2"><span class="text-sm text-slate-500 dark:text-[#94A3B8] font-normal">Mulai </span>299rb</div>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-[#94A3B8] mb-6">Cocok untuk UMKM dan bisnis skala kecil.</p>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        <li class="flex items-start text-sm text-slate-700 dark:text-[#94A3B8]"><i class="ph ph-check-circle text-brand-secondary mt-0.5 mr-2 text-lg"></i> 1 Modul</li>
+                        <li class="flex items-start text-sm text-slate-700 dark:text-[#94A3B8]"><i class="ph ph-check-circle text-brand-secondary mt-0.5 mr-2 text-lg"></i> Spreadsheet Database</li>
+                        <li class="flex items-start text-sm text-slate-700 dark:text-[#94A3B8]"><i class="ph ph-check-circle text-brand-secondary mt-0.5 mr-2 text-lg"></i> Dashboard Basic</li>
+                        <li class="flex items-start text-sm text-slate-700 dark:text-[#94A3B8]"><i class="ph ph-check-circle text-brand-secondary mt-0.5 mr-2 text-lg"></i> Setup Cepat</li>
+                    </ul>
+                    <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'contact')" class="block w-full text-center py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/5 text-slate-800 dark:text-[#E5E7EB] font-semibold transition-all mt-auto">Pilih Lite</a>
+                </div>
+
+                <div class="bg-white dark:bg-[linear-gradient(180deg,rgba(79,70,229,0.12)_0%,rgba(79,70,229,0.08)_35%,#131A2B_100%)] p-8 rounded-2xl border-2 border-brand-primary dark:border-[rgba(99,102,241,0.55)] shadow-[0_15px_40px_rgba(79,70,229,0.2)] dark:shadow-[0_0_25px_rgba(99,102,241,0.25)] flex flex-col h-full relative transform lg:scale-105 z-10 reveal" style="transition-delay: 200ms;">
+                    <div class="absolute top-0 right-0 bg-brand-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>
+                    <div class="mb-4">
+                        <h4 class="text-xl font-bold text-indigo-700">PRO</h4>
+                        <div class="text-3xl font-bold text-slate-900 mt-2"><span class="text-sm text-slate-600 font-normal">Mulai </span>999rb</div>
+                    </div>
+                    <p class="text-sm text-slate-700 mb-6">Untuk bisnis berkembang dengan kebutuhan spesifik.</p>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        <li class="flex items-start text-sm text-slate-700"><i class="ph ph-check-circle text-indigo-600 mt-0.5 mr-2 text-lg"></i> Multi Modul</li>
+                        <li class="flex items-start text-sm text-slate-700"><i class="ph ph-check-circle text-indigo-600 mt-0.5 mr-2 text-lg"></i> Dashboard Modern</li>
+                        <li class="flex items-start text-sm text-slate-700"><i class="ph ph-check-circle text-indigo-600 mt-0.5 mr-2 text-lg"></i> WhatsApp Integration</li>
+                        <li class="flex items-start text-sm text-slate-700"><i class="ph ph-check-circle text-indigo-600 mt-0.5 mr-2 text-lg"></i> Custom Branding</li>
+                    </ul>
+                    <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'contact')" class="w-full block text-center py-3 rounded-xl bg-gradient-primary hover:opacity-90 text-white font-semibold transition-all shadow-lg mt-auto">Konsultasi Pro</a>
+                </div>
+
+                <div class="saas-card p-8 flex flex-col h-full reveal" style="transition-delay: 300ms;">
+                    <div class="mb-4">
+                        <h4 class="text-xl font-bold text-brand-accent">CUSTOM</h4>
+                        <div class="text-3xl font-bold text-slate-900 dark:text-[#E5E7EB] mt-2">Konsultasi</div>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-[#94A3B8] mb-6">Sistem kompleks & ekosistem utuh untuk perusahaan.</p>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        <li class="flex items-start text-sm text-slate-700 dark:text-[#94A3B8]"><i class="ph ph-check-circle text-brand-accent mt-0.5 mr-2 text-lg"></i> Full Custom Development</li>
+                        <li class="flex items-start text-sm text-slate-700 dark:text-[#94A3B8]"><i class="ph ph-check-circle text-brand-accent mt-0.5 mr-2 text-lg"></i> Multi Role</li>
+                        <li class="flex items-start text-sm text-slate-700 dark:text-[#94A3B8]"><i class="ph ph-check-circle text-brand-accent mt-0.5 mr-2 text-lg"></i> Multi Cabang</li>
+                        <li class="flex items-start text-sm text-slate-700 dark:text-[#94A3B8]"><i class="ph ph-check-circle text-brand-accent mt-0.5 mr-2 text-lg"></i> Enterprise Workflow</li>
+                    </ul>
+                    <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'contact')" class="w-full block text-center py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/5 text-slate-800 dark:text-[#E5E7EB] font-semibold transition-all mt-auto">Hubungi Sales</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="comparison" class="py-24 relative z-10 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-[#E5E7EB]">Tinggalkan Cara Lama</h3>
+                <p class="mt-4 text-slate-600 dark:text-[#94A3B8] max-w-2xl mx-auto">Saatnya beralih dari pencatatan manual ke sistem yang terotomasi penuh.</p>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-8 max-w-5xl mx-auto reveal">
+                
+                <div class="flex-1 saas-card p-8 relative border-red-200 dark:border-red-500/20">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-100 dark:bg-red-500/10 text-red-600 dark:text-red-400 px-4 py-1 rounded-full text-sm font-semibold border border-red-200 dark:border-red-500/20">Excel / Manual</div>
+                    <ul class="space-y-6 mt-6">
+                        <li class="flex gap-4 items-start text-slate-600 dark:text-[#94A3B8]">
+                            <div class="w-8 h-8 rounded-full bg-red-100 dark:bg-red-500/10 flex items-center justify-center flex-shrink-0"><i class="ph ph-x text-red-500 dark:text-red-400"></i></div>
+                            <div><strong class="text-slate-800 dark:text-gray-300 block mb-1">Rentan Error (Human Error)</strong>Rumus terhapus atau data tertimpa tanpa sengaja.</div>
+                        </li>
+                        <li class="flex gap-4 items-start text-slate-600 dark:text-[#94A3B8]">
+                            <div class="w-8 h-8 rounded-full bg-red-100 dark:bg-red-500/10 flex items-center justify-center flex-shrink-0"><i class="ph ph-x text-red-500 dark:text-red-400"></i></div>
+                            <div><strong class="text-slate-800 dark:text-gray-300 block mb-1">Kolaborasi Sulit</strong>File bentrok jika dibuka banyak user bersamaan.</div>
+                        </li>
+                        <li class="flex gap-4 items-start text-slate-600 dark:text-[#94A3B8]">
+                            <div class="w-8 h-8 rounded-full bg-red-100 dark:bg-red-500/10 flex items-center justify-center flex-shrink-0"><i class="ph ph-x text-red-500 dark:text-red-400"></i></div>
+                            <div><strong class="text-slate-800 dark:text-gray-300 block mb-1">Tampilan Membosankan</strong>Susah dibaca di HP, UI berupa baris dan kolom kaku.</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="hidden md:flex items-center justify-center -mx-4 z-10">
+                    <div class="w-12 h-12 rounded-full bg-slate-200 dark:bg-[#131A2B] border border-slate-300 dark:border-white/5 flex items-center justify-center text-slate-500 dark:text-[#94A3B8] font-bold">VS</div>
+                </div>
+
+                <div class="flex-1 saas-card p-8 relative border-brand-primary/20 dark:border-brand-primary/30 shadow-[0_10px_30px_rgba(79,70,229,0.15)] dark:shadow-[0_0_30px_rgba(79,70,229,0.1)]">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-primary text-white px-6 py-1 rounded-full text-sm font-bold shadow-[0_5px_15px_rgba(79,70,229,0.4)] dark:shadow-[0_0_15px_rgba(79,70,229,0.5)]">GASORA</div>
+                    <ul class="space-y-6 mt-6">
+                        <li class="flex gap-4 items-start text-slate-700 dark:text-gray-300">
+                            <div class="w-8 h-8 rounded-full bg-brand-primary/10 dark:bg-brand-primary/20 flex items-center justify-center flex-shrink-0"><i class="ph ph-check text-brand-primary dark:text-brand-secondary"></i></div>
+                            <div><strong class="text-slate-900 dark:text-[#E5E7EB] block mb-1">Terotomasi & Validasi Data</strong>Input melalui form web, data tersimpan rapi dan aman.</div>
+                        </li>
+                        <li class="flex gap-4 items-start text-slate-700 dark:text-gray-300">
+                            <div class="w-8 h-8 rounded-full bg-brand-primary/10 dark:bg-brand-primary/20 flex items-center justify-center flex-shrink-0"><i class="ph ph-check text-brand-primary dark:text-brand-secondary"></i></div>
+                            <div><strong class="text-slate-900 dark:text-[#E5E7EB] block mb-1">Multi-User Realtime</strong>Diakses puluhan user bersamaan, data ter-sync tanpa error.</div>
+                        </li>
+                        <li class="flex gap-4 items-start text-slate-700 dark:text-gray-300">
+                            <div class="w-8 h-8 rounded-full bg-brand-primary/10 dark:bg-brand-primary/20 flex items-center justify-center flex-shrink-0"><i class="ph ph-check text-brand-primary dark:text-brand-secondary"></i></div>
+                            <div><strong class="text-slate-900 dark:text-[#E5E7EB] block mb-1">UI/UX Modern (Web App)</strong>Tampilan berupa aplikasi profesional, mudah di HP/PC.</div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-brand-primary dark:text-brand-secondary font-semibold tracking-wide uppercase text-sm mb-2">Workflow Kami</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-[#E5E7EB]">Proses Pembuatan</h3>
+            </div>
+
+            <div class="relative">
+                <div class="hidden lg:block absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 dark:bg-white/5 -translate-y-1/2 z-0"></div>
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8 relative z-10">
+                    <div class="text-center reveal">
+                        <div class="w-16 h-16 mx-auto rounded-2xl bg-white dark:bg-[#131A2B] border border-slate-200 dark:border-white/5 flex items-center justify-center text-2xl font-bold text-slate-400 dark:text-[#94A3B8] mb-4 transition-colors hover:border-brand-primary hover:text-brand-primary shadow-sm">1</div>
+                        <h4 class="text-slate-800 dark:text-[#E5E7EB] font-bold mb-2">Konsultasi</h4>
+                        <p class="text-sm text-slate-600 dark:text-[#94A3B8]">Analisa kebutuhan & ruang lingkup bisnis Anda.</p>
+                    </div>
+                    <div class="text-center reveal" style="transition-delay: 100ms;">
+                        <div class="w-16 h-16 mx-auto rounded-2xl bg-white dark:bg-[#131A2B] border border-slate-200 dark:border-white/5 flex items-center justify-center text-2xl font-bold text-slate-400 dark:text-[#94A3B8] mb-4 transition-colors hover:border-brand-secondary hover:text-brand-secondary shadow-sm">2</div>
+                        <h4 class="text-slate-800 dark:text-[#E5E7EB] font-bold mb-2">Desain</h4>
+                        <p class="text-sm text-slate-600 dark:text-[#94A3B8]">Perancangan struktur database & UI/UX aplikasi.</p>
+                    </div>
+                    <div class="text-center reveal" style="transition-delay: 200ms;">
+                        <div class="w-16 h-16 mx-auto rounded-2xl bg-white dark:bg-[#131A2B] border border-slate-200 dark:border-white/5 flex items-center justify-center text-2xl font-bold text-slate-400 dark:text-[#94A3B8] mb-4 transition-colors hover:border-brand-accent hover:text-brand-accent shadow-sm">3</div>
+                        <h4 class="text-slate-800 dark:text-[#E5E7EB] font-bold mb-2">Development</h4>
+                        <p class="text-sm text-slate-600 dark:text-[#94A3B8]">Koding backend GAS & frontend berbasis web.</p>
+                    </div>
+                    <div class="text-center reveal" style="transition-delay: 300ms;">
+                        <div class="w-16 h-16 mx-auto rounded-2xl bg-white dark:bg-[#131A2B] border border-slate-200 dark:border-white/5 flex items-center justify-center text-2xl font-bold text-slate-400 dark:text-[#94A3B8] mb-4 transition-colors hover:border-green-500 hover:text-green-500 shadow-sm">4</div>
+                        <h4 class="text-slate-800 dark:text-[#E5E7EB] font-bold mb-2">Testing</h4>
+                        <p class="text-sm text-slate-600 dark:text-[#94A3B8]">Uji coba fungsionalitas, bug fix, dan user acceptance.</p>
+                    </div>
+                    <div class="text-center reveal" style="transition-delay: 400ms;">
+                        <div class="w-16 h-16 mx-auto rounded-2xl bg-brand-primary flex items-center justify-center text-2xl font-bold text-white mb-4 shadow-[0_5px_15px_rgba(79,70,229,0.4)] dark:shadow-[0_0_15px_rgba(79,70,229,0.5)]">5</div>
+                        <h4 class="text-slate-800 dark:text-[#E5E7EB] font-bold mb-2">Launching</h4>
+                        <p class="text-sm text-slate-600 dark:text-[#94A3B8]">Aplikasi siap digunakan operasional penuh.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-brand-primary dark:text-brand-secondary font-semibold tracking-wide uppercase text-sm mb-2">Testimonial</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-[#E5E7EB]">Apa Kata Mereka</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="testimonials-grid">
+                <!-- Testimonial Items Fallback -->
+                <div class="saas-card p-8 reveal">
+                    <div class="flex text-yellow-400 mb-4"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                    <p class="text-slate-700 dark:text-gray-300 mb-6 italic">"Sistem kasir dan inventory dari GASORA benar-benar menyelamatkan bisnis retail kami. Tidak perlu sewa server, sangat hemat!"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-brand-primary to-brand-secondary flex items-center justify-center font-bold text-white">B</div>
+                        <div><h5 class="text-slate-900 dark:text-[#E5E7EB] font-bold">Budi Santoso</h5><span class="text-xs text-slate-500 dark:text-[#94A3B8]">Owner Retail Tech</span></div>
+                    </div>
+                </div>
+                <div class="saas-card p-8 reveal" style="transition-delay: 100ms;">
+                    <div class="flex text-yellow-400 mb-4"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                    <p class="text-slate-700 dark:text-gray-300 mb-6 italic">"Aplikasi tabungan siswa untuk yayasan kami kini digital 100%. Wali murid bisa cek saldo via link, sangat transparan dan memuaskan."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-pink-500 to-orange-500 flex items-center justify-center font-bold text-white">A</div>
+                        <div><h5 class="text-slate-900 dark:text-[#E5E7EB] font-bold">Aisyah</h5><span class="text-xs text-slate-500 dark:text-[#94A3B8]">Kepala Tata Usaha Yayasan</span></div>
+                    </div>
+                </div>
+                <div class="saas-card p-8 reveal" style="transition-delay: 200ms;">
+                    <div class="flex text-yellow-400 mb-4"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                    <p class="text-slate-700 dark:text-gray-300 mb-6 italic">"CRM yang dikembangkan tim GASORA sangat custom sesuai flow kerja property kami. Follow up leads jadi lebih terukur."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-brand-accent to-brand-primary flex items-center justify-center font-bold text-white">D</div>
+                        <div><h5 class="text-slate-900 dark:text-[#E5E7EB] font-bold">Daniel</h5><span class="text-xs text-slate-500 dark:text-[#94A3B8]">Marketing Director Property</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-24 relative z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-brand-primary dark:text-brand-secondary font-semibold tracking-wide uppercase text-sm mb-2">FAQ</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-[#E5E7EB]">Pertanyaan Umum</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start reveal" id="faq-grid">
+                <!-- FAQ Items Fallback -->
+                <div class="faq-item saas-card overflow-hidden">
+                    <button class="faq-button w-full text-left px-6 py-4 font-semibold text-slate-800 dark:text-[#E5E7EB] flex justify-between items-center focus:outline-none">
+                        <span>1. Apa itu GASORA?</span><i class="ph ph-caret-down transition-transform duration-300 text-slate-400 dark:text-[#94A3B8]"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6">
+                        <p class="pb-4 text-slate-600 dark:text-[#94A3B8] text-sm">GASORA adalah layanan pembuatan aplikasi bisnis kustom yang dibangun di atas infrastruktur Google Apps Script. Memungkinkan pembuatan Web App dengan database Google Sheets/Drive.</p>
+                    </div>
+                </div>
+                <div class="faq-item saas-card overflow-hidden">
+                    <button class="faq-button w-full text-left px-6 py-4 font-semibold text-slate-800 dark:text-[#E5E7EB] flex justify-between items-center focus:outline-none">
+                        <span>2. Berapa lama proses pembuatan aplikasi?</span><i class="ph ph-caret-down transition-transform duration-300 text-slate-400 dark:text-[#94A3B8]"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6">
+                        <p class="pb-4 text-slate-600 dark:text-[#94A3B8] text-sm">Tergantung kompleksitas. Paket LITE biasanya memakan waktu 7-14 hari kerja, sementara PRO dan Enterprise bisa 3-6 minggu.</p>
+                    </div>
+                </div>
+                <div class="faq-item saas-card overflow-hidden">
+                    <button class="faq-button w-full text-left px-6 py-4 font-semibold text-slate-800 dark:text-[#E5E7EB] flex justify-between items-center focus:outline-none">
+                        <span>3. Apakah data saya aman?</span><i class="ph ph-caret-down transition-transform duration-300 text-slate-400 dark:text-[#94A3B8]"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6">
+                        <p class="pb-4 text-slate-600 dark:text-[#94A3B8] text-sm">Sangat aman. Database disimpan di akun Google Workspace/Drive Anda sendiri. Kami hanya mendeploy script-nya. Keamanan dijamin standar enkripsi Google.</p>
+                    </div>
+                </div>
+                <div class="faq-item saas-card overflow-hidden">
+                    <button class="faq-button w-full text-left px-6 py-4 font-semibold text-slate-800 dark:text-[#E5E7EB] flex justify-between items-center focus:outline-none">
+                        <span>4. Apakah perlu bayar server bulanan?</span><i class="ph ph-caret-down transition-transform duration-300 text-slate-400 dark:text-[#94A3B8]"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6">
+                        <p class="pb-4 text-slate-600 dark:text-[#94A3B8] text-sm">Tidak. Karena menggunakan ekosistem Google Apps Script, hosting backend dan database (spreadsheet) sepenuhnya gratis di bawah limit kuota Google standard.</p>
+                    </div>
+                </div>
+                <div class="faq-item saas-card overflow-hidden">
+                    <button class="faq-button w-full text-left px-6 py-4 font-semibold text-slate-800 dark:text-[#E5E7EB] flex justify-between items-center focus:outline-none">
+                        <span>5. Apakah bisa request custom fitur?</span><i class="ph ph-caret-down transition-transform duration-300 text-slate-400 dark:text-[#94A3B8]"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6">
+                        <p class="pb-4 text-slate-600 dark:text-[#94A3B8] text-sm">Tentu, itu spesialisasi kami. Paket PRO dan Enterprise dirancang khusus untuk kustomisasi flow bisnis Anda 100%.</p>
+                    </div>
+                </div>
+                <div class="faq-item saas-card overflow-hidden">
+                    <button class="faq-button w-full text-left px-6 py-4 font-semibold text-slate-800 dark:text-[#E5E7EB] flex justify-between items-center focus:outline-none">
+                        <span>6. Apakah aplikasi bisa diakses di HP?</span><i class="ph ph-caret-down transition-transform duration-300 text-slate-400 dark:text-[#94A3B8]"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6">
+                        <p class="pb-4 text-slate-600 dark:text-[#94A3B8] text-sm">Ya, Web App yang kami kembangkan menggunakan framework frontend responsif modern (seperti Tailwind CSS), sehingga tampil rapi di HP layaknya aplikasi native (PWA).</p>
+                    </div>
+                </div>
+                <div class="faq-item saas-card overflow-hidden">
+                    <button class="faq-button w-full text-left px-6 py-4 font-semibold text-slate-800 dark:text-[#E5E7EB] flex justify-between items-center focus:outline-none">
+                        <span>7. Apa bedanya dengan App Builder lain?</span><i class="ph ph-caret-down transition-transform duration-300 text-slate-400 dark:text-[#94A3B8]"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6">
+                        <p class="pb-4 text-slate-600 dark:text-[#94A3B8] text-sm">GASORA membangun custom code (HTML/JS/GAS) sehingga tidak ada batasan UI atau limit user pricing bulanan per-seat seperti AppSheet/Glide. Anda bayar development sekali.</p>
+                    </div>
+                </div>
+                <div class="faq-item saas-card overflow-hidden">
+                    <button class="faq-button w-full text-left px-6 py-4 font-semibold text-slate-800 dark:text-[#E5E7EB] flex justify-between items-center focus:outline-none">
+                        <span>8. Apakah ada garansi / maintenance?</span><i class="ph ph-caret-down transition-transform duration-300 text-slate-400 dark:text-[#94A3B8]"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6">
+                        <p class="pb-4 text-slate-600 dark:text-[#94A3B8] text-sm">Setiap paket sudah termasuk support bug fixing (1-3 bulan). Setelah itu Anda dapat memilih opsi retainer maintenance jika dibutuhkan perlindungan jangka panjang.</p>
+                    </div>
+                </div>
+                <div class="faq-item saas-card overflow-hidden">
+                    <button class="faq-button w-full text-left px-6 py-4 font-semibold text-slate-800 dark:text-[#E5E7EB] flex justify-between items-center focus:outline-none">
+                        <span>9. Bisa integrasi WhatsApp / Email?</span><i class="ph ph-caret-down transition-transform duration-300 text-slate-400 dark:text-[#94A3B8]"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6">
+                        <p class="pb-4 text-slate-600 dark:text-[#94A3B8] text-sm">Bisa. Notifikasi Email otomatis bawaan Google (gratis). Untuk WhatsApp, kami bisa mengintegrasikannya dengan provider API WhatsApp pihak ketiga pilihan Anda.</p>
+                    </div>
+                </div>
+                <div class="faq-item saas-card overflow-hidden">
+                    <button class="faq-button w-full text-left px-6 py-4 font-semibold text-slate-800 dark:text-[#E5E7EB] flex justify-between items-center focus:outline-none">
+                        <span>10. Bagaimana cara memulainya?</span><i class="ph ph-caret-down transition-transform duration-300 text-slate-400 dark:text-[#94A3B8]"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6">
+                        <p class="pb-4 text-slate-600 dark:text-[#94A3B8] text-sm">Klik tombol "Konsultasi Gratis" di website ini. Tim analis kami akan menjadwalkan meeting (online/offline) untuk memetakan kebutuhan Anda tanpa biaya komitmen.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 reveal">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div class="max-w-3xl text-left">
+                        <h2 class="text-brand-primary dark:text-brand-secondary font-semibold tracking-wide uppercase text-sm mb-2">BLOG & INSIGHT</h2>
+                        <h3 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-[#E5E7EB] mb-4">Insight Aplikasi Bisnis & Transformasi Digital</h3>
+                        <p class="text-slate-600 dark:text-[#94A3B8]">Temukan insight, studi kasus, tips implementasi, dan rekomendasi aplikasi bisnis untuk membantu UMKM, sekolah, yayasan, retail, property, hingga perusahaan meningkatkan produktivitas melalui transformasi digital.</p>
+                    </div>
+                    <div class="shrink-0 text-left md:text-right">
+                        <a href="https://kulineriadigital.blogspot.com/" target="_blank" rel="noopener noreferrer" class="group/cta inline-flex items-center text-sm font-semibold text-brand-primary dark:text-brand-secondary hover:text-brand-secondary dark:hover:text-white transition-all duration-300">
+                            <span class="border-b border-transparent group-hover/cta:border-brand-secondary dark:group-hover/cta:border-white transition-all duration-300 pb-0.5">Artikel lengkap tersedia di Kulineria Digital</span>
+                            <i class="ph ph-arrow-up-right ml-1.5 transform group-hover/cta:translate-x-1 group-hover/cta:-translate-y-1 transition-all duration-300 text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="blog-grid">
+                <!-- Blog 1 -->
+                <article class="saas-card overflow-hidden flex flex-col reveal group cursor-pointer" onclick="LEAD_ENGINE.handleCTA('blog', {id: 'blog1'})">
+                    <div class="h-48 overflow-hidden relative border-b border-slate-100 dark:border-white/5">
+                        <img src="https://placehold.co/800x400/0F172A/4F46E5?text=Inventory+App+Dashboard" alt="Inventory Tutorial" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-brand-primary/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">Tutorial</span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1">
+                        <div class="flex items-center text-xs text-slate-500 dark:text-[#94A3B8] mb-3 gap-2">
+                            <i class="ph ph-calendar-blank"></i> 17 Jun 2026
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800 dark:text-[#E5E7EB] mb-3 group-hover:text-brand-primary dark:group-hover:text-brand-secondary transition-colors line-clamp-2">Cara Membuat Aplikasi Inventory dengan Google Apps Script</h4>
+                        <p class="text-slate-600 dark:text-[#94A3B8] text-sm mb-6 flex-1 line-clamp-3">Panduan langkah demi langkah membangun sistem manajemen stok barang terpusat menggunakan ekosistem gratis dari Google Workspace.</p>
+                        <span class="inline-flex items-center text-sm font-semibold text-brand-primary dark:text-brand-secondary group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                            Baca Selengkapnya <i class="ph ph-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </div>
+                </article>
+
+                <!-- Blog 2 -->
+                <article class="saas-card overflow-hidden flex flex-col reveal group cursor-pointer" style="transition-delay: 100ms;" onclick="LEAD_ENGINE.handleCTA('blog', {id: 'blog2'})">
+                    <div class="h-48 overflow-hidden relative border-b border-slate-100 dark:border-white/5">
+                        <img src="https://placehold.co/800x400/0F172A/06B6D4?text=Business+Growth+Chart" alt="UMKM Digitalization" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-brand-secondary/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">Bisnis</span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1">
+                        <div class="flex items-center text-xs text-slate-500 dark:text-[#94A3B8] mb-3 gap-2">
+                            <i class="ph ph-calendar-blank"></i> 15 Jun 2026
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800 dark:text-[#E5E7EB] mb-3 group-hover:text-brand-primary dark:group-hover:text-brand-secondary transition-colors line-clamp-2">5 Alasan UMKM Harus Segera Digitalisasi Data</h4>
+                        <p class="text-slate-600 dark:text-[#94A3B8] text-sm mb-6 flex-1 line-clamp-3">Meninggalkan pencatatan manual di kertas adalah langkah awal menuju efisiensi, akurasi, dan pertumbuhan bisnis yang eksponensial.</p>
+                        <span class="inline-flex items-center text-sm font-semibold text-brand-primary dark:text-brand-secondary group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                            Baca Selengkapnya <i class="ph ph-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </div>
+                </article>
+
+                <!-- Blog 3 -->
+                <article class="saas-card overflow-hidden flex flex-col reveal group cursor-pointer" style="transition-delay: 200ms;" onclick="LEAD_ENGINE.handleCTA('blog', {id: 'blog3'})">
+                    <div class="h-48 overflow-hidden relative border-b border-slate-100 dark:border-white/5">
+                        <img src="https://placehold.co/800x400/0F172A/8B5CF6?text=Code+vs+NoCode" alt="GAS vs AppSheet" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-brand-accent/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">Komparasi</span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1">
+                        <div class="flex items-center text-xs text-slate-500 dark:text-[#94A3B8] mb-3 gap-2">
+                            <i class="ph ph-calendar-blank"></i> 10 Jun 2026
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800 dark:text-[#E5E7EB] mb-3 group-hover:text-brand-primary dark:group-hover:text-brand-secondary transition-colors line-clamp-2">Google Apps Script vs AppSheet: Mana yang Terbaik?</h4>
+                        <p class="text-slate-600 dark:text-[#94A3B8] text-sm mb-6 flex-1 line-clamp-3">Analisis mendalam membandingkan kustomisasi kode murni dengan platform No-Code, serta dampak biaya bulanan untuk perusahaan.</p>
+                        <span class="inline-flex items-center text-sm font-semibold text-brand-primary dark:text-brand-secondary group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                            Baca Selengkapnya <i class="ph ph-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </div>
+                </article>
+
+                <!-- Blog 4 -->
+                <article class="saas-card overflow-hidden flex flex-col reveal group cursor-pointer" onclick="LEAD_ENGINE.handleCTA('blog', {id: 'blog4'})">
+                    <div class="h-48 overflow-hidden relative border-b border-slate-100 dark:border-white/5">
+                        <img src="https://placehold.co/800x400/0F172A/10B981?text=CRM+Leads+Funnel" alt="CRM UMKM" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-brand-primary/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">Strategi</span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1">
+                        <div class="flex items-center text-xs text-slate-500 dark:text-[#94A3B8] mb-3 gap-2">
+                            <i class="ph ph-calendar-blank"></i> 05 Jun 2026
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800 dark:text-[#E5E7EB] mb-3 group-hover:text-brand-primary dark:group-hover:text-brand-secondary transition-colors line-clamp-2">Cara Membuat CRM Murah namun Powerful untuk UMKM</h4>
+                        <p class="text-slate-600 dark:text-[#94A3B8] text-sm mb-6 flex-1 line-clamp-3">Jangan biarkan leads Anda terbengkalai. Pelajari cara merancang sistem Customer Relationship Management cerdas dengan budget minim.</p>
+                        <span class="inline-flex items-center text-sm font-semibold text-brand-primary dark:text-brand-secondary group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                            Baca Selengkapnya <i class="ph ph-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </div>
+                </article>
+
+                <!-- Blog 5 -->
+                <article class="saas-card overflow-hidden flex flex-col reveal group cursor-pointer" style="transition-delay: 100ms;" onclick="LEAD_ENGINE.handleCTA('blog', {id: 'blog5'})">
+                    <div class="h-48 overflow-hidden relative border-b border-slate-100 dark:border-white/5">
+                        <img src="https://placehold.co/800x400/0F172A/F59E0B?text=Online+Registration+Flow" alt="SPMB Online" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-brand-secondary/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">Edukasi</span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1">
+                        <div class="flex items-center text-xs text-slate-500 dark:text-[#94A3B8] mb-3 gap-2">
+                            <i class="ph ph-calendar-blank"></i> 01 Jun 2026
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800 dark:text-[#E5E7EB] mb-3 group-hover:text-brand-primary dark:group-hover:text-brand-secondary transition-colors line-clamp-2">Membangun Sistem SPMB Online yang Ramah Pengguna</h4>
+                        <p class="text-slate-600 dark:text-[#94A3B8] text-sm mb-6 flex-1 line-clamp-3">Tips merancang alur pendaftaran siswa baru secara online, mulai dari pengisian form hingga verifikasi pembayaran otomatis.</p>
+                        <span class="inline-flex items-center text-sm font-semibold text-brand-primary dark:text-brand-secondary group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                            Baca Selengkapnya <i class="ph ph-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </div>
+                </article>
+
+                <!-- Blog 6 -->
+                <article class="saas-card overflow-hidden flex flex-col reveal group cursor-pointer" style="transition-delay: 200ms;" onclick="LEAD_ENGINE.handleCTA('blog', {id: 'blog6'})">
+                    <div class="h-48 overflow-hidden relative border-b border-slate-100 dark:border-white/5">
+                        <img src="https://placehold.co/800x400/0F172A/EC4899?text=Data+Analytics+Visual" alt="Modern Dashboard" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-brand-accent/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">Desain UI/UX</span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1">
+                        <div class="flex items-center text-xs text-slate-500 dark:text-[#94A3B8] mb-3 gap-2">
+                            <i class="ph ph-calendar-blank"></i> 25 Mei 2026
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800 dark:text-[#E5E7EB] mb-3 group-hover:text-brand-primary dark:group-hover:text-brand-secondary transition-colors line-clamp-2">Panduan Dashboard Bisnis Modern: Data Menjadi Visual</h4>
+                        <p class="text-slate-600 dark:text-[#94A3B8] text-sm mb-6 flex-1 line-clamp-3">Menyajikan data ribuan baris menjadi grafik interaktif yang mempermudah pengambilan keputusan krusial bagi direksi.</p>
+                        <span class="inline-flex items-center text-sm font-semibold text-brand-primary dark:text-brand-secondary group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                            Baca Selengkapnya <i class="ph ph-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marketing Blog Modal Redesign -->
+    <div id="blog-modal" class="modal-overlay fixed inset-0 z-[100] bg-slate-900/80 dark:bg-brand-dark/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div class="modal-content relative w-full max-w-3xl bg-white dark:bg-brand-modal rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.5)] my-8 flex flex-col max-h-[85vh] overflow-hidden border border-slate-200 dark:border-white/5">
+            
+            <!-- Modal Header (Sticky) -->
+            <div class="sticky top-0 z-20 flex items-center justify-between p-6 bg-white/95 dark:bg-brand-modal/95 backdrop-blur-md border-b border-slate-100 dark:border-white/5">
+                <div id="modal-category" class="inline-flex items-center px-4 py-1.5 rounded-full bg-brand-primary/10 dark:bg-brand-primary/20 text-brand-primary text-sm font-bold tracking-wide">Kategori</div>
+                <button onclick="window.closeBlogModal()" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 flex items-center justify-center text-slate-500 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white transition-colors">
+                    <i class="ph ph-x text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body (Scrollable) -->
+            <div class="p-6 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar flex-1 bg-white dark:bg-brand-modal">
+                <div class="max-w-2xl mx-auto">
+                    <h2 id="modal-title" class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-[#E5E7EB] mb-6 leading-[1.3]">Judul Artikel Marketing</h2>
+                    
+                    <div class="flex flex-wrap items-center gap-4 text-sm font-medium text-slate-500 dark:text-[#94A3B8] mb-10 border-b border-slate-200 dark:border-white/5 pb-8">
+                        <div class="flex items-center gap-2"><i class="ph ph-calendar-blank text-brand-primary"></i> <span id="modal-date">Tanggal</span></div>
+                        <div class="hidden sm:block w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600"></div>
+                        <div class="flex items-center gap-2"><i class="ph ph-user text-brand-secondary"></i> <span id="modal-author">GASORA Team</span></div>
+                        <div class="hidden sm:block w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600"></div>
+                        <div class="flex items-center gap-2"><i class="ph ph-clock text-brand-accent"></i> <span id="modal-readtime">5 min read</span></div>
+                    </div>
+
+                    <!-- Cover Image Container untuk Modal Blog -->
+                    <div id="modal-cover-container" class="w-full h-64 sm:h-80 md:h-96 rounded-2xl overflow-hidden mb-10 hidden border border-slate-200 dark:border-white/5 shadow-sm">
+                        <img id="modal-cover-img" src="" alt="Blog Cover" class="w-full h-full object-cover" loading="lazy" decoding="async">
+                    </div>
+
+                    <div id="modal-content-body" class="blog-prose">
+                        <!-- Content injected via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer (Sticky) -->
+            <div class="sticky bottom-0 z-20 p-6 bg-slate-50/95 dark:bg-[#131A2B]/95 backdrop-blur-md border-t border-slate-200 dark:border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3" id="modal-social-share-container">
+                    <span class="text-sm font-medium text-slate-500 dark:text-[#94A3B8]">Bagikan:</span>
+                    <button class="w-10 h-10 rounded-full bg-white dark:bg-white/5 hover:bg-[#1DA1F2]/10 dark:hover:bg-[#1DA1F2]/20 text-[#1DA1F2] dark:text-[#94A3B8] dark:hover:text-[#1DA1F2] border border-slate-200 dark:border-white/5 flex items-center justify-center transition-colors shadow-sm"><i class="ph-fill ph-twitter-logo text-lg"></i></button>
+                    <button class="w-10 h-10 rounded-full bg-white dark:bg-white/5 hover:bg-[#0A66C2]/10 dark:hover:bg-[#0A66C2]/20 text-[#0A66C2] dark:text-[#94A3B8] dark:hover:text-[#0A66C2] border border-slate-200 dark:border-white/5 flex items-center justify-center transition-colors shadow-sm"><i class="ph-fill ph-linkedin-logo text-lg"></i></button>
+                    <button class="w-10 h-10 rounded-full bg-white dark:bg-white/5 hover:bg-[#25D366]/10 dark:hover:bg-[#25D366]/20 text-[#25D366] dark:text-[#94A3B8] dark:hover:text-[#25D366] border border-slate-200 dark:border-white/5 flex items-center justify-center transition-colors shadow-sm" onclick="window.open('https://wa.me/?text='+encodeURIComponent('Baca artikel menarik ini dari GASORA: https://gasora.id/#blog'))"><i class="ph-fill ph-whatsapp-logo text-lg"></i></button>
+                </div>
+                <a href="javascript:void(0)" onclick="return window.scrollToSection(event, 'contact'); window.closeBlogModal();" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold rounded-full text-white bg-gradient-primary hover:opacity-90 transition-all shadow-[0_5px_20px_rgba(79,70,229,0.3)] hover:shadow-[0_8px_25px_rgba(79,70,229,0.5)]">
+                    Konsultasi Pembuatan Aplikasi
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW SECTION: LEAD ENGINE - KONSULTASI GRATIS -->
+    <section id="contact" class="py-24 relative z-10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            <div class="saas-card p-8 md:p-12 relative overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.05)] dark:shadow-[0_0_50px_rgba(79,70,229,0.15)] border border-slate-200 dark:border-white/5 rounded-[2rem]">
+                <!-- Ambient bg inside card -->
+                <div class="absolute top-[-20%] right-[-10%] w-64 h-64 bg-brand-primary/10 rounded-full mix-blend-screen filter blur-[60px] pointer-events-none dark:bg-brand-primary/20"></div>
+                <div class="absolute bottom-[-10%] left-[-10%] w-64 h-64 bg-brand-secondary/10 rounded-full mix-blend-screen filter blur-[60px] pointer-events-none dark:bg-brand-secondary/20"></div>
+                
+                <div class="relative z-10">
+                    <div class="text-center mb-10">
+                        <h2 class="text-brand-primary dark:text-brand-secondary font-semibold tracking-wide uppercase text-sm mb-2">Mari Berdiskusi</h2>
+                        <h3 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-[#E5E7EB] mb-4">Konsultasi Gratis</h3>
+                        <p class="text-slate-600 dark:text-[#94A3B8]">Jadwalkan sesi dengan pakar kami. Ceritakan kebutuhan Anda, dan kami akan merancang solusi aplikasinya.</p>
+                    </div>
+
+                    <form id="lead-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="lead-name" class="block text-sm font-semibold text-slate-700 dark:text-[#E5E7EB] mb-2">Nama Lengkap <span class="text-red-500">*</span></label>
+                                <input type="text" id="lead-name" name="name" required placeholder="Cth: Budi Santoso" class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500">
+                            </div>
+                            <div>
+                                <label for="lead-whatsapp" class="block text-sm font-semibold text-slate-700 dark:text-[#E5E7EB] mb-2">WhatsApp <span class="text-red-500">*</span></label>
+                                <input type="tel" id="lead-whatsapp" name="whatsapp" required minlength="10" placeholder="Cth: 081234567890" class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500">
+                            </div>
+                            <div>
+                                <label for="lead-email" class="block text-sm font-semibold text-slate-700 dark:text-[#E5E7EB] mb-2">Email</label>
+                                <input type="email" id="lead-email" name="email" placeholder="nama@perusahaan.com" class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500">
+                            </div>
+                            <div>
+                                <label for="lead-company" class="block text-sm font-semibold text-slate-700 dark:text-[#E5E7EB] mb-2">Perusahaan / Instansi</label>
+                                <input type="text" id="lead-company" name="company" placeholder="Cth: PT Maju Bersama" class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="lead-service" class="block text-sm font-semibold text-slate-700 dark:text-[#E5E7EB] mb-2">Layanan yang Dibutuhkan <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <select id="lead-service" name="service" required class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 pr-10 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary outline-none transition-all appearance-none cursor-pointer">
+                                    <option value="" disabled selected>-- Pilih Layanan --</option>
+                                    <!-- Fallback Options, will be overridden by JS if API loaded -->
+                                    <option value="CRM Hub">CRM Hub</option>
+                                    <option value="POS">POS</option>
+                                    <option value="Inventory">Inventory</option>
+                                    <option value="HR">HR</option>
+                                    <option value="Booking">Booking</option>
+                                    <option value="PPDB">PPDB</option>
+                                    <option value="Property">Property</option>
+                                    <option value="Custom Development">Custom Development</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500 dark:text-slate-400">
+                                    <i class="ph ph-caret-down"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="lead-notes" class="block text-sm font-semibold text-slate-700 dark:text-[#E5E7EB] mb-2">Catatan / Detail Kebutuhan</label>
+                            <textarea id="lead-notes" name="notes" rows="4" placeholder="Ceritakan secara singkat kendala atau aplikasi yang ingin Anda bangun..." class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary outline-none transition-all custom-scrollbar placeholder:text-slate-400 dark:placeholder:text-slate-500"></textarea>
+                        </div>
+                        <div class="text-center pt-4 relative">
+                            <button type="submit" id="lead-submit-btn" class="inline-flex items-center justify-center px-10 py-4 text-base font-bold rounded-full text-white bg-gradient-primary hover:opacity-90 transition-all shadow-[0_10px_30px_rgba(79,70,229,0.3)] dark:shadow-[0_0_20px_rgba(79,70,229,0.5)] transform hover:scale-105 w-full md:w-auto disabled:opacity-70 disabled:transform-none disabled:cursor-not-allowed">
+                                <span>Kirim Konsultasi Gratis</span>
+                                <i class="ph ph-paper-plane-right ml-2 text-xl" id="lead-submit-icon"></i>
+                                <i class="ph ph-spinner animate-spin-slow ml-2 text-xl hidden" id="lead-submit-loader"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal-overlay fixed inset-0 z-[110] bg-slate-900/80 dark:bg-brand-dark/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
+        <div class="modal-content relative w-full max-w-sm bg-white dark:bg-brand-modal rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.5)] flex flex-col border border-slate-200 dark:border-white/5 text-center p-8">
+            <div class="w-20 h-20 bg-green-100 dark:bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="ph-fill ph-check-circle text-4xl text-green-500"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-slate-900 dark:text-[#E5E7EB] mb-2">Konsultasi Berhasil Terkirim</h3>
+            <p class="text-slate-600 dark:text-[#94A3B8] mb-8">Tim GASORA telah menerima data Anda dan akan segera menghubungi Anda melalui WhatsApp.</p>
+            <button onclick="LEAD_ENGINE.closeModals()" class="w-full py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/5 text-slate-800 dark:text-[#E5E7EB] font-semibold transition-all">Tutup</button>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="error-modal" class="modal-overlay fixed inset-0 z-[110] bg-slate-900/80 dark:bg-brand-dark/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
+        <div class="modal-content relative w-full max-w-sm bg-white dark:bg-brand-modal rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.5)] flex flex-col border border-slate-200 dark:border-white/5 text-center p-8">
+            <div class="w-20 h-20 bg-red-100 dark:bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="ph-fill ph-x-circle text-4xl text-red-500"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-slate-900 dark:text-[#E5E7EB] mb-2">Terjadi Kesalahan</h3>
+            <p class="text-slate-600 dark:text-[#94A3B8] mb-8">Mohon maaf, sistem gagal mengirim permintaan konsultasi Anda. Silakan coba kembali atau hubungi kami langsung via WhatsApp.</p>
+            <div class="flex gap-3">
+                <button onclick="LEAD_ENGINE.closeModals()" class="flex-1 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/5 text-slate-800 dark:text-[#E5E7EB] font-semibold transition-all">Tutup</button>
+                <a href="javascript:void(0)" onclick="LEAD_ENGINE.handleCTA('wa')" class="flex-1 py-3.5 rounded-xl bg-gradient-primary hover:opacity-90 text-white font-semibold transition-all flex items-center justify-center">Chat WA <i class="ph-fill ph-whatsapp-logo ml-1.5"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Updated Version -->
+    <footer id="footer" class="py-12 relative z-10 border-t border-slate-200 dark:border-white/5 bg-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center">
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 mb-6 cursor-pointer" onclick="return window.scrollToSection(event, 'hero')">
+                <div class="flex items-center gap-3">
+                    <img src="https://up2digi-app.github.io/up2digital-assets/gasora/logo.png" alt="GASORA Logo" class="h-10 sm:h-12 w-auto drop-shadow-md dark:drop-shadow-none" loading="lazy" decoding="async">
+                    <span class="font-bold text-2xl sm:text-3xl tracking-tight gasora-gradient-text">GASORA</span>
+                </div>
+                <span class="hidden sm:inline-block text-slate-300 dark:text-slate-600 text-xl">-</span>
+                <span class="text-sm sm:text-base font-medium text-slate-500 dark:text-[#94A3B8] mt-1 sm:mt-0" id="footer-tagline">Bangun Aplikasi Bisnis Lebih Cepat</span>
+            </div>
+            
+            <p class="text-slate-500 dark:text-[#94A3B8] text-sm mb-4">
+                Part of <a href="javascript:void(0)" onclick="LEAD_ENGINE.handleCTA('wa')" class="font-bold text-slate-700 dark:text-[#E5E7EB] hover:text-brand-primary dark:hover:text-brand-secondary transition-colors gasora-gradient-text">UP2 Digital</a> Ecosystem
+            </p>
+
+            <div id="footer-social-container" class="flex items-center justify-center gap-4 mb-4">
+                <!-- Social Fallback (Empty as per original design, dynamic injects here) -->
+            </div>
+
+            <p class="text-slate-400 dark:text-[#64748B] text-xs" id="footer-copyright">
+                &copy; 2026 GASORA by UP2 Digi-App. All rights reserved.
+            </p>
+
+        </div>
+    </footer>
+
+    <!-- Floating Customer Service Premium Widget -->
+    <a href="javascript:void(0)" onclick="LEAD_ENGINE.handleCTA('wa')" class="fixed bottom-[30px] right-[30px] lg:bottom-[40px] lg:right-[40px] z-[90] flex items-end gap-3 sm:gap-4 cs-widget hover:scale-105 transition-transform duration-300 group">
+        
+        <!-- Chat Bubble -->
+        <div class="flex flex-col items-start bg-white/95 dark:bg-brand-card/95 backdrop-blur-md px-4 py-3 sm:px-5 sm:py-3.5 w-[220px] md:w-[260px] rounded-2xl rounded-br-sm border border-slate-200 dark:border-brand-primary/30 shadow-[0_15px_35px_rgba(0,0,0,0.1)] dark:shadow-[0_15px_40px_rgba(79,70,229,0.25)] transition-all cs-bounce mb-1">
+            <div class="flex items-center gap-1.5 mb-1.5">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+                <span class="text-green-600 dark:text-green-400 font-bold text-[9px] tracking-[1px] leading-none">ONLINE</span>
+            </div>
+            <span class="text-slate-800 dark:text-[#E5E7EB] font-semibold text-[14px] tracking-wide whitespace-nowrap mb-0.5" id="wa-cs-name">Konsultan GASORA</span>
+            <span class="text-slate-500 dark:text-[#94A3B8] font-normal text-[11px] whitespace-nowrap" id="wa-cs-desc">Konsultasi Gratis</span>
+        </div>
+
+        <div class="relative cs-bounce flex justify-center items-end" style="animation-delay: 100ms;">
+            <!-- Modern Cartoon CS Avatar (Transparent PNG) -->
+            <img src="https://up2digi-app.github.io/up2digital-assets/avatar/avatar-cs-female-01.png" alt="Customer Service" class="w-[90px] lg:w-[110px] h-auto object-contain filter drop-shadow-xl dark:drop-shadow-[0_10px_20px_rgba(79,70,229,0.4)] relative z-10 animate-pulse-glow" loading="lazy" decoding="async">
+            
+            <!-- Online Indicator Bubble -->
+            <div class="absolute bottom-2 right-0 md:bottom-3 md:right-1 w-6 h-6 md:w-7 md:h-7 bg-green-500 rounded-full border-[2px] border-white dark:border-[#0F172A] flex items-center justify-center shadow-[0_0_15px_rgba(34,197,94,0.6)] z-20">
+                <span class="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping"></span>
+                <i class="ph-fill ph-check text-white text-[10px] md:text-[12px] relative"></i>
+            </div>
+        </div>
+    </a>
+
+    <!-- ========================================================================= -->
+    <!-- ENGINE SCRIPT V4.1C (FINAL STABILIZATION PATCH) -->
+    <!-- ========================================================================= -->
+    <script>
+    // =========================================================================
+    // 0. SMOOTH SCROLL HELPER
+    // =========================================================================
+    window.scrollToSection = function(e, id) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        const el = document.getElementById(id);
+        if (el) {
+            const navbar = document.getElementById('branding');
+            const navbarHeight = navbar ? navbar.offsetHeight : 80;
+            const elementPosition = el.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+        }
+        const menu = document.getElementById('mobile-menu');
+        if (menu && !menu.classList.contains('hidden')) { menu.classList.add('hidden'); }
+        return false;
+    };
+
+    // =========================================================================
+    // 1. CONFIG & DEBUG ENGINE
+    // =========================================================================
+    window.GASORA_VERSION = "4.1C";
+
+    const CONFIG = {
+        SITE_ID: "gasora",
+        SITE_NAME: "GASORA",
+        VERSION: window.GASORA_VERSION,
+        API_BASE: "https://script.google.com/macros/s/AKfycbzCO6NQTMJ7rdou9L2R5n9tflBZQz8XMZ_qrZBaQ5HA_6ZsmWYUf0bpfOizTR3yG5U81w/exec",
+        API_ENDPOINT: "?action=landing",
+        CACHE_ENABLED: true,
+        CACHE_DURATION: 300000, // 5 Minutes
+        DEFAULT_WA: "https://wa.link/i8w855",
+        DEFAULT_EMAIL: "halo@gasora.id",
+        DEFAULT_ADDRESS: "Jakarta, Indonesia",
+        DEFAULT_CTA: "Konsultasi Gratis",
+        DEBUG_MODE: false // Set to true to view Lifecycle Logs in Console
+    };
+
+    const DEBUG = {
+        log: function(msg, data = '') {
+            if(CONFIG.DEBUG_MODE) console.log(`[GASORA] ${msg}`, data !== '' ? data : '');
+        },
+        warn: function(msg, err) {
+            if(CONFIG.DEBUG_MODE) console.warn(`[GASORA WARNING] ${msg}`, err);
+        }
+    };
+
+    // =========================================================================
+    // 2. FALLBACK DATA (Cleaned)
+    // =========================================================================
+    const DOM_CACHE = { pricing: '', faq: '', testimonial: '', blog: '' };
+
+    const APP_DETAILS_FALLBACK = [
+        { showcase_id: 'booking', name: 'Online Booking System', niche: 'Reservasi & Jadwal Online', kategori: 'ops', preview_image: 'https://up2digi-app.github.io/up2digital-assets/gasora/demo/online-booking-system-dashboard.jpeg', icon: 'ph-calendar-check', description: 'Sistem reservasi pintar untuk jasa konseling, salon, lapangan olahraga, atau rental kendaraan yang mencegah jadwal bentrok.', features: ['Katalog Jasa & Layanan', 'Kalender Ketersediaan Realtime', 'Notifikasi Konfirmasi via WA'], showcase_link: 'https://up2digi-app.github.io/up2digital-assets/gasora/showcase/online-booking-system-demo.html', is_available: true, hero_slider: true },
+        { showcase_id: 'crm', name: 'CRM Customer Management', niche: 'Database Klien & Follow Up', kategori: 'crm', preview_image: 'https://up2digi-app.github.io/up2digital-assets/gasora/demo/crm-customer-management-dashboard.jpeg', icon: 'ph-users-three', description: 'Kelola alur penjualan dari prospek hingga closing. Pastikan tidak ada potensi penjualan yang lepas.', features: ['Pipeline Penjualan Visual', 'Database Kontak Terpusat', 'Reminder Follow-up'], showcase_link: 'https://up2digi-app.github.io/up2digital-assets/gasora/showcase/crm-customer-management-demo.html', is_available: true, hero_slider: true },
+        { showcase_id: 'cashbank', name: 'Cash & Bank Management', niche: 'Arus Kas & Buku Bank', kategori: 'finance', preview_image: 'https://up2digi-app.github.io/up2digital-assets/gasora/demo/cash-bank-management-dashboard.jpeg', icon: 'ph-wallet', description: 'Buku kas digital modern untuk merekam setiap transaksi masuk dan keluar dari berbagai rekening bank.', features: ['Pencatatan Multi-Rekening', 'Kategorisasi Pengeluaran', 'Transfer Antar Rekening'], showcase_link: 'https://up2digi-app.github.io/up2digital-assets/gasora/showcase/cash-bank-management-demo.html', is_available: true, hero_slider: true },
+        { showcase_id: 'leave', name: 'Employee Leave Management', niche: 'Pengajuan Cuti & Izin', kategori: 'hr', preview_image: 'https://up2digi-app.github.io/up2digital-assets/gasora/demo/employee-leave-management-dashboard.jpeg', icon: 'ph-calendar-x', description: 'Digitalisasi formulir pengajuan cuti, sakit, dan izin karyawan. Dengan sistem approval berjenjang.', features: ['Kalkulasi Sisa Saldo', 'Form Pengajuan Online', 'Approval Bertingkat'], showcase_link: 'https://up2digi-app.github.io/up2digital-assets/gasora/showcase/employee-leave-management-demo.html', is_available: true, hero_slider: true },
+        { showcase_id: 'inventory', name: 'Inventory Management', niche: 'Sistem Manajemen Gudang', kategori: 'retail', preview_image: 'https://up2digi-app.github.io/up2digital-assets/gasora/demo/inventory-management-dashboard.jpeg', icon: 'ph-package', description: 'Aplikasi manajemen gudang untuk memantau pergerakan stok barang secara realtime.', features: ['Barang Masuk/Keluar', 'Manajemen Multi-Gudang', 'Notifikasi Minimum Stok'], showcase_link: 'https://up2digi-app.github.io/up2digital-assets/gasora/showcase/inventory-management-demo.html', is_available: true, hero_slider: true },
+        { showcase_id: 'pos', name: 'Point of Sale Management', niche: 'Sistem Kasir Ritel', kategori: 'retail', preview_image: 'https://up2digi-app.github.io/up2digital-assets/gasora/demo/retail-pos-dashboard.jpeg', icon: 'ph-storefront', description: 'Sistem kasir cerdas untuk mempercepat transaksi di toko fisik Anda terhubung inventory.', features: ['Antarmuka Kasir Interaktif', 'Dukungan Barcode', 'Cetak Struk/Kirim WA'], showcase_link: 'https://up2digi-app.github.io/up2digital-assets/gasora/showcase/point-of-sale-management-demo.html', is_available: true, hero_slider: true }
+    ];
+
+    const BLOG_FALLBACK = [
+        { id: 'blog1', title: 'Cara Membuat Aplikasi Inventory dengan Google Apps Script', category: 'Tutorial', publish_date: '17 Jun 2026', excerpt: 'Panduan langkah demi langkah membangun sistem manajemen stok barang terpusat menggunakan ekosistem gratis dari Google Workspace.', content: '<p>Standard Fallback Content...</p>' },
+        { id: 'blog2', title: '5 Alasan UMKM Harus Segera Digitalisasi Data', category: 'Bisnis', publish_date: '15 Jun 2026', excerpt: 'Meninggalkan pencatatan manual di kertas adalah langkah awal menuju efisiensi, akurasi, dan pertumbuhan bisnis yang eksponensial.', content: '<p>Standard Fallback Content...</p>' }
+    ];
+
+    const FALLBACK_DATA = { settings: {}, showcase: APP_DETAILS_FALLBACK, pricing: [], pricing_features: [], faq: [], testimonial: [], blog: BLOG_FALLBACK, social: [] };
+
+    // NORMALIZED STATE FOR MODALS
+    const NORMALIZED_STATE = { showcase: [], blog: [] };
+
+    // =========================================================================
+    // 3. API ABSTRACTION (SINGLE REQUEST)
+    // =========================================================================
+    const API = {
+        get: async function(endpoint, params = {}) {
+            let url = `${CONFIG.API_BASE}${CONFIG.API_ENDPOINT}&site=${CONFIG.SITE_ID}`;
+            for (let key in params) { url += `&${key}=${encodeURIComponent(params[key])}`; }
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
+                const data = await response.json();
+                DEBUG.log('API Connected successfully.');
+                return data;
+            } catch (e) {
+                DEBUG.warn('API Fetch Error (Falling back to cached/static data)', e);
+                return null;
+            }
+        },
+        post: async function(payload) {
+            try {
+                const response = await fetch(CONFIG.API_BASE, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload)
+                });
+                return await response.json().catch(() => ({ status: 'success' })); 
+            } catch (e) { throw e; }
+        }
+    };
+
+    // =========================================================================
+    // 4. HERO TYPEWRITER ENGINE (STABILIZED)
+    // =========================================================================
+    const HERO_ENGINE = {
+        words: ["POS System", "Inventory", "CRM", "SPMB Online", "Tabungan Siswa", "ERP Lite", "Property"],
+        i: 0, isDeleting: false, text: "", timeout: null, target: null,
+        
+        initTypewriter: function() {
+            this.target = document.getElementById("typewriter");
+            this.restartTypewriter();
+        },
+        restartTypewriter: function() {
+            clearTimeout(this.timeout);
+            this.i = 0; this.isDeleting = false; this.text = "";
+            if(this.target) {
+                this.target.innerHTML = "";
+                DEBUG.log('Hero Restarted');
+                this.type();
+            }
+        },
+        type: function() {
+            if(!this.target) return;
+            const currentWord = this.words[this.i];
+            if (this.isDeleting) this.text = currentWord.substring(0, this.text.length - 1);
+            else this.text = currentWord.substring(0, this.text.length + 1);
+            
+            this.target.innerHTML = this.text;
+            let typeSpeed = 100;
+            if (this.isDeleting) typeSpeed /= 2;
+
+            if (!this.isDeleting && this.text === currentWord) {
+                typeSpeed = 2000;
+                this.isDeleting = true;
+            } else if (this.isDeleting && this.text === "") {
+                this.isDeleting = false;
+                this.i++;
+                if (this.i >= this.words.length) this.i = 0;
+                typeSpeed = 500;
+            }
+            this.timeout = setTimeout(() => this.type(), typeSpeed);
+        }
+    };
+
+    // =========================================================================
+    // 5. UTILS & COMPATIBILITY LAYER (CMS READY)
+    // =========================================================================
+    const UTILS = {
+        getCache: function(key) {
+            if (!CONFIG.CACHE_ENABLED) return null;
+            const cached = sessionStorage.getItem(key);
+            if (!cached) return null;
+            try {
+                const parsed = JSON.parse(cached);
+                if (Date.now() - parsed.timestamp > CONFIG.CACHE_DURATION) {
+                    sessionStorage.removeItem(key);
+                    return null;
+                }
+                return parsed.data;
+            } catch (e) { return null; }
+        },
+        setCache: function(key, data) {
+            if (!CONFIG.CACHE_ENABLED || !data) return;
+            sessionStorage.setItem(key, JSON.stringify({ timestamp: Date.now(), data: data }));
+        },
+        showLoader: function(text = "Memuat Ekosistem GASORA...") {
+            const loader = document.getElementById('global-loader');
+            const loaderText = document.getElementById('global-loader-text');
+            if(loader && loaderText) {
+                loaderText.innerText = text;
+                loader.classList.remove('hidden', 'opacity-0');
+            }
+        },
+        hideLoader: function() {
+            const loader = document.getElementById('global-loader');
+            if (loader) {
+                loader.classList.add('opacity-0');
+                setTimeout(() => loader.classList.add('hidden'), 700);
+            }
+        },
+        formatDate: function(dateStr) {
+            if (!dateStr) return "";
+            try {
+                const date = new Date(dateStr);
+                if (isNaN(date.getTime())) return dateStr; 
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+            } catch (e) { return dateStr; }
+        },
+        generateUUID: function() {
+            if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+            return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16));
+        },
+        // NORMALIZERS - Always return standardized structure safely
+        normalizeSettings: function(item) {
+            if (!item) return {};
+            return {
+                brand_name: item.brand_name ?? item.company_name ?? item.site_name ?? "GASORA",
+                tagline: item.tagline ?? "Bangun Aplikasi Bisnis Lebih Cepat",
+                logo_url: item.logo_url ?? item.logo ?? "",
+                favicon_url: item.favicon_url ?? item.favicon ?? "",
+                whatsapp: item.whatsapp ?? item.whatsapp_link ?? CONFIG.DEFAULT_WA,
+                email: item.email ?? CONFIG.DEFAULT_EMAIL,
+                address: item.address ?? CONFIG.DEFAULT_ADDRESS,
+                cta_text: item.cta_text ?? item.hero_button_text ?? CONFIG.DEFAULT_CTA,
+                seo_title: item.seo_title ?? `${item.brand_name ?? "GASORA"} - ${item.tagline ?? "Bangun Aplikasi Bisnis Lebih Cepat"}`,
+                seo_description: item.seo_description ?? "",
+                seo_keywords: item.seo_keywords ?? "",
+                canonical_url: item.canonical_url ?? "",
+                og_image: item.og_image ?? item.logo_url ?? item.logo ?? "",
+                twitter_image: item.twitter_image ?? item.logo_url ?? item.logo ?? "",
+                copyright: item.copyright ?? item.footer_text ?? `&copy; ${new Date().getFullYear()} GASORA by UP2 Digi-App. All rights reserved.`,
+                primary_color: item.primary_color ?? null,
+                secondary_color: item.secondary_color ?? null,
+                service_options: item.service_options ?? item.services ?? "CRM Hub,POS,Inventory,HR,Booking,PPDB,Property,Custom Development"
+            };
+        },
+        normalizeShowcase: function(item) {
+            if (!item) return {};
+            return {
+                id: item.id ?? item.showcase_id ?? "",
+                title: item.title ?? item.name ?? "",
+                subtitle: item.short_description ?? item.niche ?? item.subtitle ?? "",
+                description: item.description ?? item.desc ?? "",
+                image: item.thumbnail ?? item.image ?? item.preview_image ?? item.gallery_image ?? "",
+                category: item.category ?? item.kategori ?? "ops",
+                demo_url: item.demo_url ?? item.showcase_link ?? item.demo_link ?? "",
+                buy_url: item.button_url ?? item.buy_url ?? "",
+                button_text: item.button_text ?? "Beli",
+                icon: item.icon ?? "ph-app-window",
+                features: Array.isArray(item.features) ? item.features : (typeof item.features === 'string' ? item.features.split('|').map(f => f.trim()).filter(f=>f) : []),
+                active: [true, 'true', 'TRUE', '1', 1, 'yes', 'Yes'].includes(item.active ?? item.is_available ?? true),
+                hero_slider: [true, 'true', 'TRUE', '1', 1, 'yes', 'Yes'].includes(item.hero_slider ?? false)
+            };
+        },
+        normalizePricing: function(item) {
+            if (!item) return {};
+            return {
+                id: item.package_id ?? item.id ?? "",
+                name: item.package_name ?? item.name ?? item.title ?? "",
+                price_prefix: item.price_prefix ?? "",
+                price: item.price_text ?? item.price ?? "",
+                description: item.description ?? item.short_description ?? item.desc ?? "",
+                button_text: item.button_text ?? item.cta_text ?? "",
+                button_url: item.button_link ?? item.button_url ?? item.link ?? "",
+                cta_type: item.cta_type ?? "",
+                featured: [true, 'true', 'TRUE', '1', 1, 'yes', 'Yes'].includes(item.featured ?? item.popular ?? false),
+                active: [true, 'true', 'TRUE', '1', 1, 'yes', 'Yes'].includes(item.active ?? true),
+                features: Array.isArray(item.features) ? item.features : (typeof item.features === 'string' ? item.features.split('|').map(f => f.trim()).filter(f=>f) : [])
+            };
+        },
+        normalizeFAQ: function(item) {
+            if (!item) return {};
+            return {
+                question: item.question ?? item.title ?? "",
+                answer: item.answer ?? item.content ?? item.desc ?? ""
+            };
+        },
+        normalizeTestimonial: function(item) {
+            if (!item) return {};
+            return {
+                name: item.name ?? "",
+                company: item.company ?? "",
+                position: item.position ?? item.role ?? "",
+                avatar: item.avatar_url ?? item.photo ?? item.avatar ?? "",
+                review: item.review ?? item.testimonial ?? item.content ?? item.message ?? "",
+                rating: Number(item.rating ?? 5),
+                active: [true, 'true', 'TRUE', '1', 1, 'yes', 'Yes'].includes(item.active ?? true)
+            };
+        },
+        normalizeBlog: function(item) {
+            if (!item) return {};
+            return {
+                id: item.id ?? "",
+                slug: item.slug ?? "",
+                title: item.title ?? item.name ?? "",
+                category: item.category ?? "Artikel",
+                excerpt: item.excerpt ?? item.summary ?? item.short_description ?? item.description ?? (item.content ? item.content.replace(/<[^>]+>/g, '').substring(0, 100) + '...' : ""),
+                content: item.content ?? item.body ?? "",
+                cover_image: item.cover_image ?? item.thumbnail ?? item.cover ?? item.image ?? item.image_url ?? item.featured_image ?? "",
+                author: item.author ?? "GASORA Team",
+                publish_date: item.publish_date ?? item.date ?? item.created_at ?? item.created_date ?? "",
+                featured: item.featured ?? false,
+                tags: item.tags ?? "",
+                read_time: item.read_time ?? item.reading_time ?? "5 min read",
+                active: [true, 'true', 'TRUE', '1', 1, 'yes', 'Yes'].includes(item.active ?? true)
+            };
+        },
+        normalizeSocial: function(item) {
+            if (!item) return {};
+            return {
+                platform: item.platform ?? item.name ?? "",
+                url: item.url ?? item.link ?? "",
+                icon: item.icon ?? "",
+                sort_order: parseInt(item.sort_order) || 0,
+                active: [true, 'true', 'TRUE', '1', 1, 'yes', 'Yes'].includes(item.active ?? true)
+            };
+        },
+        normalizeLead: function(formObj) {
+            return {
+                id: this.generateUUID(),
+                created_at: new Date().toISOString(),
+                name: formObj.name || "",
+                whatsapp: formObj.whatsapp || "",
+                email: formObj.email || "",
+                company: formObj.company || "",
+                assigned_to: "",
+                follow_up_date: "",
+                service: formObj.service || "",
+                notes: formObj.notes || "",
+                source: "Landing Page",
+                status: "New Lead"
+            };
+        },
+        initUI: function() {
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+
+            function toggleTheme() {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            }
+
+            if(themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+            if(themeToggleMobileBtn) themeToggleMobileBtn.addEventListener('click', toggleTheme);
+
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            if(btn && menu) {
+                btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+            }
+
+            const navbar = document.getElementById('branding');
+            if(navbar) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 20) {
+                        navbar.classList.add('shadow-md', 'dark:shadow-lg', 'bg-white/95', 'dark:bg-brand-dark/95', 'backdrop-blur-xl');
+                        navbar.classList.remove('glass');
+                    } else {
+                        navbar.classList.remove('shadow-md', 'dark:shadow-lg', 'bg-white/95', 'dark:bg-brand-dark/95', 'backdrop-blur-xl');
+                        navbar.classList.add('glass');
+                    }
+                });
+            }
+
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                document.querySelectorAll('.reveal').forEach((element) => {
+                    if (element.getBoundingClientRect().top < windowHeight - 100) {
+                        element.classList.add('active');
+                    }
+                });
+            }
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); 
+
+            document.querySelectorAll('.modal-overlay').forEach(overlay => {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === this) { LEAD_ENGINE.closeModals(); }
+                });
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') { LEAD_ENGINE.closeModals(); }
+            });
+        },
+        initFAQ: function() {
+            document.querySelectorAll('.faq-button').forEach(button => {
+                const newBtn = button.cloneNode(true);
+                button.parentNode.replaceChild(newBtn, button);
+                newBtn.addEventListener('click', () => {
+                    const answer = newBtn.nextElementSibling;
+                    const icon = newBtn.querySelector('i');
+                    document.querySelectorAll('.faq-answer').forEach(el => {
+                        if (el !== answer) {
+                            el.style.maxHeight = null;
+                            if(el.previousElementSibling.querySelector('i')) el.previousElementSibling.querySelector('i').style.transform = 'rotate(0deg)';
+                            el.previousElementSibling.classList.remove('text-brand-primary', 'dark:text-brand-secondary');
+                        }
+                    });
+                    if (answer.style.maxHeight) {
+                        answer.style.maxHeight = null;
+                        if(icon) icon.style.transform = 'rotate(0deg)';
+                        newBtn.classList.remove('text-brand-primary', 'dark:text-brand-secondary');
+                    } else {
+                        answer.style.maxHeight = answer.scrollHeight + "px";
+                        if(icon) icon.style.transform = 'rotate(180deg)';
+                        newBtn.classList.add('text-brand-primary', 'dark:text-brand-secondary');
+                    }
+                });
+            });
+        },
+        initShowcaseFilters: function() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
+                newBtn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('active', 'border-brand-primary', 'text-brand-primary', 'dark:text-brand-secondary', 'shadow-[0_0_15px_rgba(79,70,229,0.2)]');
+                        b.classList.add('border-transparent', 'border-slate-200', 'dark:border-white/5', 'text-slate-500', 'dark:text-[#94A3B8]');
+                    });
+                    newBtn.classList.add('active', 'border-brand-primary', 'text-brand-primary', 'dark:text-brand-secondary', 'shadow-[0_0_15px_rgba(79,70,229,0.2)]');
+                    newBtn.classList.remove('border-transparent', 'border-slate-200', 'dark:border-white/5', 'text-slate-500', 'dark:text-[#94A3B8]');
+                    const filter = newBtn.dataset.filter;
+                    document.querySelectorAll('.showcase-card').forEach(card => {
+                        card.style.transform = 'scale(0.95)';
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = 'flex';
+                            setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }, 50);
+                        } else {
+                            card.style.opacity = '0';
+                            setTimeout(() => { card.style.display = 'none'; }, 400); 
+                        }
+                    });
+                });
+            });
+        }
+    };
+
+    // =========================================================================
+    // 6. LEAD ENGINE (FORM LOGIC)
+    // =========================================================================
+    const LEAD_ENGINE = {
+        init: function() {
+            const form = document.getElementById('lead-form');
+            if (form) form.addEventListener('submit', this.handleFormSubmit.bind(this));
+        },
+        handleCTA: function(type, payload = {}) {
+            if (type === 'wa' || type === 'buy') { window.open(CONFIG.DEFAULT_WA, '_blank'); } 
+            else if (type === 'demo' && payload.url && payload.url !== '#') { window.open(payload.url, '_blank'); } 
+            else if (type === 'modal' && typeof window.openAppModal === 'function') { window.openAppModal(payload.id); } 
+            else if (type === 'blog' && typeof window.openBlogModal === 'function') { window.openBlogModal(payload.id); }
+        },
+        handleFormSubmit: async function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const btn = document.getElementById('lead-submit-btn');
+            const icon = document.getElementById('lead-submit-icon');
+            const loader = document.getElementById('lead-submit-loader');
+
+            const rawData = {
+                name: form.querySelector('#lead-name').value.trim(),
+                whatsapp: form.querySelector('#lead-whatsapp').value.trim(),
+                email: form.querySelector('#lead-email').value.trim(),
+                company: form.querySelector('#lead-company').value.trim(),
+                service: form.querySelector('#lead-service').value,
+                notes: form.querySelector('#lead-notes').value.trim()
+            };
+
+            if (!rawData.name || !rawData.whatsapp || !rawData.service) return; 
+            if (rawData.whatsapp.length < 10) { alert("Nomor WhatsApp minimal 10 digit."); return; }
+
+            const payload = UTILS.normalizeLead(rawData);
+
+            btn.disabled = true;
+            icon.classList.add('hidden');
+            loader.classList.remove('hidden');
+            btn.querySelector('span').innerText = "Mengirim...";
+
+            try {
+                const requestBody = { action: 'submit_lead', source: CONFIG.SITE_ID, data: payload };
+                await API.post(requestBody);
+                DEBUG.log('Lead Submitted Successfully', payload);
+                form.reset();
+                this.showModal('success-modal');
+            } catch (err) {
+                DEBUG.warn('Lead Failed to Submit', err);
+                this.showModal('error-modal');
+            } finally {
+                btn.disabled = false;
+                icon.classList.remove('hidden');
+                loader.classList.add('hidden');
+                btn.querySelector('span').innerText = "Kirim Konsultasi Gratis";
+            }
+        },
+        showModal: function(modalId) {
+            document.body.style.overflow = 'hidden';
+            const m = document.getElementById(modalId);
+            if (m) m.classList.add('active');
+        },
+        closeModals: function() {
+            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+            setTimeout(() => {
+                if(!document.querySelector('.modal-overlay.active')) document.body.style.overflow = 'auto';
+            }, 300);
+        }
+    };
+
+    window.closeAppModal = LEAD_ENGINE.closeModals;
+    window.closeBlogModal = LEAD_ENGINE.closeModals;
+
+    // =========================================================================
+    // 7. MODULAR RENDER ENGINE (GLOBAL ERROR HANDLER + NORMALIZATION)
+    // =========================================================================
+    const RENDER_ENGINE = {
+        renderAll: function(data) {
+            if (!data) return;
+
+            const safeExecute = (name, fn) => {
+                try { 
+                    fn(); 
+                    DEBUG.log(`${name} Loaded`);
+                } catch(e) { 
+                    DEBUG.warn(`Failed to render ${name}:`, e); 
+                }
+            };
+
+            safeExecute('Settings', () => {
+                if(data.settings) {
+                    const normSettings = UTILS.normalizeSettings(data.settings);
+                    this.renderSettings(normSettings);
+                    this.renderLead(normSettings); 
+                }
+            });
+
+            safeExecute('Hero', () => { 
+                if(data.hero) this.renderHero(data.hero); 
+                HERO_ENGINE.initTypewriter(); 
+            });
+            
+            safeExecute('Showcase', () => {
+                if(data.showcase && Array.isArray(data.showcase)) {
+                    const normShowcase = data.showcase.map(UTILS.normalizeShowcase).filter(i => i.active);
+                    NORMALIZED_STATE.showcase = normShowcase;
+                    this.renderShowcase(normShowcase);
+                }
+            });
+
+            safeExecute('Pricing', () => {
+                if(data.pricing && Array.isArray(data.pricing)) {
+                    const features = data.pricing_features || [];
+                    const normPricing = data.pricing.map(p => {
+                        const np = UTILS.normalizePricing(p);
+                        if(np.features.length === 0 && features.length > 0) {
+                            const matched = features.filter(f => String(f.package_id) === String(np.id) || String(f.plan_id) === String(np.id));
+                            if(matched.length > 0) {
+                                if (matched[0].features) {
+                                    let pf = matched[0].features;
+                                    np.features = Array.isArray(pf) ? pf : (typeof pf === 'string' ? pf.split('|').map(x=>x.trim()).filter(x=>x) : []);
+                                } else {
+                                    np.features = matched.map(f => f.feature_name || f.feature || f.name || f.title).filter(f => typeof f === 'string' && f.trim() !== '');
+                                }
+                            }
+                        }
+                        return np;
+                    }).filter(i => i.active);
+                    this.renderPricing(normPricing);
+                } else if(typeof data.pricing === 'string') {
+                    const container = document.getElementById('pricing-grid');
+                    if(container) container.innerHTML = data.pricing;
+                }
+            });
+
+            safeExecute('FAQ', () => {
+                if(data.faq && Array.isArray(data.faq)) {
+                    const normFAQ = data.faq.map(UTILS.normalizeFAQ);
+                    this.renderFAQ(normFAQ);
+                } else if(typeof data.faq === 'string') {
+                    const container = document.getElementById('faq-grid');
+                    if(container) { container.innerHTML = data.faq; UTILS.initFAQ(); }
+                }
+            });
+
+            safeExecute('Testimonial', () => {
+                const testData = data.testimonial || data.testimonials;
+                if(testData && Array.isArray(testData)) {
+                    const normTest = testData.map(UTILS.normalizeTestimonial).filter(i => i.active);
+                    this.renderTestimonial(normTest);
+                } else if(typeof testData === 'string') {
+                    const container = document.getElementById('testimonials-grid');
+                    if(container) container.innerHTML = testData;
+                }
+            });
+
+            safeExecute('Blog', () => {
+                if(data.blog) {
+                    let blogArray = Array.isArray(data.blog) ? data.blog : Object.keys(data.blog).map(k => ({...data.blog[k], id: k}));
+                    const normBlog = blogArray.map(UTILS.normalizeBlog).filter(i => i.active);
+                    NORMALIZED_STATE.blog = normBlog;
+                    this.renderBlog(normBlog);
+                }
+            });
+
+            safeExecute('Social', () => {
+                if(data.social) {
+                    let socialArray = Array.isArray(data.social) ? data.social : Object.keys(data.social).map(k => ({platform: k, url: data.social[k], active: true, sort_order: 0}));
+                    const normSocial = socialArray.map(UTILS.normalizeSocial).filter(i => i.active);
+                    this.renderSocial(normSocial);
+                }
+            });
+
+            setTimeout(() => window.dispatchEvent(new Event('scroll')), 100);
+        },
+        renderSettings: function(settings) {
+            CONFIG.DEFAULT_WA = settings.whatsapp;
+            CONFIG.DEFAULT_EMAIL = settings.email;
+            CONFIG.DEFAULT_ADDRESS = settings.address;
+            CONFIG.DEFAULT_CTA = settings.cta_text;
+            document.title = settings.seo_title;
+            
+            const updateMeta = (selector, contentAttr, value) => {
+                const el = document.querySelector(selector);
+                if(el && value) el.setAttribute(contentAttr, value);
+            }
+            updateMeta('meta[name="description"]', 'content', settings.seo_description);
+            updateMeta('meta[name="keywords"]', 'content', settings.seo_keywords);
+            updateMeta('link[rel="canonical"]', 'href', settings.canonical_url);
+            updateMeta('meta[property="og:image"]', 'content', settings.og_image);
+            updateMeta('meta[name="twitter:image"]', 'content', settings.twitter_image);
+            
+            if(settings.favicon_url) {
+                const fav = document.querySelector('link[rel="icon"]');
+                const appleFav = document.querySelector('link[rel="apple-touch-icon"]');
+                if(fav) fav.href = settings.favicon_url;
+                if(appleFav) appleFav.href = settings.favicon_url;
+            }
+            if(settings.logo_url) {
+                document.querySelectorAll('img[alt="GASORA Logo"]').forEach(img => {
+                    img.src = settings.logo_url;
+                });
+            }
+
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+            let node;
+            while(node = walker.nextNode()) {
+                const text = node.nodeValue.trim();
+                if(settings.brand_name && text === 'GASORA') {
+                    if (node.parentElement && node.parentElement.classList.contains('gasora-gradient-text')) node.nodeValue = settings.brand_name;
+                }
+                if(settings.tagline && text === 'Bangun Aplikasi Bisnis Lebih Cepat') node.nodeValue = settings.tagline;
+                if(settings.cta_text && text === 'Konsultasi Gratis') node.nodeValue = settings.cta_text;
+            }
+
+            const footerTagline = document.getElementById('footer-tagline');
+            if(footerTagline && settings.tagline) footerTagline.innerText = settings.tagline;
+            const footerCopyright = document.getElementById('footer-copyright');
+            if(footerCopyright && settings.copyright) footerCopyright.innerHTML = settings.copyright;
+
+            if(settings.primary_color) document.documentElement.style.setProperty('--color-brand-primary', settings.primary_color);
+            if(settings.secondary_color) document.documentElement.style.setProperty('--color-brand-secondary', settings.secondary_color);
+        },
+        renderLead: function(settings) {
+            const serviceSelect = document.getElementById('lead-service');
+            if (serviceSelect && settings.service_options) {
+                const opts = settings.service_options.split(',').map(s => s.trim()).filter(s => s);
+                if (opts.length > 0) {
+                    serviceSelect.innerHTML = '<option value="" disabled selected>-- Pilih Layanan --</option>';
+                    opts.forEach(opt => { serviceSelect.innerHTML += `<option value="${opt}">${opt}</option>`; });
+                }
+            }
+        },
+        renderHero: function(hero) {
+            const titleEl = document.querySelector('#hero h1');
+            const descEl = document.querySelector('#hero p');
+            const heroWrapper = document.querySelector('#hero');
+            if(hero.title && titleEl) titleEl.innerHTML = hero.title; 
+            if(hero.subtitle && descEl) descEl.innerHTML = hero.subtitle;
+            if(hero.background_image && heroWrapper) {
+                heroWrapper.style.backgroundImage = `url('${hero.background_image}')`;
+                heroWrapper.style.backgroundSize = 'cover';
+                heroWrapper.style.backgroundPosition = 'center';
+            }
+        },
+        renderShowcase: function(normalizedData) {
+            const grid = document.getElementById('showcase-grid');
+            if(!grid || normalizedData.length === 0) return;
+            
+            grid.innerHTML = '';
+            normalizedData.forEach(item => {
+                let imageSection = '';
+                if (item.image) {
+                    imageSection = `<div class="w-full h-[220px] bg-cover bg-center bg-no-repeat transition-transform duration-500 group-hover:scale-105" style="background-image: url('${item.image}');"></div>`;
+                } else {
+                    let gradientClass = 'from-indigo-600 to-purple-800 dark:from-indigo-900 dark:to-purple-900';
+                    if(item.category === 'retail') gradientClass = 'from-cyan-600 to-blue-800 dark:from-cyan-900 dark:to-blue-900';
+                    else if(item.category === 'crm') gradientClass = 'from-orange-600 to-red-800 dark:from-orange-900 dark:to-red-900';
+                    else if(item.category === 'finance') gradientClass = 'from-yellow-600 to-amber-800 dark:from-yellow-900 dark:to-amber-900';
+                    else if(item.category === 'hr') gradientClass = 'from-blue-600 to-indigo-800 dark:from-blue-900 dark:to-indigo-900';
+                    else if(item.category === 'property') gradientClass = 'from-violet-600 to-fuchsia-800 dark:from-violet-900 dark:to-fuchsia-900';
+                    else if(item.category === 'ops') gradientClass = 'from-emerald-600 to-teal-800 dark:from-emerald-900 dark:to-teal-900';
+                    
+                    imageSection = `
+                    <div class="w-full h-[220px] bg-gradient-to-br ${gradientClass} flex items-center justify-center relative overflow-hidden">
+                            <i class="ph ${item.icon} text-6xl text-white/30 absolute -right-4 -bottom-4 group-hover:scale-110 transition-transform"></i>
+                            <span class="text-xl font-bold text-white relative z-10 text-center px-4 drop-shadow-md">${item.title}</span>
+                    </div>`;
+                }
+
+                let demoBtnHtml = '';
+                if (item.demo_url && item.demo_url !== '#') {
+                    demoBtnHtml = `<button onclick="LEAD_ENGINE.handleCTA('demo', {url: '${item.demo_url}'})" class="flex-1 py-2 rounded-md bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/5 text-slate-700 dark:text-[#E5E7EB] text-[11px] lg:text-xs font-bold transition-colors text-center flex items-center justify-center btn-demo">Demo</button>`;
+                }
+
+                let buttonsHtml = '';
+                if((item.demo_url && item.demo_url !== '#') || item.id || item.buy_url) {
+                    buttonsHtml = `
+                        <div class="flex gap-1.5 mt-auto">
+                            ${demoBtnHtml}
+                            ${item.id ? `<button onclick="LEAD_ENGINE.handleCTA('modal', {id: '${item.id}'})" class="flex-1 py-2 rounded-md bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/5 text-slate-700 dark:text-[#E5E7EB] text-[11px] lg:text-xs font-bold transition-colors">Detail</button>` : ''}
+                            ${item.buy_url ? `<button onclick="LEAD_ENGINE.handleCTA('buy', {url: '${item.buy_url}'})" class="flex-1 py-2 rounded-md bg-gradient-primary hover:opacity-90 text-white text-[11px] lg:text-xs font-bold transition-colors text-center flex items-center justify-center">${item.button_text}</button>` : ''}
+                        </div>
+                    `;
+                }
+
+                const cardHtml = `
+                    <div class="showcase-card saas-card overflow-hidden reveal group flex flex-col" data-category="${item.category}">
+                        <div class="relative overflow-hidden bg-slate-100 dark:bg-[#131A2B]">
+                            ${imageSection}
+                        </div>
+                        <div class="p-5 flex flex-col flex-1">
+                            <h4 class="text-lg font-bold text-slate-900 dark:text-[#E5E7EB] mb-2">${item.title}</h4>
+                            <p class="text-sm text-slate-600 dark:text-[#94A3B8] mb-6 line-clamp-2">${item.subtitle}</p>
+                            ${buttonsHtml}
+                        </div>
+                    </div>
+                `;
+                grid.insertAdjacentHTML('beforeend', cardHtml);
+            });
+
+            this.renderHeroSlider(normalizedData.filter(item => item.hero_slider));
+            UTILS.initShowcaseFilters();
+        },
+        renderHeroSlider: function(sliderItems) {
+            const sliderWrapper = document.getElementById('hero-slider');
+            const dotsContainer = document.getElementById('slider-dots');
+            if(!sliderWrapper || !dotsContainer) return;
+
+            const totalSlides = sliderItems.length;
+            if(totalSlides === 0) return;
+
+            sliderWrapper.style.width = `${totalSlides * 100}%`;
+            sliderWrapper.innerHTML = '';
+            dotsContainer.innerHTML = '';
+            
+            sliderItems.forEach((item, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'h-full relative block group/slide overflow-hidden hero-slide';
+                slide.style.width = `${100 / totalSlides}%`;
+                slide.style.cursor = 'pointer';
+                slide.addEventListener('click', () => {
+                    if(item.demo_url && item.demo_url !== '#'){ LEAD_ENGINE.handleCTA('demo', {url: item.demo_url}); } 
+                    else if(item.id) { LEAD_ENGINE.handleCTA('modal', {id: item.id}); }
+                });
+                slide.innerHTML = `
+                    <div class="w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover/slide:scale-[1.01]" style="background-image: url('${item.image}')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 dark:from-[#0F172A]/80 via-transparent to-transparent pointer-events-none"></div>
+                    <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10 bg-white/90 dark:bg-[#162032]/90 backdrop-blur px-6 py-3 rounded-xl border border-white/10 text-left transition-transform group-hover/slide:-translate-y-1 pointer-events-none">
+                        <h4 class="font-bold text-slate-900 dark:text-[#E5E7EB] text-lg">${item.title}</h4>
+                        <p class="text-xs text-brand-primary dark:text-brand-secondary font-medium">${item.subtitle}</p>
+                    </div>
+                `;
+                sliderWrapper.appendChild(slide);
+                
+                const dot = document.createElement('button');
+                dot.className = `w-2.5 h-2.5 rounded-full transition-all ${index === 0 ? 'w-8 bg-brand-primary dark:bg-brand-secondary' : 'bg-slate-300 dark:bg-white/40 hover:bg-slate-400 dark:hover:bg-white'}`;
+                dot.onclick = (e) => {
+                    e.stopPropagation();
+                    clearInterval(window.slideInterval);
+                    goToSlide(index);
+                    startAutoSlide();
+                };
+                dotsContainer.appendChild(dot);
+            });
+
+            let currentSlide = 0;
+            if(window.slideInterval) clearInterval(window.slideInterval);
+            function goToSlide(index) {
+                currentSlide = index;
+                sliderWrapper.style.transform = `translateX(-${currentSlide * (100/totalSlides)}%)`;
+                Array.from(dotsContainer.children).forEach((dot, idx) => {
+                    dot.className = `w-2.5 h-2.5 rounded-full transition-all ${idx === currentSlide ? 'w-8 bg-brand-primary dark:bg-brand-secondary' : 'bg-slate-300 dark:bg-white/40 hover:bg-slate-400 dark:hover:bg-white'}`;
+                });
+            }
+
+            const btnPrev = document.getElementById('slider-prev');
+            const btnNext = document.getElementById('slider-next');
+            if(btnPrev) {
+                const newPrev = btnPrev.cloneNode(true);
+                btnPrev.parentNode.replaceChild(newPrev, btnPrev);
+                newPrev.onclick = () => { clearInterval(window.slideInterval); currentSlide = (currentSlide - 1 + totalSlides) % totalSlides; goToSlide(currentSlide); startAutoSlide(); };
+            }
+            if(btnNext) {
+                const newNext = btnNext.cloneNode(true);
+                btnNext.parentNode.replaceChild(newNext, btnNext);
+                newNext.onclick = () => { clearInterval(window.slideInterval); currentSlide = (currentSlide + 1) % totalSlides; goToSlide(currentSlide); startAutoSlide(); };
+            }
+            function startAutoSlide() {
+                window.slideInterval = setInterval(() => { currentSlide = (currentSlide + 1) % totalSlides; goToSlide(currentSlide); }, 4000);
+            }
+            startAutoSlide();
+        },
+        renderPricing: function(normalizedData) { 
+            const container = document.getElementById('pricing-grid');
+            if(!container || normalizedData.length === 0) return;
+            
+            let html = '';
+            normalizedData.forEach((item, idx) => {
+                const delay = idx * 100;
+                
+                let titleColor = 'text-slate-500 dark:text-gray-300';
+                let checkColor = 'text-brand-primary dark:text-brand-secondary';
+                if (item.id === 'lite' || item.name.toUpperCase() === 'LITE') { titleColor = 'text-brand-secondary'; checkColor = 'text-brand-secondary'; } 
+                else if (item.id === 'custom' || item.name.toUpperCase() === 'CUSTOM') { titleColor = 'text-brand-accent'; checkColor = 'text-brand-accent'; }
+                if (item.featured) { titleColor = 'text-indigo-700'; checkColor = 'text-indigo-600'; }
+
+                let featureHtml = '';
+                item.features.forEach(f => { featureHtml += `<li class="flex items-start text-sm ${item.featured ? 'text-slate-700' : 'text-slate-700 dark:text-[#94A3B8]'}"><i class="ph ph-check-circle ${checkColor} mt-0.5 mr-2 text-lg"></i> ${f}</li>`; });
+                const pricePrefixHtml = item.price_prefix ? `<span class="text-sm ${item.featured ? 'text-slate-600' : 'text-slate-500 dark:text-[#94A3B8]'} font-normal">${item.price_prefix}</span>` : '';
+                
+                // NEW PRICING BUTTON LINK ENGINE
+                const btnText = item.button_text || "Konsultasi Sekarang";
+                const btnLink = item.button_url || "#contact";
+                
+                let btnActionStr = '';
+                if (btnLink.startsWith('http://') || btnLink.startsWith('https://')) {
+                    btnActionStr = `onclick="window.open('${btnLink}', '_blank', 'noopener,noreferrer')"`;
+                } else if (btnLink.startsWith('#')) {
+                    const targetId = btnLink.substring(1);
+                    btnActionStr = `onclick="return window.scrollToSection(event, '${targetId}')"`;
+                } else {
+                    btnActionStr = `onclick="window.location.href='${btnLink}'"`;
+                }
+
+                const btnClass = item.featured ? 'bg-gradient-primary hover:opacity-90 text-white shadow-lg' : 'bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/5 text-slate-800 dark:text-[#E5E7EB]';
+
+                if (item.featured) {
+                    html += `
+                    <div class="bg-white dark:bg-[linear-gradient(180deg,rgba(79,70,229,0.12)_0%,rgba(79,70,229,0.08)_35%,#131A2B_100%)] p-8 rounded-2xl border-2 border-brand-primary dark:border-[rgba(99,102,241,0.55)] shadow-[0_15px_40px_rgba(79,70,229,0.2)] dark:shadow-[0_0_25px_rgba(99,102,241,0.25)] flex flex-col h-full relative transform lg:scale-105 z-10 reveal" style="transition-delay: ${delay}ms;">
+                        <div class="absolute top-0 right-0 bg-brand-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>
+                        <div class="mb-4">
+                            <h4 class="text-xl font-bold ${titleColor}">${item.name}</h4>
+                            <div class="text-3xl font-bold text-slate-900 mt-2">${pricePrefixHtml}${item.price}</div>
+                        </div>
+                        <p class="text-sm text-slate-700 mb-6">${item.description}</p>
+                        <ul class="space-y-3 mb-8 flex-1">${featureHtml}</ul>
+                        <button ${btnActionStr} class="w-full block text-center py-3 rounded-xl font-semibold transition-all mt-auto ${btnClass}">${btnText}</button>
+                    </div>`;
+                } else {
+                    html += `
+                    <div class="saas-card p-8 flex flex-col h-full reveal" style="transition-delay: ${delay}ms;">
+                        <div class="mb-4">
+                            <h4 class="text-xl font-bold ${titleColor}">${item.name}</h4>
+                            <div class="text-3xl font-bold text-slate-900 dark:text-[#E5E7EB] mt-2">${pricePrefixHtml}${item.price}</div>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-[#94A3B8] mb-6">${item.description}</p>
+                        <ul class="space-y-3 mb-8 flex-1">${featureHtml}</ul>
+                        <button ${btnActionStr} class="block w-full text-center py-3 rounded-xl font-semibold transition-all mt-auto ${btnClass}">${btnText}</button>
+                    </div>`;
+                }
+            });
+            container.innerHTML = html;
+        },
+        renderFAQ: function(normalizedData) { 
+            const container = document.getElementById('faq-grid');
+            if(!container || normalizedData.length === 0) return;
+            
+            let html = '';
+            normalizedData.forEach(item => {
+                if (!item.question) return;
+                html += `
+                <div class="faq-item saas-card overflow-hidden">
+                    <button class="faq-button w-full text-left px-6 py-4 font-semibold text-slate-800 dark:text-[#E5E7EB] flex justify-between items-center focus:outline-none">
+                        <span>${item.question}</span><i class="ph ph-caret-down transition-transform duration-300 text-slate-400 dark:text-[#94A3B8]"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6">
+                        <p class="pb-4 text-slate-600 dark:text-[#94A3B8] text-sm">${item.answer}</p>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+            UTILS.initFAQ();
+        },
+        renderTestimonial: function(normalizedData) { 
+            const container = document.getElementById('testimonials-grid');
+            if(!container || normalizedData.length === 0) return;
+            
+            let html = '';
+            const gradients = ['from-brand-primary to-brand-secondary', 'from-pink-500 to-orange-500', 'from-brand-accent to-brand-primary'];
+            
+            normalizedData.forEach((item, idx) => {
+                const delay = idx * 100;
+                const grad = gradients[idx % gradients.length];
+                const initial = item.name ? item.name.charAt(0).toUpperCase() : 'U';
+                
+                let roleDisplay = item.position;
+                if(item.company) roleDisplay = item.position ? `${item.position} • ${item.company}` : item.company;
+                
+                let stars = '';
+                for(let i=0; i<item.rating; i++) stars += '<i class="ph-fill ph-star"></i>';
+                
+                let avatarHtml = `<div class="w-12 h-12 rounded-full bg-gradient-to-tr ${grad} flex items-center justify-center font-bold text-white">${initial}</div>`;
+                if(item.avatar) {
+                    avatarHtml = `<img src="${item.avatar}" alt="${item.name}" class="w-12 h-12 rounded-full object-cover shadow-sm border border-slate-200 dark:border-white/10" loading="lazy" decoding="async">`;
+                }
+
+                html += `
+                <div class="saas-card p-8 reveal" style="transition-delay: ${delay}ms;">
+                    <div class="flex text-yellow-400 mb-4">${stars}</div>
+                    <p class="text-slate-700 dark:text-gray-300 mb-6 italic">"${item.review}"</p>
+                    <div class="flex items-center gap-4">
+                        ${avatarHtml}
+                        <div>
+                            <h5 class="text-slate-900 dark:text-[#E5E7EB] font-bold">${item.name}</h5>
+                            ${roleDisplay ? `<span class="text-xs text-slate-500 dark:text-[#94A3B8] line-clamp-1">${roleDisplay}</span>` : ''}
+                        </div>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        },
+        renderBlog: function(normalizedData) {
+            const container = document.getElementById('blog-grid');
+            if(!container || normalizedData.length === 0) return;
+            
+            container.innerHTML = '';
+            normalizedData.forEach((item, idx) => {
+                const delay = (idx % 3) * 100;
+                const fallbackImg = `https://placehold.co/800x400/0F172A/4F46E5?text=${encodeURIComponent(item.category)}`;
+                let thumbnail = item.cover_image;
+                if(!thumbnail || thumbnail.trim() === '') thumbnail = fallbackImg;
+                
+                const publishDate = UTILS.formatDate(item.publish_date);
+                const dateHtml = publishDate ? `<div class="flex items-center text-xs text-slate-500 dark:text-[#94A3B8] mb-3 gap-2"><i class="ph ph-calendar-blank"></i> ${publishDate}</div>` : `<div class="mb-3 h-4"></div>`;
+
+                const html = `
+                <article class="saas-card overflow-hidden flex flex-col reveal group cursor-pointer" style="transition-delay: ${delay}ms;" onclick="LEAD_ENGINE.handleCTA('blog', {id: '${item.id}'})">
+                    <div class="h-48 overflow-hidden relative border-b border-slate-100 dark:border-white/5">
+                        <img src="${thumbnail}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${fallbackImg}';">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-brand-primary/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">${item.category}</span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1">
+                        ${dateHtml}
+                        <h4 class="text-xl font-bold text-slate-800 dark:text-[#E5E7EB] mb-3 group-hover:text-brand-primary dark:group-hover:text-brand-secondary transition-colors line-clamp-2">${item.title}</h4>
+                        <p class="text-slate-600 dark:text-[#94A3B8] text-sm mb-6 flex-1 line-clamp-3">${item.excerpt}</p>
+                        <span class="inline-flex items-center text-sm font-semibold text-brand-primary dark:text-brand-secondary group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                            Baca Selengkapnya <i class="ph ph-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </div>
+                </article>`;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+            const reveals = container.querySelectorAll('.reveal');
+            setTimeout(() => { reveals.forEach(el => el.classList.add('active')); }, 100);
+        },
+        renderSocial: function(normalizedData) {
+            const socialContainer = document.getElementById('footer-social-container');
+            if(!socialContainer || normalizedData.length === 0) return;
+
+            let html = '';
+            normalizedData.sort((a, b) => a.sort_order - b.sort_order).forEach(item => {
+                if(item.url && item.platform) {
+                    const iconClass = item.icon ? (item.icon.includes('ph-') ? item.icon : `ph-${item.icon}`) : `ph-${item.platform.toLowerCase()}-logo`;
+                    html += `<a href="${item.url}" target="_blank" class="text-slate-400 hover:text-brand-primary transition-colors" title="${item.platform}"><i class="ph-fill ${iconClass} text-2xl"></i></a>`;
+                }
+            });
+            if(html) socialContainer.innerHTML = html;
+        }
+    };
+
+    // =========================================================================
+    // 8. CMS ENGINE
+    // =========================================================================
+    const CMS_ENGINE = {
+        getCacheKey: function() { return `${CONFIG.SITE_ID}_landing_data_${CONFIG.VERSION}`; },
+        loadLanding: async function() {
+            // Loader startup dinonaktifkan agar Landing Page langsung tampil
+            // UTILS.showLoader("Mempersiapkan Ekosistem GASORA...");
+            
+            // 1. Check Cache first to paint immediately
+            const cacheKey = this.getCacheKey();
+            let cachedData = UTILS.getCache(cacheKey);
+
+            if (cachedData) {
+                DEBUG.log('CMS Loaded from Cache');
+                RENDER_ENGINE.renderAll(cachedData);
+            } else {
+                // If no cache, use fallback while fetching
+                DEBUG.log('CMS Loaded from Fallback');
+                RENDER_ENGINE.renderAll(FALLBACK_DATA);
+            }
+
+            // 2. Fetch fresh API data in background (Single Source of Truth)
+            const freshData = await API.get('landing');
+            if (freshData && (freshData.status === 'success' || freshData.success === true) && freshData.data) {
+                UTILS.setCache(cacheKey, freshData.data);
+                RENDER_ENGINE.renderAll(freshData.data); // Override with fresh SSOT
+                DEBUG.log('CMS Successfully Sync with Spreadsheet (API).');
+            } else {
+                DEBUG.warn('Failed to Sync with API. Keeping current state.');
+            }
+            
+            UTILS.hideLoader();
+        },
+        init: function() {
+            this.loadLanding();
+        }
+    };
+
+    // =========================================================================
+    // 9. APP BOOTSTRAP
+    // =========================================================================
+    const APP = {
+        init: function() {
+            const pricingGrid = document.querySelector('#pricing-grid');
+            const faqGrid = document.querySelector('#faq-grid');
+            const testimonialsGrid = document.querySelector('#testimonials-grid');
+            
+            if(pricingGrid) DOM_CACHE.pricing = pricingGrid.innerHTML;
+            if(faqGrid) DOM_CACHE.faq = faqGrid.innerHTML;
+            if(testimonialsGrid) DOM_CACHE.testimonial = testimonialsGrid.innerHTML;
+
+            FALLBACK_DATA.pricing = DOM_CACHE.pricing;
+            FALLBACK_DATA.faq = DOM_CACHE.faq;
+            FALLBACK_DATA.testimonial = DOM_CACHE.testimonial;
+
+            UTILS.initUI();
+            LEAD_ENGINE.init();
+            CMS_ENGINE.init();
+            
+            if(CONFIG.DEBUG_MODE) {
+               console.log("=== PRODUCTION READY CHECK ===");
+               console.log("✅ Config Loaded");
+               console.log("✅ UI Engine Initialized");
+               console.log("✅ Lead Engine Online");
+               console.log("✅ Loading CMS Synchronization...");
+            }
+        }
+    };
+
+    window.openAppModal = function(appId) {
+        let rawData = NORMALIZED_STATE.showcase.find(item => String(item.id) === String(appId));
+        if (!rawData) {
+            const fbData = APP_DETAILS_FALLBACK.find(item => String(item.id || item.showcase_id) === String(appId));
+            if(!fbData) return;
+            rawData = UTILS.normalizeShowcase(fbData);
+        }
+
+        document.getElementById('app-modal-title').innerText = rawData.title;
+        
+        const subtitleEl = document.getElementById('app-modal-subtitle');
+        const CATEGORY_MAP = { property: "Property", crm: "Sales & CRM", finance: "Finance", hr: "HR & Workforce", ops: "Operations", retail: "Retail & Inventory" };
+        if(subtitleEl) subtitleEl.innerText = CATEGORY_MAP[rawData.category.toLowerCase()] || rawData.category;
+
+        const visualContainer = document.getElementById('app-modal-visual');
+        if(rawData.image) {
+            visualContainer.innerHTML = `<img src="${rawData.image}" class="w-full max-h-[320px] object-cover rounded-[16px]" loading="lazy" decoding="async">`;
+        } else {
+            visualContainer.innerHTML = `<img src="https://placehold.co/800x400/0F172A/4F46E5?text=GASORA+App" class="w-full max-h-[320px] object-cover rounded-[16px]" loading="lazy" decoding="async">`;
+        }
+
+        document.getElementById('app-modal-desc').innerText = rawData.description;
+        
+        const demoBtn = document.getElementById('app-modal-demo-btn');
+        if(rawData.demo_url && rawData.demo_url !== '#') {
+            demoBtn.href = rawData.demo_url;
+            demoBtn.style.display = 'block';
+        } else {
+            demoBtn.style.display = 'none';
+        }
+        
+        const featuresContainer = document.getElementById('app-modal-features');
+        featuresContainer.innerHTML = '';
+        if(rawData.features.length > 0) {
+            rawData.features.forEach(feature => {
+                featuresContainer.innerHTML += `<li class="flex items-start"><i class="ph ph-check-circle text-brand-primary mr-2 mt-0.5"></i><span>${feature}</span></li>`;
+            });
+        } else {
+            featuresContainer.innerHTML = `<li class="flex items-start italic text-slate-400"><span>Fitur belum tersedia</span></li>`;
+        }
+
+        document.body.style.overflow = 'hidden';
+        document.getElementById('app-modal').classList.add('active');
+    };
+
+    window.openBlogModal = function(blogId) {
+        let data = NORMALIZED_STATE.blog.find(item => String(item.id) === String(blogId) || String(item.id || '') === String(blogId).replace('dyn_blog_', ''));
+        if (!data) {
+            const fbKey = Object.keys(BLOG_FALLBACK).find(k => k === blogId);
+            if(!fbKey) return;
+            data = UTILS.normalizeBlogItem({id: fbKey, ...BLOG_FALLBACK[fbKey]});
+        }
+
+        document.getElementById('modal-title').innerText = data.title;
+        document.getElementById('modal-category').innerText = data.category;
+        document.getElementById('modal-content-body').innerHTML = data.content;
+
+        const dateEl = document.getElementById('modal-date');
+        if (dateEl) {
+            const metaContainer = dateEl.parentElement.parentElement;
+            if (metaContainer) {
+                let metaHtml = '';
+                const publishDate = UTILS.formatDate(data.publish_date);
+                if (publishDate) {
+                    metaHtml += `<div class="flex items-center gap-2"><i class="ph ph-calendar-blank text-brand-primary"></i> <span>${publishDate}</span></div>`;
+                    metaHtml += `<div class="hidden sm:block w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600 mx-4"></div>`;
+                }
+                metaHtml += `<div class="flex items-center gap-2"><i class="ph ph-user text-brand-secondary"></i> <span>${data.author}</span></div>`;
+                metaHtml += `<div class="hidden sm:block w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600 mx-4"></div>`;
+                metaHtml += `<div class="flex items-center gap-2"><i class="ph ph-clock text-brand-accent"></i> <span>${data.read_time}</span></div>`;
+                metaContainer.innerHTML = metaHtml;
+            }
+        }
+
+        const fallbackImg = `https://placehold.co/800x400/0F172A/4F46E5?text=${encodeURIComponent(data.category)}`;
+        let thumbnail = data.cover_image || fallbackImg;
+
+        const coverContainer = document.getElementById('modal-cover-container');
+        const coverImg = document.getElementById('modal-cover-img');
+        if(coverContainer && coverImg) {
+            coverImg.src = thumbnail;
+            coverImg.alt = data.title;
+            coverImg.onerror = function() { this.onerror = null; this.src = fallbackImg; };
+            coverContainer.classList.remove('hidden');
+        }
+
+        document.body.style.overflow = 'hidden';
+        document.getElementById('blog-modal').classList.add('active');
+    };
+
+    document.addEventListener('DOMContentLoaded', () => APP.init());
+    </script>
+</body>
+</html>
