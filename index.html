@@ -4,44 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO Optimization Patch v1.0 -->
+    <!-- ============================================== -->
+    <!-- PRIMARY SEO META TAGS -->
+    <!-- ============================================== -->
     <title>GASORA | Bangun Aplikasi Bisnis Lebih Cepat</title>
     <meta name="description" content="Solusi jasa pembuatan aplikasi bisnis kustom berbasis Google Apps Script. Bangun CRM, POS, Inventory, dan ERP untuk UMKM, Sekolah, Property, dan Perusahaan.">
     <meta name="keywords" content="Google Apps Script, Inventory, POS, ERP, CRM, Dashboard, Spreadsheet, UMKM, Sekolah, Travel, Property, Aplikasi Bisnis">
-    <meta name="robots" content="index,follow">
-    <meta name="theme-color" content="#4F46E5">
-    
+    <meta name="author" content="UP2 Digital">
+    <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://gasora.up2digital.workers.dev/">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://up2digi-app.github.io/up2digital-assets/gasora/favicon.png">
-    <link rel="apple-touch-icon" href="https://up2digi-app.github.io/up2digital-assets/gasora/favicon.png">
-    
-    <!-- Open Graph / Social Media -->
+    <meta name="theme-color" content="#4F46E5">
+
+    <!-- ============================================== -->
+    <!-- OPEN GRAPH (FACEBOOK, LINKEDIN, WHATSAPP) -->
+    <!-- ============================================== -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gasora.up2digital.workers.dev/">
     <meta property="og:title" content="GASORA | Bangun Aplikasi Bisnis Lebih Cepat">
     <meta property="og:description" content="Solusi jasa pembuatan aplikasi bisnis kustom berbasis Google Apps Script. Bangun CRM, POS, Inventory, dan ERP untuk UMKM, Sekolah, Property, dan Perusahaan.">
-    <meta property="og:image" content="https://up2digi-app.github.io/up2digital-assets/gasora/logo.png">
-    <meta property="og:url" content="https://gasora.up2digital.workers.dev/">
-    <meta property="og:type" content="website">
-    
-    <!-- Twitter -->
+    <meta property="og:image" content="https://up2digi-app.github.io/gasora/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:site_name" content="GASORA">
+    <meta property="og:locale" content="id_ID">
+
+    <!-- ============================================== -->
+    <!-- TWITTER CARD -->
+    <!-- ============================================== -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://gasora.up2digital.workers.dev/">
     <meta name="twitter:title" content="GASORA | Bangun Aplikasi Bisnis Lebih Cepat">
     <meta name="twitter:description" content="Solusi jasa pembuatan aplikasi bisnis kustom berbasis Google Apps Script. Bangun CRM, POS, Inventory, dan ERP untuk UMKM, Sekolah, Property, dan Perusahaan.">
-    <meta name="twitter:image" content="https://up2digi-app.github.io/up2digital-assets/gasora/logo.png">
-    <meta name="twitter:url" content="https://gasora.up2digital.workers.dev/">
+    <meta name="twitter:image" content="https://up2digi-app.github.io/gasora/og-image.jpg">
 
-    <!-- Theme Initialization Script (Prevents FOUC) -->
-    <script>
-        if (localStorage.getItem('theme') === 'light') {
-            document.documentElement.classList.remove('dark');
-        } else {
-            // Default to dark mode if no preference or prefers dark
-            document.documentElement.classList.add('dark');
-        }
-    </script>
+    <!-- ============================================== -->
+    <!-- FAVICONS & MANIFEST -->
+    <!-- ============================================== -->
+    <link rel="icon" type="image/png" href="https://up2digi-app.github.io/gasora/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="https://up2digi-app.github.io/gasora/favicon.svg">
+    <link rel="shortcut icon" href="https://up2digi-app.github.io/gasora/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://up2digi-app.github.io/gasora/apple-touch-icon.png">
+    <link rel="manifest" href="https://up2digi-app.github.io/gasora/site.webmanifest">
 
-    <!-- SEO Schema JSON-LD -->
+    <!-- ============================================== -->
+    <!-- SCHEMA.ORG JSON-LD -->
+    <!-- ============================================== -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -50,7 +58,7 @@
           "@type": "Organization",
           "name": "GASORA",
           "url": "https://gasora.up2digital.workers.dev/",
-          "logo": "https://up2digi-app.github.io/up2digital-assets/gasora/logo.png",
+          "logo": "https://up2digi-app.github.io/gasora/logo.png",
           "contactPoint": {
             "@type": "ContactPoint",
             "telephone": "",
@@ -71,7 +79,7 @@
         {
           "@type": "LocalBusiness",
           "name": "UP2 Digi-App",
-          "image": "https://up2digi-app.github.io/up2digital-assets/gasora/logo.png",
+          "image": "https://up2digi-app.github.io/gasora/logo.png",
           "url": "https://gasora.up2digital.workers.dev/",
           "telephone": "WA: https://wa.link/i8w855"
         },
@@ -88,15 +96,26 @@
     }
     </script>
 
-    <!-- Fonts -->
+    <!-- ============================================== -->
+    <!-- PRECONNECT, FONTS & RESOURCES -->
+    <!-- ============================================== -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- Tailwind CSS -->
+    <!-- Theme Initialization Script (Prevents FOUC) -->
+    <script>
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else {
+            // Default to dark mode if no preference or prefers dark
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+
+    <!-- Tailwind CSS configuration -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -699,6 +718,84 @@
         </div>
     </section>
 
+    <!-- CALCULATOR SECTION START -->
+    <section id="calculator" class="py-24 relative z-10 bg-slate-50 dark:bg-[#0F172A]/50 border-y border-slate-200/50 dark:border-white/5">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 id="calc-title" class="text-brand-primary dark:text-brand-secondary font-semibold tracking-wide uppercase text-sm mb-2">Business Calculator & Profit Simulator</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-[#E5E7EB] mb-4">Simulasi Keuntungan Bisnis</h3>
+                <p id="calc-subtitle" class="mt-4 text-slate-600 dark:text-[#94A3B8] max-w-2xl mx-auto">
+                    Hitung estimasi harga jual, margin keuntungan, Break Even Point (BEP), target omzet, hingga proyeksi laba hanya dalam beberapa detik. 
+                    Mendukung perhitungan <span class="font-medium text-slate-700 dark:text-slate-300">HPP Calculator, BEP Calculator, Margin Calculator</span>, dan terintegrasi dengan Google Apps Script ERP & POS.
+                </p>
+            </div>
+
+            <!-- Main Calculator Card -->
+            <div class="saas-card overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.05)] dark:shadow-[0_0_50px_rgba(79,70,229,0.15)] border-t-[6px] border-t-brand-primary rounded-[2rem] reveal relative">
+                
+                <!-- Category Tabs -->
+                <div class="bg-slate-100/50 dark:bg-white/5 p-4 sm:p-6 border-b border-slate-200 dark:border-white/5">
+                    <p class="text-sm font-semibold text-slate-700 dark:text-[#E5E7EB] mb-4 text-center">Pilih Kategori Bisnis Anda:</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="calc-category-container">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- Simulator Loader Buttons -->
+                <div class="px-6 pt-6 flex flex-wrap gap-2 justify-center items-center">
+                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Atau coba simulasi data:</span>
+                    <button onclick="BUSINESS_CALCULATOR.loadSample('retail')" class="px-3 py-1 text-xs font-semibold rounded-full bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white transition-colors border border-brand-primary/20">Sepatu Retail</button>
+                    <button onclick="BUSINESS_CALCULATOR.loadSample('production')" class="px-3 py-1 text-xs font-semibold rounded-full bg-brand-secondary/10 text-brand-secondary hover:bg-brand-secondary hover:text-white transition-colors border border-brand-secondary/20">Kopi Susu (F&B)</button>
+                    <button onclick="BUSINESS_CALCULATOR.loadSample('service')" class="px-3 py-1 text-xs font-semibold rounded-full bg-brand-accent/10 text-brand-accent hover:bg-brand-accent hover:text-white transition-colors border border-brand-accent/20">Agency SEO</button>
+                </div>
+
+                <!-- Input Form -->
+                <div class="p-6 sm:p-8">
+                    <div id="calculator-dynamic-form" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <!-- Dynamic fields injected here -->
+                    </div>
+                    
+                    <div class="text-center pt-4 border-t border-slate-200 dark:border-white/5">
+                        <button onclick="BUSINESS_CALCULATOR.handleCalculate()" class="inline-flex items-center justify-center px-10 py-4 text-lg font-bold rounded-full text-white bg-gradient-primary hover:opacity-90 transition-all shadow-[0_10px_30px_rgba(79,70,229,0.3)] dark:shadow-[0_0_20px_rgba(79,70,229,0.5)] transform hover:scale-105 w-full md:w-auto">
+                            Hitung Profit Bisnis <i class="ph-bold ph-calculator ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Output -->
+            <div id="calculator-results" class="mt-12 hidden opacity-0 transition-opacity duration-700">
+                <div class="text-center mb-8">
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-[#E5E7EB]">Hasil Estimasi Bisnis</h3>
+                    <p class="text-slate-500 dark:text-[#94A3B8] text-sm mt-2" id="calc-result-subtitle">Berdasarkan data yang dimasukkan.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="calc-output-grid">
+                    <!-- Dynamic Result Cards Injected here -->
+                </div>
+            </div>
+
+            <!-- Big CTA inside calculator -->
+            <div class="mt-16 bg-gradient-primary rounded-[2rem] p-8 md:p-12 text-center text-white reveal shadow-2xl relative overflow-hidden group">
+                <div class="absolute top-[-30%] left-[-10%] w-64 h-64 bg-white/10 rounded-full mix-blend-screen filter blur-[40px] pointer-events-none group-hover:scale-110 transition-transform duration-700"></div>
+                <div class="absolute bottom-[-30%] right-[-10%] w-64 h-64 bg-[#16C7FF]/20 rounded-full mix-blend-screen filter blur-[40px] pointer-events-none group-hover:scale-110 transition-transform duration-700"></div>
+                
+                <div class="relative z-10">
+                    <h3 id="calc-cta-title" class="text-3xl md:text-4xl font-bold mb-4">Ingin semua perhitungan ini otomatis?</h3>
+                    <p id="calc-cta-desc" class="text-indigo-100 mb-8 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+                        Bangun aplikasi bisnis kustom bersama GASORA. Dapatkan sistem ERP, POS, atau CRM modern berbasis Google Apps Script yang mengotomatisasi seluruh kalkulasi finansial Anda tanpa biaya server bulanan.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="#contact" onclick="return window.scrollToSection(event, 'contact')" class="bg-white text-brand-primary px-8 py-3.5 rounded-full font-bold hover:bg-slate-50 transition-colors shadow-lg hover:shadow-xl text-center">Konsultasi Gratis</a>
+                        <a href="#showcase" onclick="return window.scrollToSection(event, 'showcase')" class="border border-white/30 hover:bg-white/10 px-8 py-3.5 rounded-full font-bold transition-colors text-center backdrop-blur-sm">Lihat Demo Aplikasi</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- CALCULATOR SECTION END -->
+
     <section id="process" class="py-24 relative z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
@@ -1236,7 +1333,7 @@
     // =========================================================================
     // 1. CONFIG & DEBUG ENGINE
     // =========================================================================
-    window.GASORA_VERSION = "4.1C";
+    window.GASORA_VERSION = "4.1D";
 
     const CONFIG = {
         SITE_ID: "gasora",
@@ -1260,6 +1357,326 @@
         warn: function(msg, err) {
             if(CONFIG.DEBUG_MODE) console.warn(`[GASORA WARNING] ${msg}`, err);
         }
+    };
+
+    // =========================================================================
+    // 1.5 BUSINESS CALCULATOR CONFIG & ENGINE (V3.0 PATCH)
+    // =========================================================================
+    const BUSINESS_CALCULATOR_CONFIG = {
+        categories: [
+            { id: 'retail', label: 'Dagang / Reseller', icon: 'ph-storefront' },
+            { id: 'production', label: 'Produksi / F&B', icon: 'ph-factory' },
+            { id: 'service', label: 'Jasa / Agency', icon: 'ph-briefcase' }
+        ],
+        sampleData: {
+            retail: { name: 'Sepatu Sneakers Premium', hpp: 150000, markup: 60, fixedCost: 5000000, varCost: 15000, targetProfit: 15 },
+            production: { name: 'Kopi Susu Literan', rawMaterial: 15000, productionCost: 5000, markup: 120, fixedCost: 3500000, varCost: 2000, targetProfit: 20 },
+            service: { name: 'Jasa Desain Website', fee: 4500000, varCost: 300000, fixedCost: 2500000, targetClients: 5 }
+        }
+    };
+
+    window.GASORA_BUSINESS_RESULT = {};
+    window.getBusinessJSON = function() { return window.GASORA_BUSINESS_RESULT; };
+
+    const BusinessEngine = {
+        parseNum: function(val) {
+            if (typeof val === 'number') return val;
+            return parseFloat((val || '').toString().replace(/\D/g, '')) || 0;
+        },
+        formatCurrency: function(num) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(num);
+        },
+        formatPercent: function(num) {
+            return parseFloat(num).toFixed(2) + '%';
+        }
+    };
+
+    const RetailEngine = {
+        calculate: function(data) {
+            const hpp = BusinessEngine.parseNum(data.hpp);
+            const markup = BusinessEngine.parseNum(data.markup);
+            const fc = BusinessEngine.parseNum(data.fixedCost);
+            const vc = BusinessEngine.parseNum(data.varCost);
+            const tp = BusinessEngine.parseNum(data.targetProfit);
+
+            const sellingPrice = hpp * (1 + (markup / 100));
+            const gpUnit = sellingPrice - hpp - vc;
+            const gm = sellingPrice > 0 ? (gpUnit / sellingPrice) * 100 : 0;
+            const bepUnit = gpUnit > 0 ? Math.ceil(fc / gpUnit) : 0;
+            
+            let q = 0;
+            const marginMinusTp = gpUnit - ((tp/100) * sellingPrice);
+            if(marginMinusTp > 0) q = Math.ceil(fc / marginMinusTp);
+            
+            const targetRevenue = q * sellingPrice;
+            const estimatedProfit = (gpUnit * q) - fc;
+            const totalCost = fc + ((hpp + vc) * q);
+            const roi = totalCost > 0 ? (estimatedProfit / totalCost) * 100 : 0;
+
+            return {
+                category: 'Retail', productName: data.name, hpp, sellingPrice,
+                grossProfit: gpUnit, grossMargin: gm, netMargin: tp, 
+                bep: bepUnit, targetRevenue, estimatedProfit, cashFlow: estimatedProfit, roi
+            };
+        }
+    };
+
+    const ProductionEngine = {
+        calculate: function(data) {
+            const bb = BusinessEngine.parseNum(data.rawMaterial);
+            const prod = BusinessEngine.parseNum(data.productionCost);
+            const hpp = bb + prod;
+            const markup = BusinessEngine.parseNum(data.markup);
+            const fc = BusinessEngine.parseNum(data.fixedCost);
+            const vc = BusinessEngine.parseNum(data.varCost);
+            const tp = BusinessEngine.parseNum(data.targetProfit);
+
+            const sellingPrice = hpp * (1 + (markup / 100));
+            const gpUnit = sellingPrice - hpp - vc;
+            const gm = sellingPrice > 0 ? (gpUnit / sellingPrice) * 100 : 0;
+            const bepUnit = gpUnit > 0 ? Math.ceil(fc / gpUnit) : 0;
+            
+            let q = 0;
+            const marginMinusTp = gpUnit - ((tp/100) * sellingPrice);
+            if(marginMinusTp > 0) q = Math.ceil(fc / marginMinusTp);
+            
+            const targetRevenue = q * sellingPrice;
+            const estimatedProfit = (gpUnit * q) - fc;
+            const totalCost = fc + ((hpp + vc) * q);
+            const roi = totalCost > 0 ? (estimatedProfit / totalCost) * 100 : 0;
+
+            return {
+                category: 'Production', productName: data.name, hpp, sellingPrice,
+                grossProfit: gpUnit, grossMargin: gm, netMargin: tp,
+                bep: bepUnit, targetRevenue, estimatedProfit, cashFlow: estimatedProfit, roi
+            };
+        }
+    };
+
+    const ServiceEngine = {
+        calculate: function(data) {
+            const fee = BusinessEngine.parseNum(data.fee);
+            const vc = BusinessEngine.parseNum(data.varCost);
+            const fc = BusinessEngine.parseNum(data.fixedCost);
+            const targetClients = BusinessEngine.parseNum(data.targetClients);
+
+            const hpp = 0;
+            const sellingPrice = fee;
+            const gpUnit = sellingPrice - vc;
+            const gm = sellingPrice > 0 ? (gpUnit / sellingPrice) * 100 : 0;
+            const bepUnit = gpUnit > 0 ? Math.ceil(fc / gpUnit) : 0;
+            
+            const targetRevenue = targetClients * sellingPrice;
+            const estimatedProfit = (gpUnit * targetClients) - fc;
+            const netMargin = targetRevenue > 0 ? (estimatedProfit / targetRevenue) * 100 : 0;
+            const totalCost = fc + (vc * targetClients);
+            const roi = totalCost > 0 ? (estimatedProfit / totalCost) * 100 : 0;
+
+            return {
+                category: 'Service', productName: data.name, hpp, sellingPrice,
+                grossProfit: gpUnit, grossMargin: gm, netMargin,
+                bep: bepUnit, targetRevenue, estimatedProfit, cashFlow: estimatedProfit, roi
+            };
+        }
+    };
+
+    const BUSINESS_CALCULATOR = {
+        currentCategory: 'retail',
+        init: function() {
+            this.renderTabs();
+            this.renderForm();
+        },
+        renderTabs: function() {
+            const container = document.getElementById('calc-category-container');
+            if(!container) return;
+            container.innerHTML = BUSINESS_CALCULATOR_CONFIG.categories.map(cat => `
+                <button onclick="BUSINESS_CALCULATOR.setCategory('${cat.id}')" 
+                        class="calc-tab ${this.currentCategory === cat.id ? 'active' : 'bg-white dark:bg-[#131A2B] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-brand-primary/50 hover:text-brand-primary'} 
+                               flex items-center justify-center gap-2 py-3 rounded-xl font-bold cursor-pointer transition-all">
+                    <i class="ph ${cat.icon} text-xl"></i> ${cat.label}
+                </button>
+            `).join('');
+        },
+        setCategory: function(id) {
+            this.currentCategory = id;
+            this.renderTabs();
+            this.renderForm();
+            document.getElementById('calculator-results').classList.add('hidden');
+            document.getElementById('calculator-results').classList.remove('opacity-100');
+        },
+        createInput: function(id, label, icon, type = 'currency', placeholder = '0') {
+            const formatFn = type === 'currency' ? 'BUSINESS_CALCULATOR.formatCurrencyInput(this)' : 'BUSINESS_CALCULATOR.formatNumberInput(this)';
+            return `
+                <div class="calc-input">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-[#E5E7EB] mb-2">${label}</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors"><i class="ph ${icon} text-slate-400 text-lg"></i></div>
+                        <input type="text" id="calc_${id}" data-type="${type}" placeholder="${placeholder}" oninput="${formatFn}" onblur="${formatFn}"
+                               class="w-full bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-white/10 rounded-xl pl-11 pr-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary outline-none transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600 font-medium">
+                        ${type === 'percent' ? `<div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none"><span class="text-slate-400 font-bold">%</span></div>` : ''}
+                    </div>
+                </div>
+            `;
+        },
+        renderForm: function() {
+            const container = document.getElementById('calculator-dynamic-form');
+            if(!container) return;
+            let html = '';
+
+            // Common Name field
+            html += `
+                <div class="calc-input md:col-span-2">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-[#E5E7EB] mb-2">Nama Produk / Jasa</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i class="ph ph-tag text-slate-400 text-lg"></i></div>
+                        <input type="text" id="calc_name" placeholder="Cth: Sepatu Sneakers" class="w-full bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-white/10 rounded-xl pl-11 pr-4 py-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary outline-none transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600 font-medium">
+                    </div>
+                </div>
+            `;
+
+            if (this.currentCategory === 'retail') {
+                html += this.createInput('hpp', 'Harga Pokok Penjualan (HPP)', 'ph-money');
+                html += this.createInput('markup', 'Markup / Keuntungan', 'ph-trend-up', 'percent');
+                html += this.createInput('fixedCost', 'Biaya Tetap Bulanan (Sewa, Gaji, dll)', 'ph-bank');
+                html += this.createInput('varCost', 'Biaya Variabel per Unit (Packing, Ongkir)', 'ph-package');
+                html += this.createInput('targetProfit', 'Target Profit Margin', 'ph-target', 'percent');
+            } else if (this.currentCategory === 'production') {
+                html += this.createInput('rawMaterial', 'Biaya Bahan Baku (per Unit)', 'ph-plant');
+                html += this.createInput('productionCost', 'Biaya Produksi / Tenaga (per Unit)', 'ph-hammer');
+                html += this.createInput('markup', 'Markup / Keuntungan', 'ph-trend-up', 'percent');
+                html += this.createInput('fixedCost', 'Biaya Tetap Bulanan (Sewa, Gaji, dll)', 'ph-bank');
+                html += this.createInput('varCost', 'Biaya Variabel per Unit (Packaging)', 'ph-package');
+                html += this.createInput('targetProfit', 'Target Profit Margin', 'ph-target', 'percent');
+            } else if (this.currentCategory === 'service') {
+                html += this.createInput('fee', 'Fee per Klien / Proyek', 'ph-money');
+                html += this.createInput('varCost', 'Biaya Variabel per Klien', 'ph-users');
+                html += this.createInput('fixedCost', 'Biaya Tetap Bulanan', 'ph-bank');
+                html += this.createInput('targetClients', 'Target Klien per Bulan', 'ph-target', 'number');
+            }
+            container.innerHTML = html;
+        },
+        formatCurrencyInput: function(el) {
+            let val = el.value.replace(/\D/g, '');
+            if(!val) { el.value = ''; el.dataset.value = 0; return; }
+            el.dataset.value = val;
+            el.value = 'Rp ' + new Intl.NumberFormat('id-ID').format(val);
+        },
+        formatNumberInput: function(el) {
+            let val = el.value.replace(/\D/g, '');
+            if(!val) { el.value = ''; el.dataset.value = 0; return; }
+            el.dataset.value = val;
+            el.value = new Intl.NumberFormat('id-ID').format(val);
+        },
+        getRawValue: function(id) {
+            const el = document.getElementById(`calc_${id}`);
+            if(!el) return 0;
+            if(el.dataset.value !== undefined) return BusinessEngine.parseNum(el.dataset.value);
+            return el.value;
+        },
+        setInputValue: function(id, val, type = 'currency') {
+            const el = document.getElementById(`calc_${id}`);
+            if(!el) return;
+            if(type === 'text') { el.value = val; return; }
+            el.value = val;
+            if(type === 'currency') this.formatCurrencyInput(el);
+            else this.formatNumberInput(el);
+        },
+        loadSample: function(catId) {
+            this.setCategory(catId);
+            const data = BUSINESS_CALCULATOR_CONFIG.sampleData[catId];
+            this.setInputValue('name', data.name, 'text');
+            
+            if(catId === 'retail') {
+                this.setInputValue('hpp', data.hpp, 'currency');
+                this.setInputValue('markup', data.markup, 'number');
+                this.setInputValue('fixedCost', data.fixedCost, 'currency');
+                this.setInputValue('varCost', data.varCost, 'currency');
+                this.setInputValue('targetProfit', data.targetProfit, 'number');
+            } else if (catId === 'production') {
+                this.setInputValue('rawMaterial', data.rawMaterial, 'currency');
+                this.setInputValue('productionCost', data.productionCost, 'currency');
+                this.setInputValue('markup', data.markup, 'number');
+                this.setInputValue('fixedCost', data.fixedCost, 'currency');
+                this.setInputValue('varCost', data.varCost, 'currency');
+                this.setInputValue('targetProfit', data.targetProfit, 'number');
+            } else if (catId === 'service') {
+                this.setInputValue('fee', data.fee, 'currency');
+                this.setInputValue('varCost', data.varCost, 'currency');
+                this.setInputValue('fixedCost', data.fixedCost, 'currency');
+                this.setInputValue('targetClients', data.targetClients, 'number');
+            }
+            // Auto calculate after loading sample
+            setTimeout(() => this.handleCalculate(), 300);
+        },
+        handleCalculate: function() {
+            let result = null;
+            window.calculateBusiness = () => {
+                if(this.currentCategory === 'retail') {
+                    result = RetailEngine.calculate({
+                        name: this.getRawValue('name'), hpp: this.getRawValue('hpp'), markup: this.getRawValue('markup'),
+                        fixedCost: this.getRawValue('fixedCost'), varCost: this.getRawValue('varCost'), targetProfit: this.getRawValue('targetProfit')
+                    });
+                } else if(this.currentCategory === 'production') {
+                    result = ProductionEngine.calculate({
+                        name: this.getRawValue('name'), rawMaterial: this.getRawValue('rawMaterial'), productionCost: this.getRawValue('productionCost'),
+                        markup: this.getRawValue('markup'), fixedCost: this.getRawValue('fixedCost'), varCost: this.getRawValue('varCost'), targetProfit: this.getRawValue('targetProfit')
+                    });
+                } else if(this.currentCategory === 'service') {
+                    result = ServiceEngine.calculate({
+                        name: this.getRawValue('name'), fee: this.getRawValue('fee'), varCost: this.getRawValue('varCost'),
+                        fixedCost: this.getRawValue('fixedCost'), targetClients: this.getRawValue('targetClients')
+                    });
+                }
+                window.GASORA_BUSINESS_RESULT = result;
+                window.renderBusinessResult(result);
+            };
+            window.calculateBusiness();
+        }
+    };
+
+    window.renderBusinessResult = function(data) {
+        const container = document.getElementById('calculator-results');
+        const grid = document.getElementById('calc-output-grid');
+        if(!container || !grid) return;
+
+        const createCard = (title, value, icon, desc, colorClass) => `
+            <div class="bg-white dark:bg-[#131A2B] rounded-2xl p-6 border border-slate-200 dark:border-white/5 flex gap-4 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 group">
+                <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center bg-slate-50 dark:bg-white/5 ${colorClass} transition-colors">
+                    <i class="ph ${icon} text-2xl"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-slate-500 dark:text-[#94A3B8] mb-1">${title}</p>
+                    <h4 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-[#E5E7EB] tracking-tight mb-2">${value}</h4>
+                    <p class="text-xs text-slate-500 dark:text-[#64748B] leading-relaxed">${desc}</p>
+                </div>
+            </div>
+        `;
+
+        let html = '';
+        html += createCard('Harga Jual Ideal', BusinessEngine.formatCurrency(data.sellingPrice), 'ph-tag', 'Harga jual per unit/klien setelah penambahan markup.', 'text-brand-primary group-hover:bg-brand-primary/10');
+        if(data.category !== 'Service') {
+            html += createCard('Harga Pokok (HPP)', BusinessEngine.formatCurrency(data.hpp), 'ph-package', 'Total biaya modal dasar per unit sebelum operasional.', 'text-amber-500 group-hover:bg-amber-500/10');
+        }
+        html += createCard('Laba Kotor (Gross Profit)', BusinessEngine.formatCurrency(data.grossProfit), 'ph-coins', 'Keuntungan per unit setelah dikurangi HPP & Biaya Variabel.', 'text-brand-secondary group-hover:bg-brand-secondary/10');
+        html += createCard('Break Even Point (BEP)', `${new Intl.NumberFormat('id-ID').format(data.bep)} ${data.category === 'Service' ? 'Klien' : 'Unit'}`, 'ph-scales', 'Minimal penjualan per bulan agar tidak rugi (Tutup Biaya Tetap).', 'text-rose-500 group-hover:bg-rose-500/10');
+        
+        html += createCard('Target Omzet (Revenue)', BusinessEngine.formatCurrency(data.targetRevenue), 'ph-chart-line-up', 'Total pendapatan yang harus dicapai untuk memenuhi target.', 'text-indigo-500 group-hover:bg-indigo-500/10');
+        html += createCard('Estimasi Laba Bersih', BusinessEngine.formatCurrency(data.estimatedProfit), 'ph-wallet', 'Proyeksi keuntungan bersih per bulan setelah semua biaya.', 'text-green-500 group-hover:bg-green-500/10');
+        
+        html += createCard('Gross Margin', BusinessEngine.formatPercent(data.grossMargin), 'ph-chart-pie-slice', 'Persentase laba kotor terhadap pendapatan (Ideal > 40%).', 'text-teal-500 group-hover:bg-teal-500/10');
+        html += createCard('Net Margin / Target', BusinessEngine.formatPercent(data.netMargin), 'ph-percent', 'Persentase target laba bersih akhir bisnis Anda.', 'text-blue-500 group-hover:bg-blue-500/10');
+        
+        html += createCard('Return on Investment (ROI)', BusinessEngine.formatPercent(data.roi), 'ph-rocket-launch', 'Rasio tingkat pengembalian modal dari total biaya bulanan.', 'text-brand-accent group-hover:bg-brand-accent/10');
+        html += createCard('Free Cash Flow', BusinessEngine.formatCurrency(data.cashFlow), 'ph-arrows-left-right', 'Estimasi uang kas riil yang tersedia untuk diputar kembali.', 'text-emerald-500 group-hover:bg-emerald-500/10');
+
+        grid.innerHTML = html;
+        container.classList.remove('hidden');
+        
+        // Smooth reveal animation
+        setTimeout(() => {
+            container.classList.add('opacity-100');
+            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 50);
     };
 
     // =========================================================================
@@ -2239,12 +2656,14 @@
             UTILS.initUI();
             LEAD_ENGINE.init();
             CMS_ENGINE.init();
+            BUSINESS_CALCULATOR.init(); // Initialize Calculator V3.0
             
             if(CONFIG.DEBUG_MODE) {
                console.log("=== PRODUCTION READY CHECK ===");
                console.log("✅ Config Loaded");
                console.log("✅ UI Engine Initialized");
                console.log("✅ Lead Engine Online");
+               console.log("✅ Business Calculator Engine V3.0 Online");
                console.log("✅ Loading CMS Synchronization...");
             }
         }
